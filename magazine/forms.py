@@ -8,4 +8,4 @@ class ArticleAdminForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        fields = ['title', 'content', 'cover_image', 'category', 'slug', 'published', 'status', 'editor']
+        fields = ['title', 'content', 'author', 'cover_image', 'category', 'slug', 'published', 'status', 'editor']

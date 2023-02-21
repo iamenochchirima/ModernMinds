@@ -1,0 +1,13 @@
+asgiref==3.6.0
+autopep8==2.0.1
+DateTime==5.0
+decouple==0.0.7
+Django==4.1.6
+django-tinymce==3.5.0
+djangorestframework==3.14.0
+Pillow==9.4.0
+pycodestyle==2.10.0
+pytz==2022.7.1
+sqlparse==0.4.3
+tomli==2.0.1
+zope.interface==5.5.2

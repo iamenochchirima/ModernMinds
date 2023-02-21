@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Category(models.Model):
@@ -11,7 +13,7 @@ class Category(models.Model):
 
 
 def get_cover_image_filepath(self, filename):
-    return 'profile_images/' + str(self.pk) + '/cover_image.png'
+    return 'cover_images/' + str(self.pk) + '/cover_image.png'
 
 
 def default_cover_image():
