@@ -2,5 +2,7 @@
 .env
 *venv
 venv
+../../static_cdn
+*static_cdn
 *.pyc
 *__pycache__/
