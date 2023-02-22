@@ -37,7 +37,7 @@ class Article(models.Model):
     cover_image = models.ImageField(
         upload_to=get_cover_image_filepath, null=True, blank=True, default=default_cover_image)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    slug = models.SlugField(max_length=250, unique_for_date='published')
+    slug = models.SlugField(max_length=250, unique_for_date='created_at')
     status = models.CharField(
         max_length=10, choices=options, default='published')
     editor = models.ForeignKey(
