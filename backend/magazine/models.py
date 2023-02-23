@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from ckeditor_uploader.fields import RichTextUploadingField 
 
 User = get_user_model()
 
@@ -33,7 +34,7 @@ class Article(models.Model):
 
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
-    content = models.TextField()
+    content = RichTextUploadingField(blank=True, null=True)
     cover_image = models.ImageField(
         upload_to=get_cover_image_filepath, null=True, blank=True, default=default_cover_image)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
