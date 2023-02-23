@@ -162,13 +162,6 @@ DEFAULT_FILE_STORAGE = 'modernminds.storages.MediaStorage'
 
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 
-# STATIC_URL = 'static/'
-# MEDIA_URL = '/media/'
-
-# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "static_root")
-
-# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -227,7 +220,7 @@ CKEDITOR_CONFIGS = {
             'autoembed',
             'embedsemantic',
             'autogrow',
-            'devtools',
+            # 'devtools',
             'widget',
             'lineutils',
             'clipboard',
