@@ -4,17 +4,17 @@ import { useGetArticlesQuery } from "@/redux/api/articleApi";
 
 const Articles = () => {
   const { data: articles } = useGetArticlesQuery();
-  console.log(articles)
   return (
     <div className="font-poppins">
         <h1>HI</h1>
-      {/* {articles?.map((article) => {
+      {articles?.map((article) => {
         return (
-          <div className="">
-            <h1></h1>
+          <div key={article.id} className="">
+            <h1>{article.title}</h1>
+            <div dangerouslySetInnerHTML={{ __html: article.content }} safe="true" />
           </div>
         );
-      })} */}
+      })}
     </div>
   );
 };
