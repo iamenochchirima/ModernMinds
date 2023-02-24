@@ -1,8 +1,7 @@
 *.env
 .env
 *venv
-../../static_cdn
-*static_cdn
-*static_cdn
+static
+media
 *.pyc
 *__pycache__/
