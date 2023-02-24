@@ -1,9 +1,10 @@
-import Articles from "./Articles";
+import Layout from "@/components/Layout";
+import Articles from "../components/Articles";
 
 export default function Home() {
   return (
-   <div className="">
+   <Layout >
     <Articles/>
-   </div>
+   </Layout>
   );
 }
