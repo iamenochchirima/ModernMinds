@@ -4,7 +4,7 @@ export const articlesApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getArticles: builder.query({
       query: () => ({
-        url: "/api/articles/",
+        url: "/articles/articles/",
         method: "GET",
       }),
     }),

@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useLogInMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { setAuthState } from "@/redux/slices/authSlice";
 
@@ -38,33 +36,6 @@ const Login = () => {
           .unwrap()
           .then((payload) => {
             console.log("fulfilled", payload);
-            const accesstoken = payload.access;
-            const accessDecodedToken = jwtDecode(accesstoken);
-            const accsessExpirationTime = new Date(
-              accessDecodedToken.exp * 1000
-            );
-            console.log(accsessExpirationTime)
-            const refreshtoken = payload.refresh;
-            const refreshDecodedToken = jwtDecode(refreshtoken);
-            const refreshExpirationTime = new Date(
-              refreshDecodedToken.exp * 1000
-            );
-            console.log(refreshExpirationTime)
-            Cookies.set("access", payload.access, {
-              expires: accsessExpirationTime,
-              secure: process.env.NODE_ENV === "production",
-              sameSite: "strict",
-              httpOnly: true,
-              path: "/",
-            });
-            Cookies.set("refresh", payload.refresh, {
-              expires: refreshExpirationTime,
-              secure: process.env.NODE_ENV === "production",
-              sameSite: "strict",
-              httpOnly: true,
-              path: "/",
-            });
-            console.log(Cookies)
             setFormData(initialFormData);
             router.push("/");
             dispatch(setAuthState());

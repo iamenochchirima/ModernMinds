@@ -1,20 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
-import Cookies from "js-cookie";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:8000/",
-  credentials: "include",
-  prepareHeaders: (headers, { getState }) => {
-    const accessToken = Cookies.get('access');
-    console.log(accessToken, "Here")
+  baseUrl: "/api/",
+  // credentials: "include",
+  // prepareHeaders: (headers, { getState }) => {
+  //   const accessToken = Cookies.get('access');
+  //   console.log(accessToken, "Here")
 
-    if (accessToken) {
-      headers.set("Authorization", `Bearer ${accessToken}`);
-    }
+  //   if (accessToken) {
+  //     headers.set("Authorization", `Bearer ${accessToken}`);
+  //   }
 
-    return headers;
-  },
+  //   return headers;
+  // },
 });
 
 export const apiSlice = createApi({
