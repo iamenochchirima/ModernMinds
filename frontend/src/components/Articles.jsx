@@ -5,12 +5,14 @@ import Link from "next/link";
 
 const Articles = () => {
   const {
-    data: articles,
+    data,
     isLoading,
     isSuccess,
     isError,
     error,
   } = useGetArticlesQuery();
+  
+  const articles = data?.articles
 
   let content;
 
@@ -20,7 +22,7 @@ const Articles = () => {
         <h1>Loading...</h1>
       </div>
     );
-  } else if (articles?.length === 0) {
+  } else if (articles.length === 0) {
     content = (
       <div>
         <center>
