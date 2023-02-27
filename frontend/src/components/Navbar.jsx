@@ -26,7 +26,9 @@ const Navbar = () => {
 
   const [logout] = useLogoutMutation();
 
-  const { data, isSuccess } = useLoadUserQuery();
+  const { data, isSuccess, error } = useLoadUserQuery();
+
+  console.log(error)
 
   const handleLoginClick = () => {
     dispatch(setOpenLoginViewState());
