@@ -3,6 +3,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import UserAccount
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.urls import reverse
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=30, required=True)
@@ -13,19 +20,23 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserAccount
-        fields = ('email', 'first_name', 'last_name', 'password', 're_password')
-        extra_kwargs = {'password': {'write_only': True}, 're_password': {'write_only': True}}
+        fields = ('email', 'first_name', 'last_name',
+                  'password', 're_password')
+        extra_kwargs = {'password': {'write_only': True},
+                        're_password': {'write_only': True}}
 
     def validate_email(self, value):
         if UserAccount.objects.filter(email=value).exists():
-            raise serializers.ValidationError("A user with this email already exists.")
+            raise serializers.ValidationError(
+                "A user with this email already exists.")
         return value
 
     def validate(self, data):
         if data['password'] != data['re_password']:
             raise serializers.ValidationError("Passwords must match.")
         if len(data['password']) < 8:
-            raise serializers.ValidationError("Password must be at least 8 characters long.")
+            raise serializers.ValidationError(
+                "Password must be at least 8 characters long.")
         return data
 
     def create(self, validated_data):
@@ -37,6 +48,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class CustomUserCreate(APIView):
     permission_classes = [AllowAny]
 
@@ -45,9 +57,26 @@ class CustomUserCreate(APIView):
         if serializer.is_valid():
             user = serializer.save()
             if user:
+                # Generate verification token
+                uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+                token = PasswordResetTokenGenerator().make_token(user)
+
+                # Construct verification URL
+                verification_url = request.build_absolute_uri(
+                    reverse('users:verify-email', args=(uidb64, token))
+                )
+
+                # Send verification email
+                subject = 'Verify your email address'
+                message = f'Please click on the following link to verify your email address: {verification_url}'
+                from_email = settings.DEFAULT_FROM_EMAIL
+                recipient_list = [user.email]
+                send_mail(subject, message, from_email, recipient_list)
+
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LoadUserView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -64,3 +93,29 @@ class LoadUserView(APIView):
                 {'error': 'Something went wrong when trying to load user'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+class VerifyEmailView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, uidb64, token):
+
+        try:
+            # Decode uidb64 to get user pk
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            uid_int = int(uid)
+
+            # Get user object and verify token
+            user = UserAccount.objects.get(pk=uid_int)
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                raise Exception('Invalid verification token')
+
+            # Mark email as verified and save user
+            user.is_email_verified = True
+            user.save()
+
+            return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
+        except UserAccount.DoesNotExist:
+            return Response({'error': 'User account not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
