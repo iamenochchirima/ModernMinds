@@ -7,24 +7,24 @@ export default async (req, res) => {
     const cookies = cookie.parse(req.headers.cookie ?? "");
     const access = cookies.access ?? false;
 
-    // if (access === false) {
-    //   return res.status(401).json({
-    //     error: "User unauthorized to make this request",
-    //   });
-    // }
+    if (access === false) {
+      return res.status(401).json({
+        error: "User unauthorized to make this request",
+      });
+    }
 
     try {
-      const apiRes = await axios.get(`${API_URL}/api/articles/`, {
+      const apiRes = await axios.get(`${API_URL}/users/load/`, {
         headers: {
           Accept: "application/json",
-          // Authorization: `Bearer ${access}`,
+          Authorization: `Bearer ${access}`,
         },
       });
       const data = apiRes.data;
 
       if (apiRes.status === 200) {
         return res.status(200).json({
-          articles: data,
+          user: data,
         });
       } else {
         return res.status(apiRes.status).json({

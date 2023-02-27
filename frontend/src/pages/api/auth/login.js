@@ -5,7 +5,6 @@ import axios from 'axios';
 export default async (req, res) => {
     if (req.method === 'POST') {
         const { email, password } = req.body;
-        console.log(req.body)
 
         const body = JSON.stringify({
             email,
@@ -54,7 +53,7 @@ export default async (req, res) => {
             }
         } catch(err) {
             return res.status(500).json({
-                error: 'Something went wrong when authenticating'
+                err,
             });
         }
     } else {
