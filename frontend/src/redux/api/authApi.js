@@ -30,6 +30,12 @@ export const authApi = apiSlice.injectEndpoints({
         body,
       }),
     }),
+    refresh: builder.query({
+      query: () => ({
+        url: "/auth/load_user",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -38,4 +44,5 @@ export const {
   useLoginMutation,
   useLoadUserQuery,
   useLogoutMutation,
+  useRefreshQuery
 } = authApi;
