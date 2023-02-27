@@ -13,6 +13,7 @@ class CustomAccountManager(BaseUserManager):
         other_fields.setdefault('is_active', True)
         other_fields.setdefault('is_verified', True)
         other_fields.setdefault('is_admin', True)
+        other_fields.setdefault('is_email_verified', True)
 
         if other_fields.get('is_staff') is not True:
             raise ValueError(
@@ -41,6 +42,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255, blank=True)
     is_admin = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
+    is_email_verified = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_subscribed = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
