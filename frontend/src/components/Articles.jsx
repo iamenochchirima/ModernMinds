@@ -22,7 +22,7 @@ const Articles = () => {
         <h1>Loading...</h1>
       </div>
     );
-  } else if (articles.length === 0) {
+  } else if (articles?.length === 0) {
     content = (
       <div>
         <center>

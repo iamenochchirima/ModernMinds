@@ -1,17 +1,33 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
+import { createSlice } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
   isAuthenticated: false,
-  user: null,
+  loginView: false,
+  registerView: false,
 };
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    setAuthState(state, action) {
+    setAuthState(state) {
       state.isAuthenticated = true;
+    },
+    setLogoutState(state) {
+      state.isAuthenticated = false;
+    },
+    setOpenLoginViewState(state) {
+      state.loginView = true;
+    },
+    setCloseLoginViewState(state) {
+      state.loginView = false;
+    },
+    setOpenRegisterViewState(state) {
+      state.registerView = true;
+    },
+    setCloseRegisterViewState(state) {
+      state.registerView = false;
     },
 
     extraReducers: {
@@ -25,5 +41,12 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthState} = authSlice.actions;
+export const {
+  setAuthState,
+  setLogoutState,
+  setOpenLoginViewState,
+  setCloseLoginViewState,
+  setOpenRegisterViewState,
+  setCloseRegisterViewState,
+} = authSlice.actions;
 export default authSlice.reducer;

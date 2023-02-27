@@ -3,17 +3,6 @@ import { HYDRATE } from "next-redux-wrapper";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "/api/",
-  // credentials: "include",
-  // prepareHeaders: (headers, { getState }) => {
-  //   const accessToken = Cookies.get('access');
-  //   console.log(accessToken, "Here")
-
-  //   if (accessToken) {
-  //     headers.set("Authorization", `Bearer ${accessToken}`);
-  //   }
-
-  //   return headers;
-  // },
 });
 
 export const apiSlice = createApi({
