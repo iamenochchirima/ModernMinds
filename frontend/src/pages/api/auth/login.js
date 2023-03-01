@@ -28,9 +28,6 @@ export default async (req, res) => {
       const accessTokenMaxAge = accessToken.exp - Math.floor(Date.now() / 1000);
       const refreshTokenMaxAge = refreshToken.exp - Math.floor(Date.now() / 1000);
 
-      console.log(accessTokenMaxAge, "here")
-      console.log(refreshTokenMaxAge, "here")
-
       if (apiRes.status === 200) {
         res.setHeader("Set-Cookie", [
           cookie.serialize("access", data.access, {

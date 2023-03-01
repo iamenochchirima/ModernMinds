@@ -82,7 +82,6 @@ export default async (req, res) => {
             });
           }
         } catch (err) {
-          console.log(err)
           return res.status(500).json({
             error: "Something went wrong when refreshing token",
           });
