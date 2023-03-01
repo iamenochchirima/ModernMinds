@@ -62,9 +62,7 @@ class CustomUserCreate(APIView):
                 token = PasswordResetTokenGenerator().make_token(user)
 
                 # Construct verification URL
-                verification_url = request.build_absolute_uri(
-                    reverse('users:verify-email', args=(uidb64, token))
-                )
+                verification_url = f'http://localhost:3000/verify-email/{uidb64}/{token}'
 
                 # Send verification email
                 subject = 'Verify your email address'
