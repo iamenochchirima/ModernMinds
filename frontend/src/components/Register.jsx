@@ -54,8 +54,6 @@ const Register = () => {
           .then((payload) => {
             console.log("fulfilled", payload);
             setFormData(initialFormData);
-            // dispatch(setCloseRegisterViewState());
-            // dispatch(setOpenLoginViewState());
           });
       } catch (err) {
         console.error("Failed to register: ", err);

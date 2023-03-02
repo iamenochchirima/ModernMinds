@@ -9,6 +9,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.urls import reverse
 from django.core.mail import send_mail
 from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -64,12 +66,19 @@ class CustomUserCreate(APIView):
                 # Construct verification URL
                 verification_url = f'http://localhost:3000/verify-email/{uidb64}/{token}'
 
-                # Send verification email
-                subject = 'Verify your email address'
-                message = f'Please click on the following link to verify your email address: {verification_url}'
-                from_email = settings.DEFAULT_FROM_EMAIL
-                recipient_list = [user.email]
-                send_mail(subject, message, from_email, recipient_list)
+                # Send verification email using SendGrid
+                message = Mail(
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to_emails=user.email,
+                    subject='Verify your email address',
+                    html_content=f'Please click on the following link to verify your email address: <a href="{verification_url}">{verification_url}</a>'
+                )
+                try:
+                    sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+                    response = sg.send(message)
+                    print(response.status_code)
+                except Exception as e:
+                    print(e)
 
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
