@@ -33,6 +33,9 @@ export const authSlice = createSlice({
     setIsLogedIn(state) {
       state.isLogedIn = true;
     },
+    setCloseIsLogedIn(state) {
+      state.isLogedIn = false;
+    },
 
     extraReducers: {
       [HYDRATE]: (state, action) => {
@@ -53,5 +56,6 @@ export const {
   setOpenRegisterViewState,
   setCloseRegisterViewState,
   setIsLogedIn,
+  setCloseIsLogedIn,
 } = authSlice.actions;
 export default authSlice.reducer;

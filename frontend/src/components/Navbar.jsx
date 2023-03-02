@@ -10,6 +10,7 @@ import {
   setOpenLoginViewState,
   setCloseLoginViewState,
   setCloseRegisterViewState,
+  setCloseIsLogedIn
 } from "@/redux/slices/authSlice";
 import { useSelector } from "react-redux";
 import Link from "next/link";
@@ -27,7 +28,7 @@ const Navbar = () => {
     (state) => state.auth
   );
 
-  const [logout] = useLogoutMutation();
+  const [logout, {isSuccess: logoutSuccess}] = useLogoutMutation();
 
   const { data, isSuccess, error } = useLoadUserQuery();
 
@@ -38,6 +39,13 @@ const Navbar = () => {
     e.preventDefault;
     dispatch(setOpenLoginViewState());
   };
+
+  useEffect(() => {
+    if (logoutSuccess) {
+      // dispatch(setCloseIsLogedIn())
+      window.location.reload()
+    }
+  }, [logoutSuccess])
 
   useEffect(() => {
     if (isLogedIn) {
@@ -53,10 +61,15 @@ const Navbar = () => {
     }
   }, [isLogedIn, success, lazyData, data, isSuccess]);
 
+  useEffect(() => {
+    if (isAuthenticated === false) {
+    }
+  }, [isAuthenticated])
+
   const handleLogout = () => {
     logout();
-    dispatch(setLogoutState());
     setUserInfo(null);
+    dispatch(setLogoutState());
   };
 
   return (
