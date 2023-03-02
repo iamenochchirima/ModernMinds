@@ -145,13 +145,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('HOST_EMAIL')
 EMAIL_HOST_PASSWORD = config('HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('HOST_EMAIL')
+SENDGRID_API_KEY = config('SENDGRID_API_KEY')
+
+
 
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY')
 # AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
