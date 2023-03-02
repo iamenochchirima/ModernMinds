@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { useLoadUserQuery } from "@/redux/api/authApi";
-import { useLogoutMutation } from "@/redux/api/authApi";
+import {
+  useLoadUserQuery,
+  useLazyLoadUserQuery,
+  useLogoutMutation,
+} from "@/redux/api/authApi";
 import {
   setLogoutState,
   setAuthState,
   setOpenLoginViewState,
   setCloseLoginViewState,
-  setCloseRegisterViewState
+  setCloseRegisterViewState,
 } from "@/redux/slices/authSlice";
 import { useSelector } from "react-redux";
 import Link from "next/link";
@@ -20,7 +23,7 @@ const Navbar = () => {
 
   const [userInfo, setUserInfo] = useState(null);
 
-  const { isAuthenticated, loginView, registerView } = useSelector(
+  const { isAuthenticated, loginView, registerView, isLogedIn } = useSelector(
     (state) => state.auth
   );
 
@@ -28,18 +31,27 @@ const Navbar = () => {
 
   const { data, isSuccess, error } = useLoadUserQuery();
 
-  console.log(error)
+  const [fetchUser, { data: lazyData, isSuccess: success, error: lazyError }] =
+    useLazyLoadUserQuery();
 
-  const handleLoginClick = () => {
+  const handleLoginClick = (e) => {
+    e.preventDefault;
     dispatch(setOpenLoginViewState());
   };
 
   useEffect(() => {
+    if (isLogedIn) {
+      fetchUser();
+    }
+    if (success) {
+      setUserInfo(lazyData);
+      dispatch(setAuthState());
+    }
     if (isSuccess) {
       setUserInfo(data);
       dispatch(setAuthState());
     }
-  }, [data, isSuccess]);
+  }, [isLogedIn, success, lazyData, data, isSuccess]);
 
   const handleLogout = () => {
     logout();
@@ -54,15 +66,11 @@ const Navbar = () => {
         <ul className="flex space-x-2">
           {isAuthenticated ? (
             <li>
-              <Link onClick={handleLogout} href="">
-                Logout
-              </Link>
+              <button onClick={handleLogout}>Logout</button>
             </li>
           ) : (
             <li>
-              <Link onClick={handleLoginClick} href="">
-                Login/Register
-              </Link>
+              <button onClick={handleLoginClick}>Login/Register</button>
             </li>
           )}
           <li>{userInfo?.user.first_name}</li>
@@ -73,8 +81,11 @@ const Navbar = () => {
           <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="bg-white w-full rounded-lg px-6 py-2 max-w-md space-y-8">
               <div className="flex justify-end">
-                <button className="justify-end" onClick={() => dispatch(setCloseLoginViewState())}>
-                  <GrClose className="text-2xl mt-2"/>
+                <button
+                  className="justify-end"
+                  onClick={() => dispatch(setCloseLoginViewState())}
+                >
+                  <GrClose className="text-2xl mt-2" />
                 </button>
               </div>
               <Login />
@@ -85,10 +96,13 @@ const Navbar = () => {
       {registerView && (
         <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75">
           <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-          <div className="bg-white w-full rounded-lg px-6 py-2 max-w-md space-y-8">
+            <div className="bg-white w-full rounded-lg px-6 py-2 max-w-md space-y-8">
               <div className="flex justify-end">
-                <button className="justify-end" onClick={() => dispatch(setCloseRegisterViewState())}>
-                  <GrClose className="text-2xl mt-2"/>
+                <button
+                  className="justify-end"
+                  onClick={() => dispatch(setCloseRegisterViewState())}
+                >
+                  <GrClose className="text-2xl mt-2" />
                 </button>
               </div>
               <Register />

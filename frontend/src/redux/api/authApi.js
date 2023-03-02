@@ -50,6 +50,7 @@ export const {
   useRegisterMutation,
   useLoginMutation,
   useLoadUserQuery,
+  useLazyLoadUserQuery,
   useLogoutMutation,
   useRefreshQuery,
   useVerifyEmailMutation

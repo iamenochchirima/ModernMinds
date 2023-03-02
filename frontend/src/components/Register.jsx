@@ -63,7 +63,7 @@ const Register = () => {
     }
   };
 
-  if (!isSuccess) {
+  if (isSuccess) {
     return <>
     <div className="">
     <img
@@ -71,7 +71,7 @@ const Register = () => {
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Mordern Minds"
           />
-      <p className="text-center text-teal-800 text-lg">Account have been successfully created, now check your emails we have sent a link to verify your email and activate you account, come back when you are done.</p></div></>;
+      <p className="text-center text-teal-800 text-lg mb-10">Account have been successfully created, now check your emails we have sent a link to verify your email and activate you account, come back when you are done.</p></div></>;
   } else {
     return (
       <>

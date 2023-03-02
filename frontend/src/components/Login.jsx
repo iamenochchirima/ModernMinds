@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import {
   setAuthState,
-  setOpenLoginViewState,
   setCloseLoginViewState,
   setOpenRegisterViewState,
+  setIsLogedIn,
 } from "@/redux/slices/authSlice";
 import { Oval } from "react-loader-spinner";
 import Link from "next/link";
@@ -47,9 +47,10 @@ const Login = () => {
           .unwrap()
           .then((payload) => {
             setFormData(initialFormData);
-            router.push("/");
             dispatch(setAuthState());
-            window.location.reload();
+            dispatch(setIsLogedIn());
+            dispatch(setCloseLoginViewState())
+            router.push("/")
           });
       } catch (err) {
         console.error("Failed to login: ", err);
