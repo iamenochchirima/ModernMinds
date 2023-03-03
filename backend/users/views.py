@@ -1,3 +1,5 @@
+import os
+from decouple import config
 from rest_framework import status, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -66,19 +68,23 @@ class CustomUserCreate(APIView):
                 # Construct verification URL
                 verification_url = f'http://localhost:3000/verify-email/{uidb64}/{token}'
 
-                # Send verification email using SendGrid
+                # Send verification email using SendGrid dynamic template
                 message = Mail(
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     to_emails=user.email,
                     subject='Verify your email address',
-                    html_content=f'Please click on the following link to verify your email address: <a href="{verification_url}">{verification_url}</a>'
                 )
+                message.template_id = config('EMAIL_VERIFICATION_TEMPLATE_ID')
+                message.dynamic_template_data = {
+                    'verification_url': verification_url,
+                }
                 try:
                     sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
                     response = sg.send(message)
                     print(response.status_code)
                 except Exception as e:
                     print(e)
+                    print(e.body)
 
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
@@ -122,6 +128,76 @@ class VerifyEmailView(APIView):
             user.save()
 
             return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
+        except UserAccount.DoesNotExist:
+            return Response({'error': 'User account not found'}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PasswordResetRequestView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, format='json'):
+        email = request.data.get('email', '')
+        try:
+            user = UserAccount.objects.get(email=email)
+        except UserAccount.DoesNotExist:
+            return Response({'error': 'User account not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Generate reset token
+        uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+        token = PasswordResetTokenGenerator().make_token(user)
+
+        # Construct reset URL
+        reset_url = f'http://localhost:3000/reset_password_confirm/{uidb64}/{token}'
+
+        # Send reset email using SendGrid dynamic template
+        message = Mail(
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to_emails=user.email,
+            subject='Reset your password',
+        )
+        message.template_id = config('PASSWORD_RESET_TEMPLATE_ID')
+        message.dynamic_template_data = {
+            'reset_url': reset_url,
+        }
+        try:
+            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+            response = sg.send(message)
+            print(response.status_code)
+        except Exception as e:
+            print(e)
+            print(e.body)
+
+        return Response({'message': 'Password reset email sent'}, status=status.HTTP_200_OK)
+
+
+class PasswordResetConfirmView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, uidb64, token):
+        password = request.data.get('password', '')
+        re_password = request.data.get('re_password', '')
+
+        # Check if password and re_password match
+        if password != re_password:
+            return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Decode uidb64 to get user pk
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        uid_int = int(uid)
+
+        try:
+            # Get user object and verify token
+            user = UserAccount.objects.get(pk=uid_int)
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                raise Exception('Invalid reset token')
+
+            # Reset password
+            user.set_password(password)
+            user.save()
+
+            return Response({'message': 'Password reset successful'}, status=status.HTTP_200_OK)
         except UserAccount.DoesNotExist:
             return Response({'error': 'User account not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
