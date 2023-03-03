@@ -6,6 +6,7 @@ const initialState = {
   loginView: false,
   registerView: false,
   isLogedIn: false,
+  resetPasswordRequest: false,
 };
 
 export const authSlice = createSlice({
@@ -36,6 +37,12 @@ export const authSlice = createSlice({
     setCloseIsLogedIn(state) {
       state.isLogedIn = false;
     },
+    setOpenPasswordReset(state) {
+      state.resetPasswordRequest = true;
+    },
+    setClosePasswordReset(state) {
+      state.resetPasswordRequest = false;
+    },
 
     extraReducers: {
       [HYDRATE]: (state, action) => {
@@ -57,5 +64,7 @@ export const {
   setCloseRegisterViewState,
   setIsLogedIn,
   setCloseIsLogedIn,
+  setOpenPasswordReset,
+  setClosePasswordReset,
 } = authSlice.actions;
 export default authSlice.reducer;

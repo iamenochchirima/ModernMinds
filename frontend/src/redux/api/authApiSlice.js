@@ -5,8 +5,8 @@ const baseQuery = fetchBaseQuery({
   baseUrl: "/api/",
 });
 
-export const apiSlice = createApi({
-  reducerPath: "apiSlice",
+export const authApiSlice = createApi({
+  reducerPath: "authApiSlice",
   baseQuery: baseQuery,
   extractRehydrationInfo: function (action, { reducerPath }) {
     if (action.type === HYDRATE) {

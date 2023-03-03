@@ -1,18 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
-import {apiSlice} from './api/apiSlice';
+import {authApiSlice} from './api/authApiSlice';
+import {generalApiSlice} from './api/generalApiSlice';
 
 import { authSlice } from "./slices/authSlice";
 
 const makeStore = () =>
   configureStore({
     reducer: {
-      [apiSlice.reducerPath]: apiSlice.reducer,
+      [authApiSlice.reducerPath]: authApiSlice.reducer,
+      [generalApiSlice.reducerPath]: generalApiSlice.reducer,
       [authSlice.name]: authSlice.reducer,
     },
     devTools: true,
     middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+      getDefaultMiddleware().concat(
+        authApiSlice.middleware,
+        generalApiSlice.middleware
+      ),
   });
 
 export const wrapper = createWrapper(makeStore);

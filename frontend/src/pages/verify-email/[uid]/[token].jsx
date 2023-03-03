@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useVerifyEmailMutation } from "@/redux/api/authApi";
+import { useVerifyEmailMutation } from "@/redux/api/generalApi";
 import { setOpenLoginViewState } from "@/redux/slices/authSlice";
 import { Oval } from "react-loader-spinner";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 const EmailVeryfication = () => {
   const dispatch = useDispatch()
   const router = useRouter();
-  const { uid, token } = router.query;
+  const { uid, token } = router.query || {};
   const [verifyUser, { isLoading, isSuccess, isError, error }] =
     useVerifyEmailMutation();
 
@@ -22,7 +22,7 @@ const EmailVeryfication = () => {
   }
 
   useEffect(() => {
-    verifyUser({ uid, token });
+    verifyUser({uid, token});
   }, [uid, token, verifyUser]);
 
   if (isLoading) {
