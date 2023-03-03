@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useGetArticlesQuery } from "@/redux/api/articleApi";
+import { useGetArticlesQuery } from "@/redux/api/generalApi";
 import Link from "next/link";
 
 const Articles = () => {
@@ -12,7 +12,7 @@ const Articles = () => {
     error,
   } = useGetArticlesQuery();
   
-  const articles = data?.articles
+  const articles = data
 
   let content;
 
@@ -36,7 +36,6 @@ const Articles = () => {
         <p>Something went wrong</p>
       </div>
     );
-    console.log(error);
   } else if (isSuccess) {
     content = (
       <div className="font-poppins">

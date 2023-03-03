@@ -7,6 +7,7 @@ import {
   setCloseLoginViewState,
   setOpenRegisterViewState,
   setIsLogedIn,
+  setOpenPasswordReset,
 } from "@/redux/slices/authSlice";
 import { Oval } from "react-loader-spinner";
 import Link from "next/link";
@@ -39,6 +40,11 @@ const Login = () => {
     dispatch(setOpenRegisterViewState());
   };
 
+  const handleForgotPassword = () => {
+    dispatch(setCloseLoginViewState());
+    dispatch(setOpenPasswordReset());
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (body) {
@@ -49,8 +55,8 @@ const Login = () => {
             setFormData(initialFormData);
             dispatch(setAuthState());
             dispatch(setIsLogedIn());
-            dispatch(setCloseLoginViewState())
-            router.push("/")
+            dispatch(setCloseLoginViewState());
+            router.push("/");
           });
       } catch (err) {
         console.error("Failed to login: ", err);
@@ -134,12 +140,12 @@ const Login = () => {
           </div>
 
           <div className="text-sm">
-            <a
-              href="#"
+            <button
               className="font-medium text-indigo-600 hover:text-indigo-500"
+              onClick={handleForgotPassword}
             >
               Forgot your password?
-            </a>
+            </button>
           </div>
         </div>
 

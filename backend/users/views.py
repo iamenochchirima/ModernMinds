@@ -52,7 +52,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
 class CustomUserCreate(APIView):
     permission_classes = [AllowAny]
 
@@ -107,7 +106,6 @@ class LoadUserView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
-
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny]
 
@@ -149,7 +147,7 @@ class PasswordResetRequestView(APIView):
         token = PasswordResetTokenGenerator().make_token(user)
 
         # Construct reset URL
-        reset_url = f'http://localhost:3000/reset_password_confirm/{uidb64}/{token}'
+        reset_url = f'http://localhost:3000/reset-password-confirm/{uidb64}/{token}'
 
         # Send reset email using SendGrid dynamic template
         message = Mail(
@@ -175,7 +173,10 @@ class PasswordResetRequestView(APIView):
 class PasswordResetConfirmView(APIView):
     permission_classes = [AllowAny]
 
-    def post(self, request, uidb64, token):
+    def post(self, request):
+
+        uidb64 = request.data.get('uid', '')
+        token = request.data.get('token', '')
         password = request.data.get('password', '')
         re_password = request.data.get('re_password', '')
 

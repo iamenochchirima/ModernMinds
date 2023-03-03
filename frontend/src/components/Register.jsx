@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useRegisterMutation } from "@/redux/api/authApi";
+import { useRegisterMutation } from "@/redux/api/generalApi";
 import { Oval } from "react-loader-spinner";
 import {
   setCloseRegisterViewState,
