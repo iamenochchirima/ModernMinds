@@ -70,68 +70,70 @@ const userprofile = () => {
                   Personal Information
                 </h3>
                 <form onSubmit={handleSubmit}>
-                  <div className="flex flex-col space-y-2">
-                    <label htmlFor="firstName">First Name</label>
-                    <input
-                      className="relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      value={firstName}
-                      onChange={(event) => setFirstName(event.target.value)}
-                    />
+                  <div className="flex flex-col space-y-5">
+                    <div className="flex flex-col space-y-1">
+                      <label className="text-sm font-medium" htmlFor="firstName">FIRST NAME</label>
+                      <input
+                        className="relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        value={firstName}
+                        onChange={(event) => setFirstName(event.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <label className="text-sm font-medium" htmlFor="lastName">LAST NAME</label>
+                      <input
+                        className="relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        value={lastName}
+                        onChange={(event) => setLastName(event.target.value)}
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <label className="text-sm font-medium" htmlFor="country">COUNTRY</label>
+                      <select
+                        className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        id="country"
+                        name="country"
+                        value={country}
+                        onChange={(event) => setCountry(event.target.value)}
+                      >
+                        <option value="">Select a country</option>
+                        {/* Render options from the countries model */}
+                        {userInfo?.user?.country_choices.map((country) => (
+                          <option key={country.id} value={country.id}>
+                            {country.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <label className="text-sm font-medium" htmlFor="gender">GENDER</label>
+                      <select
+                        id="gender"
+                        className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        name="gender"
+                        value={gender}
+                        onChange={(event) => setGender(event.target.value)}
+                      >
+                        <option value="">Select a gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="nonbinary">Non-binary</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div className="text-center"><button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Save
+                      </button></div>
                   </div>
-                  <div className="flex flex-col space-y-2">
-                    <label htmlFor="lastName">Last Name</label>
-                    <input
-                      className="relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      value={lastName}
-                      onChange={(event) => setLastName(event.target.value)}
-                    />
-                  </div>
-                  <div className="flex flex-col space-y-2">
-                    <label htmlFor="country">Country</label>
-                    <select
-                     className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      id="country"
-                      name="country"
-                      value={country}
-                      onChange={(event) => setCountry(event.target.value)}
-                    >
-                      <option value="">Select a country</option>
-                      {/* Render options from the countries model */}
-                      {userInfo?.user?.country_choices.map((country) => (
-                        <option key={country.id} value={country.id}>
-                          {country.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="flex flex-col space-y-2">
-                    <label htmlFor="gender">Gender</label>
-                    <select
-                      id="gender"
-                      className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      name="gender"
-                      value={gender}
-                      onChange={(event) => setGender(event.target.value)}
-                    >
-                      <option value="">Select a gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="nonbinary">Non-binary</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                  <button
-                    type="submit"
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                  >
-                    Save
-                  </button>
                 </form>
                 {!userInfo.user?.is_subscribed && (
                   <div className="flex justify-between border border-gray-300 rounded my-5 p-5 items-center">
