@@ -35,18 +35,37 @@ class CustomAccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+class Country(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        verbose_name_plural = 'Countries'
+
+    def __str__(self):
+        return self.name
+
 class UserAccount(AbstractBaseUser, PermissionsMixin):
+
+    gender_options = (
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('non-binary', 'Non-binary'),
+        ('other', 'Other'),
+    )
 
     email = models.EmailField(_('email address'), unique=True)
     first_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255, blank=True)
+    country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True, blank=True)
+    gender = models.CharField(
+        max_length=10, choices=gender_options, null=True, blank=True)
     is_admin = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     is_email_verified = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_subscribed = models.BooleanField(default=False)
+    is_newsletter_sub = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=False)
     date_joined	= models.DateTimeField(verbose_name='date joined', auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
