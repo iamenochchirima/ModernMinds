@@ -27,11 +27,15 @@ const Navbar = () => {
 
   const [userInfo, setUserInfo] = useState(null);
 
-  const { isAuthenticated, loginView, registerView, isLogedIn, resetPasswordRequest } = useSelector(
-    (state) => state.auth
-  );
+  const {
+    isAuthenticated,
+    loginView,
+    registerView,
+    isLogedIn,
+    resetPasswordRequest,
+  } = useSelector((state) => state.auth);
 
-  const [logout, {isSuccess: logoutSuccess}] = useLogoutMutation();
+  const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
 
   const { data, isSuccess, error } = useLoadUserQuery();
 
@@ -45,9 +49,9 @@ const Navbar = () => {
 
   useEffect(() => {
     if (logoutSuccess) {
-      window.location.reload()
+      window.location.reload();
     }
-  }, [logoutSuccess])
+  }, [logoutSuccess]);
 
   useEffect(() => {
     if (isLogedIn) {
@@ -66,7 +70,7 @@ const Navbar = () => {
   useEffect(() => {
     if (isAuthenticated === false) {
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     logout();
@@ -88,7 +92,22 @@ const Navbar = () => {
               <button onClick={handleLoginClick}>Login/Register</button>
             </li>
           )}
-          <li>{userInfo?.user.first_name}</li>
+          <li className="relative group hover:bg-gray-100">
+            <button className=" group-hover:text-gray-800">
+              {userInfo?.user.first_name}
+            </button>
+            <div className="absolute z-10 left-1/2 transform -translate-x-1/2 top-full w-40 py-2 bg-white rounded-md shadow-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <Link href="/userprofile" className="block px-4 py-2 hover:bg-gray-100">
+                Account settings
+              </Link>
+              <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+                Subscriptions
+              </a>
+              <a href="#" className="block px-4 py-2 hover:bg-gray-100">
+                Sign out
+              </a>
+            </div>
+          </li>
         </ul>
       </div>
       {loginView && (

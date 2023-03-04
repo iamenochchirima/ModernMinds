@@ -1,15 +1,13 @@
-import os
 from decouple import config
 from rest_framework import status, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import UserAccount
+from .serializers import AccountSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.urls import reverse
-from django.core.mail import send_mail
 from django.conf import settings
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -95,16 +93,35 @@ class LoadUserView(APIView):
 
     def get(self, request, format=None):
         try:
-            serializer = CustomUserSerializer(request.user)
+            serializer = AccountSerializer(request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_200_OK
             )
-        except:
+        except UserAccount.DoesNotExist:
             return Response(
-                {'error': 'Something went wrong when trying to load user'},
+                {'error': 'User not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            print(e)
+            return Response(
+                {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        
+class UpdateUser(APIView):
+    permission_classes = (IsAuthenticated)
+
+    def put(self, request, format=None):
+        user = request.user
+        serializer = CustomUserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                json = serializer.data
+                return Response(json, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny]

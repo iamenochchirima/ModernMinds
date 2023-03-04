@@ -29,6 +29,13 @@ export const authApi = authApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    updateUser: builder.mutation({
+      query: (body) => ({
+        url: "/auth/update_user",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -38,4 +45,5 @@ export const {
   useLazyLoadUserQuery,
   useLogoutMutation,
   useRefreshQuery,
+  useUpdateUserMutation,
 } = authApi;
