@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useRegisterMutation } from "@/redux/api/generalApi";
+import { useEffect, useState } from "react";
+import { useRegisterMutation, useGetCountriesQuery } from "@/redux/api/generalApi";
 import { Oval } from "react-loader-spinner";
 import {
   setCloseRegisterViewState,
@@ -9,20 +9,38 @@ import { useDispatch } from "react-redux";
 import Link from "next/link";
 
 const Register = () => {
+  const [countries, setCounties] = useState(null)
   const dispatch = useDispatch();
   const [register, { isLoading, isSuccess }] = useRegisterMutation();
+  const { data, isSuccess: countriesSuccess, isError } = useGetCountriesQuery()
+
+  useEffect(() => {
+    if (countriesSuccess) {
+      setCounties(data)
+    }
+  }, [data, countriesSuccess])
 
   const initialFormData = Object.freeze({
     first_name: "",
     last_name: "",
     email: "",
+    country: "",
+    gender: "",
     password: "",
     re_password: "",
   });
 
   const [formData, setFormData] = useState(initialFormData);
 
-  const { first_name, last_name, email, password, re_password } = formData;
+  const {
+    first_name,
+    last_name,
+    email,
+    country,
+    gender,
+    password,
+    re_password,
+  } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
@@ -31,6 +49,8 @@ const Register = () => {
     first_name: formData.first_name,
     last_name: formData.last_name,
     email: formData.email,
+    country: formData.country,
+    gender: formData.gender,
     password: formData.password,
     re_password: formData.re_password,
   };
@@ -62,14 +82,22 @@ const Register = () => {
   };
 
   if (isSuccess) {
-    return <>
-    <div className="">
-    <img
+    return (
+      <>
+        <div className="">
+          <img
             className="mx-auto h-12 w-auto mb-5"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Mordern Minds"
           />
-      <p className="text-center text-teal-800 text-lg mb-10">Account have been successfully created, now check your emails we have sent a link to verify your email and activate you account, come back when you are done.</p></div></>;
+          <p className="text-center text-teal-800 text-lg mb-10">
+            Account have been successfully created, now check your emails we
+            have sent a link to verify your email and activate you account, come
+            back when you are done.
+          </p>
+        </div>
+      </>
+    );
   } else {
     return (
       <>
@@ -139,6 +167,46 @@ const Register = () => {
                 placeholder="Email address"
               />
             </div>
+            <div className="flex flex-col space-y-1">
+              <label className="text-sm font-medium sr-only" htmlFor="country">
+                Country
+              </label>
+              <select
+                className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                id="country"
+                required
+                name="country"
+                value={country}
+                onChange={onChange}
+              >
+                <option value="">Select a country</option>
+                {/* Render options from the countries model */}
+                {countries?.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-col space-y-3 pb-3">
+              <label className="text-sm font-medium sr-only" htmlFor="gender">
+                Gender
+              </label>
+              <select
+                id="gender"
+                required
+                className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                name="gender"
+                value={gender}
+                onChange={onChange}
+              >
+                <option value="">Select a gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="nonbinary">Non-binary</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
             <div>
               <label htmlFor="password" className="sr-only">
                 Password
@@ -206,7 +274,6 @@ const Register = () => {
                 type="submit"
                 className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3"></span>
                 Register
               </button>
             )}

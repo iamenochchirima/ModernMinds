@@ -2,8 +2,8 @@ from decouple import config
 from rest_framework import status, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import UserAccount
-from .serializers import AccountSerializer
+from .models import UserAccount, Country
+from .serializers import AccountSerializer, CountrySerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
@@ -17,12 +17,14 @@ class CustomUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=30, required=True)
     last_name = serializers.CharField(max_length=30, required=True)
     email = serializers.EmailField(required=True)
+    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), required=True)
+    gender = serializers.CharField(max_length=30, required=True)
     password = serializers.CharField(min_length=8, write_only=True)
     re_password = serializers.CharField(min_length=8, write_only=True)
 
     class Meta:
         model = UserAccount
-        fields = ('email', 'first_name', 'last_name',
+        fields = ('email', 'first_name', 'last_name', 'country', 'gender',
                   'password', 're_password')
         extra_kwargs = {'password': {'write_only': True},
                         're_password': {'write_only': True}}
@@ -49,6 +51,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
 
 class CustomUserCreate(APIView):
     permission_classes = [AllowAny]
@@ -88,6 +91,40 @@ class CustomUserCreate(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class UpdateUserDataSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(max_length=100, required=True)
+    last_name = serializers.CharField(max_length=100, required=True)
+    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), required=True)
+    gender = serializers.CharField(max_length=30, required=True)
+
+    class Meta:
+        model = UserAccount
+        fields = ('first_name', 'last_name', 'country', 'gender')
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get(
+            'first_name', instance.first_name)
+        instance.last_name = validated_data.get(
+            'last_name', instance.last_name)
+        instance.country = validated_data.get('country', instance.country)
+        instance.gender = validated_data.get('gender', instance.gender)
+        instance.save()
+        return instance
+
+class UpdateUser(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, format=None):
+        print(request.data)
+        user = request.user
+        serializer = UpdateUserDataSerializer(
+            user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class LoadUserView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -109,19 +146,7 @@ class LoadUserView(APIView):
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
-        
-class UpdateUser(APIView):
-    permission_classes = (IsAuthenticated)
 
-    def put(self, request, format=None):
-        user = request.user
-        serializer = CustomUserSerializer(user, data=request.data, partial=True)
-        if serializer.is_valid():
-            user = serializer.save()
-            if user:
-                json = serializer.data
-                return Response(json, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class VerifyEmailView(APIView):
     permission_classes = [AllowAny]
@@ -220,3 +245,12 @@ class PasswordResetConfirmView(APIView):
             return Response({'error': 'User account not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
+class CountryListView(APIView):
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, format=None):
+        countries = Country.objects.all()
+        serializer = CountrySerializer(countries, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

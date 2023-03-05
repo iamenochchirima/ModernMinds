@@ -14,12 +14,12 @@ export default async (req, res) => {
         gender,
     } = req.body;
 
-    const body = JSON.stringify({
+    const body = {
         first_name,
         last_name,
         country,
         gender,
-    });
+    };
 
     try {
       const apiRes = await axios.put(`${API_URL}/users/update/`, body, {
