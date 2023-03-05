@@ -10,4 +10,5 @@ urlpatterns = [
     path('password-reset/', views.PasswordResetRequestView.as_view(), name='password_reset'),
     path('password-reset/confirm/', views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('update/', views.UpdateUser.as_view(), name='update-account'),
+    path('countries/', views.CountryListView.as_view(), name='country-list'),
 ]

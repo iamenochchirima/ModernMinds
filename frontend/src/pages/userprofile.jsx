@@ -4,6 +4,7 @@ import { GrClose } from "react-icons/gr";
 import { useLoadUserQuery } from "@/redux/api/authApi";
 import { useUpdateUserMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/router";
+import { Oval } from "react-loader-spinner";
 
 const userprofile = () => {
   const router = useRouter();
@@ -14,9 +15,11 @@ const userprofile = () => {
   const [country, setCountry] = useState("");
   const [gender, setGender] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [showUpdateMessage, setShowUpdateMessage] = useState(false);
 
-  const { data, isSuccess, isLoading, error } = useLoadUserQuery();
-  const [updateUser, { isSuccess: isUpdateSuccess }] = useUpdateUserMutation();
+  const { data, isSuccess, error } = useLoadUserQuery();
+  const [updateUser, { isSuccess: isUpdateSuccess, isLoading }] =
+    useUpdateUserMutation();
 
   useEffect(() => {
     if (isSuccess) {
@@ -31,6 +34,8 @@ const userprofile = () => {
   useEffect(() => {
     if (isUpdateSuccess) {
       setIsEditing(false);
+      setShowUpdateMessage(true);
+      setTimeout(() => setShowUpdateMessage(false), 5000);
     }
   }, [isUpdateSuccess]);
 
@@ -43,11 +48,8 @@ const userprofile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted");
-    // await updateUser(body);
+    await updateUser(body);
   };
-
-  console.log(data);
 
   return (
     <Layout>
@@ -69,10 +71,20 @@ const userprofile = () => {
                 <h3 className="text-center text-xl font-medium">
                   Personal Information
                 </h3>
+                {showUpdateMessage && (
+                  <div className="bg-green-200 text-green-800 py-2 px-4 rounded-md text-center">
+                    Personal information has been updated.
+                  </div>
+                )}
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col space-y-5">
                     <div className="flex flex-col space-y-1">
-                      <label className="text-sm font-medium" htmlFor="firstName">FIRST NAME</label>
+                      <label
+                        className="text-sm font-medium"
+                        htmlFor="firstName"
+                      >
+                        FIRST NAME
+                      </label>
                       <input
                         className="relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         type="text"
@@ -83,7 +95,9 @@ const userprofile = () => {
                       />
                     </div>
                     <div className="flex flex-col space-y-1">
-                      <label className="text-sm font-medium" htmlFor="lastName">LAST NAME</label>
+                      <label className="text-sm font-medium" htmlFor="lastName">
+                        LAST NAME
+                      </label>
                       <input
                         className="relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         type="text"
@@ -94,11 +108,14 @@ const userprofile = () => {
                       />
                     </div>
                     <div className="flex flex-col space-y-1">
-                      <label className="text-sm font-medium" htmlFor="country">COUNTRY</label>
+                      <label className="text-sm font-medium" htmlFor="country">
+                        COUNTRY
+                      </label>
                       <select
                         className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         id="country"
                         name="country"
+                        required
                         value={country}
                         onChange={(event) => setCountry(event.target.value)}
                       >
@@ -112,9 +129,12 @@ const userprofile = () => {
                       </select>
                     </div>
                     <div className="flex flex-col space-y-1">
-                      <label className="text-sm font-medium" htmlFor="gender">GENDER</label>
+                      <label className="text-sm font-medium" htmlFor="gender">
+                        GENDER
+                      </label>
                       <select
                         id="gender"
+                        required
                         className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                         name="gender"
                         value={gender}
@@ -127,14 +147,41 @@ const userprofile = () => {
                         <option value="other">Other</option>
                       </select>
                     </div>
-                    <div className="text-center"><button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Save
-                      </button></div>
+                    <div className="text-center">
+                      {isLoading ? (
+                        <div className="flex justify-center mt-5">
+                          <Oval
+                            height={40}
+                            width={40}
+                            color="blue"
+                            wrapperStyle={{}}
+                            wrapperClass=""
+                            visible={true}
+                            ariaLabel="oval-loading"
+                            secondaryColor="#4fa94d"
+                            strokeWidth={4}
+                            strokeWidthSecondary={4}
+                          />
+                        </div>
+                      ) : (
+                        <button
+                          type="submit"
+                          className="bg-indigo-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Update
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </form>
+                <div className="">
+                  <h3 className="text-center text-xl font-medium">
+                    Email Address
+                  </h3>
+                  <div className="">
+                    <span className="border border-t">{userInfo?.user?.email}</span>
+                  </div>
+                </div>
                 {!userInfo.user?.is_subscribed && (
                   <div className="flex justify-between border border-gray-300 rounded my-5 p-5 items-center">
                     <span>Become a member</span>

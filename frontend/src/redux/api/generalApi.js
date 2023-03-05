@@ -35,6 +35,12 @@ export const generalApi = generalApiSlice.injectEndpoints({
           method: "GET",
         }),
       }),
+    getCountries: builder.query({
+        query: () => ({
+          url: "/users/countries/",
+          method: "GET",
+        }),
+      }),
   }),
 });
 
@@ -43,5 +49,6 @@ useGetArticlesQuery,
 useRegisterMutation,
 useVerifyEmailMutation,
 useResetPasswordMutation,
-useConfirmResetMutation
+useConfirmResetMutation,
+useGetCountriesQuery,
 } = generalApi;
