@@ -17,7 +17,8 @@ class CustomUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=30, required=True)
     last_name = serializers.CharField(max_length=30, required=True)
     email = serializers.EmailField(required=True)
-    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), required=True)
+    country = serializers.PrimaryKeyRelatedField(
+        queryset=Country.objects.all(), required=True)
     gender = serializers.CharField(max_length=30, required=True)
     password = serializers.CharField(min_length=8, write_only=True)
     re_password = serializers.CharField(min_length=8, write_only=True)
@@ -94,7 +95,8 @@ class CustomUserCreate(APIView):
 class UpdateUserDataSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=100, required=True)
     last_name = serializers.CharField(max_length=100, required=True)
-    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), required=True)
+    country = serializers.PrimaryKeyRelatedField(
+        queryset=Country.objects.all(), required=True)
     gender = serializers.CharField(max_length=30, required=True)
 
     class Meta:
@@ -111,6 +113,7 @@ class UpdateUserDataSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class UpdateUser(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -123,29 +126,6 @@ class UpdateUser(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class LoadUserView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, format=None):
-        try:
-            serializer = AccountSerializer(request.user)
-            return Response(
-                serializer.data,
-                status=status.HTTP_200_OK
-            )
-        except UserAccount.DoesNotExist:
-            return Response(
-                {'error': 'User not found'},
-                status=status.HTTP_404_NOT_FOUND
-            )
-        except Exception as e:
-            print(e)
-            return Response(
-                {'error': str(e)},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
 
 
 class VerifyEmailView(APIView):
@@ -172,6 +152,71 @@ class VerifyEmailView(APIView):
             return Response({'error': 'User account not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChangeEmailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, format=None):
+        user = request.user
+        new_email = request.data.get('new_email')
+        if not new_email:
+            return Response({'new_email': ['This field is required.']}, status=status.HTTP_400_BAD_REQUEST)
+        if UserAccount.objects.filter(email=new_email).exists():
+            return Response({'new_email': ['A user with this email already exists.']}, status=status.HTTP_400_BAD_REQUEST)
+        user.email = new_email
+        user.is_email_verified = False
+        user.save()
+
+        # Generate verification token
+        uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+        token = PasswordResetTokenGenerator().make_token(user)
+
+        # Construct verification URL
+        verification_url = f'http://localhost:3000/verify-email/{uidb64}/{token}'
+
+        # Send verification email using SendGrid dynamic template
+        message = Mail(
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to_emails=new_email,
+            subject='Verify your email address',
+        )
+        message.template_id = config('EMAIL_VERIFICATION_TEMPLATE_ID')
+        message.dynamic_template_data = {
+            'verification_url': verification_url,
+        }
+        try:
+            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+            response = sg.send(message)
+            print(response.status_code)
+        except Exception as e:
+            print(e)
+            print(e.body)
+
+        return Response({'detail': 'Email changed successfully. Verification email sent.'}, status=status.HTTP_200_OK)
+
+
+class LoadUserView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, format=None):
+        try:
+            serializer = AccountSerializer(request.user)
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+        except UserAccount.DoesNotExist:
+            return Response(
+                {'error': 'User not found'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            print(e)
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
 
 class PasswordResetRequestView(APIView):
@@ -245,7 +290,8 @@ class PasswordResetConfirmView(APIView):
             return Response({'error': 'User account not found'}, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        
+
+
 class CountryListView(APIView):
 
     permission_classes = [AllowAny]

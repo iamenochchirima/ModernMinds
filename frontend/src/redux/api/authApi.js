@@ -36,6 +36,20 @@ export const authApi = authApiSlice.injectEndpoints({
         body,
       }),
     }),
+    changeEmail: builder.mutation({
+      query: (body) => ({
+        url: "/auth/change_email",
+        method: "POST",
+        body,
+      }),
+    }),
+    signUpNewsletter: builder.mutation({
+      query: (body) => ({
+        url: "/auth/newsletter",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -46,4 +60,6 @@ export const {
   useLogoutMutation,
   useRefreshQuery,
   useUpdateUserMutation,
+  useChangeEmailMutation,
+  useSignUpNewsletterMutation
 } = authApi;
