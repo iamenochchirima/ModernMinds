@@ -7,16 +7,8 @@ export default async (req, res) => {
     const cookies = cookie.parse(req.headers.cookie ?? "");
     const access = cookies.access ?? false;
 
-    const {
-       email
-    } = req.body;
-
-    const body = {
-        new_email: email
-    };
-
     try {
-      const apiRes = await axios.put(`${API_URL}/newsletter/signup/`, body, {
+      const apiRes = await axios.post(`${API_URL}/newsletter/main_newsletter/`, null, {
         headers: {
           Accept: "application/json",
           Authorization: `Bearer ${access}`,
@@ -26,8 +18,7 @@ export default async (req, res) => {
 
       if (apiRes.status === 200) {
         return res.status(200).json({
-          message: "Newsletter signup was successfull",
-          data
+          user: data,
         });
       } else {
         return res.status(apiRes.status).json({
@@ -36,7 +27,7 @@ export default async (req, res) => {
       }
     } catch (err) {
       return res.status(500).json({
-        error: "Something went wrong when signing up for newsletter",
+        error: "Something went wrong when sending emails",
       });
     }
   } else {

@@ -19,36 +19,44 @@ export const generalApi = generalApiSlice.injectEndpoints({
     ConfirmReset: builder.mutation({
       query: (body) => ({
         url: `users/password-reset/confirm/`,
-        method: 'POST',
+        method: "POST",
         body,
-      })
+      }),
     }),
     verifyEmail: builder.mutation({
-      query: ({uid, token}) => ({
+      query: ({ uid, token }) => ({
         url: `/users/verify-email/${uid}/${token}/`,
-        method: 'GET',
-      })
+        method: "GET",
+      }),
     }),
     getArticles: builder.query({
-        query: () => ({
-          url: "/api/articles/",
-          method: "GET",
-        }),
+      query: () => ({
+        url: "/api/articles/",
+        method: "GET",
       }),
+    }),
     getCountries: builder.query({
-        query: () => ({
-          url: "/users/countries/",
-          method: "GET",
-        }),
+      query: () => ({
+        url: "/users/countries/",
+        method: "GET",
       }),
+    }),
+    signUpNewsletter: builder.mutation({
+      query: (body) => ({
+        url: "/newsletter/signup/",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 });
 
 export const {
-useGetArticlesQuery,
-useRegisterMutation,
-useVerifyEmailMutation,
-useResetPasswordMutation,
-useConfirmResetMutation,
-useGetCountriesQuery,
+  useGetArticlesQuery,
+  useRegisterMutation,
+  useVerifyEmailMutation,
+  useResetPasswordMutation,
+  useConfirmResetMutation,
+  useGetCountriesQuery,
+  useSignUpNewsletterMutation,
 } = generalApi;

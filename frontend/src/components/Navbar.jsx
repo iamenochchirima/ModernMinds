@@ -3,8 +3,8 @@ import {
   useLoadUserQuery,
   useLazyLoadUserQuery,
   useLogoutMutation,
-  useSignUpNewsletterMutation
 } from "@/redux/api/authApi";
+import { useSignUpNewsletterMutation } from "@/redux/api/generalApi";
 import {
   setLogoutState,
   setAuthState,
@@ -22,19 +22,22 @@ import Login from "./Login";
 import Register from "./Register";
 import { GrClose } from "react-icons/gr";
 import PasswordReset from "./PasswordReset";
+import { Oval } from "react-loader-spinner";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState(null);
-  const [letteEmail, setLetterEmail] = useState("")
+  const [letteEmail, setLetterEmail] = useState("");
   const [showNewsletterForm, setShowForm] = useState(false);
 
   const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
-  const [signupLetter, {isSuccess: letterSuccess, isLoading: letterLoading}] = useSignUpNewsletterMutation()
+  const [
+    signupLetter,
+    { isSuccess: letterSuccess, isLoading: letterLoading, error: signupError },
+  ] = useSignUpNewsletterMutation();
   const { data, isSuccess, error } = useLoadUserQuery();
   const [fetchUser, { data: lazyData, isSuccess: success, error: lazyError }] =
     useLazyLoadUserQuery();
-
 
   const handleShowForm = () => {
     setShowForm(true);
@@ -45,17 +48,18 @@ const Navbar = () => {
   };
 
   const letterBody = {
-    email: letteEmail
-  }
+    email: letteEmail,
+  };
   const handleSubmitNewsletter = (event) => {
     event.preventDefault();
     if (letterBody) {
       try {
-        signupLetter(letterBody)
+        signupLetter(letterBody);
       } catch (err) {
         console.error("Failed to sign up for newsletter: ", err);
+        console.log(signupError, "There have been an error");
       }
-    } 
+    }
   };
 
   const {
@@ -87,7 +91,7 @@ const Navbar = () => {
     }
     if (isSuccess) {
       setUserInfo(data);
-      setLetterEmail(data.user.email)
+      setLetterEmail(data.user.email);
       dispatch(setAuthState());
     }
   }, [isLogedIn, success, lazyData, data, isSuccess]);
@@ -138,6 +142,14 @@ const Navbar = () => {
               </div>
             </li>
           )}
+          {userInfo?.user?.is_staff && (
+            <li>
+              <Link href="/admin">
+              <button>Admin</button>
+              </Link>
+              
+            </li>
+          )}
           <li>
             <button className="" onClick={handleShowForm}>
               Get the newsletter
@@ -167,13 +179,33 @@ const Navbar = () => {
                         required
                         className="border border-gray-400 py-2 px-4 rounded w-full mb-4"
                       />
-                      <button
-                        type="submit"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      >
-                        Sign Up
-                      </button>
+                      {letterLoading ? (
+                        <Oval
+                          height={30}
+                          width={30}
+                          color="blue"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                          visible={true}
+                          ariaLabel="oval-loading"
+                          secondaryColor="#4fa94d"
+                          strokeWidth={4}
+                          strokeWidthSecondary={4}
+                        />
+                      ) : (
+                        <button
+                          type="submit"
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                          Sign Up
+                        </button>
+                      )}
                     </form>
+                    {letterSuccess && (
+                      <div className="bg-green-200 rounded p-2 text-green-800">
+                        <p>Congratulations! News letter sign up successfull</p>
+                      </div>
+                    )}
                     <p className="text-sm mt-4">
                       Sign up to stay updated with special offers and updates
                       for Morden Minds. By signing up, you agree to our{" "}
