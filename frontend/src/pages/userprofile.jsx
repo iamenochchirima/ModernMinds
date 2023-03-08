@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import { GrClose } from "react-icons/gr";
 import { useLoadUserQuery } from "@/redux/api/authApi";
+import Articles from "@/components/Articles";
 import {
   useUpdateUserMutation,
   useChangeEmailMutation,
@@ -97,6 +98,7 @@ const userprofile = () => {
 
   return (
     <Layout>
+      <Articles/>
       <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-500 bg-opacity-50">
         <div className=" flex  items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white w-full rounded px-6 py-2 max-w-xl space-y-8">
