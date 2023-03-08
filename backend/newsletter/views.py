@@ -51,15 +51,17 @@ class SendNewsletterView(APIView):
         mail = Mail()
         mail.from_email = Email(settings.DEFAULT_FROM_EMAIL)
         mail.template_id = TemplateId(config('MAIN_NEWSLETTER_TEMPLATE_ID'))
-        personalization = Personalization()
-        personalization.dynamic_template_data = {
-            'email': subscribers,
-        }
-        personalization.add_to(Email(','.join(subscribers)))
-        mail.add_personalization(personalization)
 
         try:
             sg = SendGridAPIClient(config('SENDGRID_API_KEY'))
+            for subscriber in subscribers:
+                personalization = Personalization()
+                personalization.add_to(Email(subscriber))
+                personalization.dynamic_template_data = {
+                    'email': subscriber,
+                }
+                mail.add_personalization(personalization)
+
             response = sg.send(mail)
             print(response.status_code)
             print(response.body)
