@@ -6,13 +6,14 @@ import { useVerifyNewsletterEmailMutation } from "@/redux/api/generalApi";
 import { GrClose } from "react-icons/gr";
 import Layout from "@/components/Layout";
 import Articles from "@/components/Articles";
+import Link from "next/link";
 
 const Verify = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { token } = router.query || {};
 
-  const [verifyEmail, { isSuccess, isLoading, isError }] =
+  const [verifyEmail, { isSuccess, isLoading, isError, error }] =
     useVerifyNewsletterEmailMutation();
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const Verify = () => {
                 </h2>
                 <div className="pb-5 text-center">
                   <span className="text-center text-lg">
-                    There was an error verifying your email address.
+                  You weren't added to our list because your token has expired. Please <Link href="/" className="underline">subscribe again</Link> to generate a new token.
                   </span>
                 </div>
               </>

@@ -48,6 +48,8 @@ class SubscribeNewsletterView(APIView):
         signer = TimestampSigner()
         subscriber_id = str(subscriber.pk)
         nonce = get_random_string(length=32)
+        subscriber.nonce = nonce
+        subscriber.save()
         token = f"{subscriber_id}:{nonce}"
         signed_token = signer.sign(token)
         encoded_token = urlsafe_base64_encode(force_bytes(signed_token))
@@ -82,9 +84,11 @@ class VerifyNewsletterEmailView(APIView):
             subscriber = NewsletterSubscriber.objects.get(pk=subscriber_id)
             if subscriber.is_verified:
                 return Response({'detail': 'Your email has already been verified.'}, status=status.HTTP_400_BAD_REQUEST)
-            # if subscriber.nonce != nonce:
-            #     return Response({'detail': 'The verification link is invalid.'}, status=status.HTTP_400_BAD_REQUEST)
+            if subscriber.nonce != nonce:
+                return Response({'detail': 'The verification link is invalid.'}, status=status.HTTP_400_BAD_REQUEST)
+            nonce = get_random_string(length=32)
             subscriber.is_verified = True
+            subscriber.nonce = nonce
             subscriber.save()
             serializer = SubscriberSerializer(subscriber)
             return Response(serializer.data)
