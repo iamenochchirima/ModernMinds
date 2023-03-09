@@ -203,7 +203,7 @@ const Navbar = () => {
                     </form>
                     {letterSuccess && (
                       <div className="bg-green-200 rounded p-2 text-green-800">
-                        <p>Congratulations! News letter sign up successfull</p>
+                        <p>Check your inbox, we sent you a link to verify your email</p>
                       </div>
                     )}
                     <p className="text-sm mt-4">

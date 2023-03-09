@@ -29,6 +29,12 @@ export const generalApi = generalApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    verifyNewsletterEmail: builder.mutation({
+      query: ({ token }) => ({
+        url: `/newsletter/verify-nl-email/${token}/`,
+        method: "GET",
+      }),
+    }),
     getArticles: builder.query({
       query: () => ({
         url: "/api/articles/",
@@ -59,4 +65,5 @@ export const {
   useConfirmResetMutation,
   useGetCountriesQuery,
   useSignUpNewsletterMutation,
+  useVerifyNewsletterEmailMutation,
 } = generalApi;
