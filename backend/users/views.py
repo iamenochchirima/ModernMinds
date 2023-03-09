@@ -90,6 +90,14 @@ class CustomUserCreate(APIView):
                 json = serializer.data
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class DeleteAccount(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, format=None):
+        user = request.user
+        user.delete()
+        return Response({'message': 'Account successfully deleted'}, status=204)
 
 class UpdateUserDataSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=100, required=True)

@@ -50,11 +50,11 @@ const Navbar = () => {
   const letterBody = {
     email: letteEmail,
   };
-  const handleSubmitNewsletter = (event) => {
+  const handleSubmitNewsletter = async (event) => {
     event.preventDefault();
     if (letterBody) {
       try {
-        signupLetter(letterBody);
+        await signupLetter(letterBody);
       } catch (err) {
         console.error("Failed to sign up for newsletter: ", err);
         console.log(signupError, "There have been an error");
@@ -145,9 +145,8 @@ const Navbar = () => {
           {userInfo?.user?.is_staff && (
             <li>
               <Link href="/admin">
-              <button>Admin</button>
+                <button>Admin</button>
               </Link>
-              
             </li>
           )}
           <li>
@@ -203,7 +202,20 @@ const Navbar = () => {
                     </form>
                     {letterSuccess && (
                       <div className="bg-green-200 rounded p-2 text-green-800">
-                        <p>Check your inbox, we sent you a link to verify your email</p>
+                        <p>
+                          Check your inbox, we sent you a link to verify your
+                          email
+                        </p>
+                      </div>
+                    )}
+                    {signupError && (
+                      <div className="bg-green-200 rounded p-2 text-green-800">
+                        {signupError.data.error ===
+                          "Email already subscribed to newsletter" && (
+                          <p>
+                            Your email is already subcribed to the newsletter
+                          </p>
+                        )}
                       </div>
                     )}
                     <p className="text-sm mt-4">

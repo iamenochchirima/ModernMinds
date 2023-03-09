@@ -29,6 +29,12 @@ export const authApi = authApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    deleteAccount: builder.mutation({
+      query: () => ({
+        url: "/auth/delete_account",
+        method: "POST",
+      }),
+    }),
     updateUser: builder.mutation({
       query: (body) => ({
         url: "/auth/update_user",
@@ -44,10 +50,9 @@ export const authApi = authApiSlice.injectEndpoints({
       }),
     }),
     mainNewsletter: builder.mutation({
-      query: (body) => ({
+      query: () => ({
         url: "/auth/sendmainmails/",
         method: "POST",
-        body,
       }),
     }),
   }),
@@ -62,4 +67,5 @@ export const {
   useUpdateUserMutation,
   useChangeEmailMutation,
   useMainNewsletterMutation,
+  useDeleteAccountMutation
 } = authApi;
