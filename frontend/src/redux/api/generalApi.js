@@ -54,6 +54,12 @@ export const generalApi = generalApiSlice.injectEndpoints({
         body,
       }),
     }),
+    newsletterUnsubscribe: builder.mutation({
+      query: ({token}) => ({
+        url: `/newsletter/unsubscribe/${token}/`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -66,4 +72,5 @@ export const {
   useGetCountriesQuery,
   useSignUpNewsletterMutation,
   useVerifyNewsletterEmailMutation,
+  useNewsletterUnsubscribeMutation,
 } = generalApi;

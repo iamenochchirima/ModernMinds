@@ -1,10 +1,9 @@
 from rest_framework.views import APIView
-import json
 import base64
 from rest_framework.response import Response
 from django.utils.crypto import get_random_string
+from django.shortcuts import get_object_or_404
 from rest_framework import status
-from django.utils.encoding import force_bytes
 from django.core.signing import TimestampSigner, BadSignature
 from decouple import config
 from .serializer import SubscriberSerializer
@@ -99,11 +98,8 @@ class SendNewsletterView(APIView):
     permission_classes = [IsAuthenticated, IsAdminUser]
 
     def post(self, request):
-        # Get all subscribers
-        subscribers = NewsletterSubscriber.objects.all().values_list('email', flat=True)
-        subscribers = list(subscribers)
-
-        # Send the newsletter
+        subscribers = NewsletterSubscriber.objects.all()
+      
         mail = Mail()
         mail.from_email = Email(settings.DEFAULT_FROM_EMAIL)
         mail.template_id = TemplateId(config('MAIN_NEWSLETTER_TEMPLATE_ID'))
@@ -111,10 +107,17 @@ class SendNewsletterView(APIView):
         try:
             sg = SendGridAPIClient(config('SENDGRID_API_KEY'))
             for subscriber in subscribers:
+
+                subscriber_id = str(subscriber.pk)
+                token = f"{subscriber_id}"
+                encoded_token = base64.urlsafe_b64encode(token.encode('utf-8')).decode('utf-8')
+                unsubscribe_link = f"{config('FRONTEND_BASE_URL')}/unsubscribe/{encoded_token}/",
+
                 personalization = Personalization()
-                personalization.add_to(Email(subscriber))
+                personalization.add_to(Email(subscriber.email))
                 personalization.dynamic_template_data = {
-                    'email': subscriber,
+                    'email': subscriber.email,
+                    'unsubscribe_link': unsubscribe_link
                 }
                 mail.add_personalization(personalization)
 
@@ -126,3 +129,25 @@ class SendNewsletterView(APIView):
             print(str(e))
 
         return Response({'message': 'Newsletter sent successfully!'}, status=status.HTTP_200_OK)
+
+class UnsubscribeView(APIView):
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, token):
+        try:
+            subscriber_id = base64.urlsafe_b64decode(token.encode('utf-8')).decode('utf-8')
+        except (TypeError, ValueError):
+            return Response({'message': 'Invalid token.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        subscriber = get_object_or_404(NewsletterSubscriber, pk=subscriber_id)
+        email = subscriber.email
+        subscriber.delete()
+
+        UserAccount = get_user_model()
+        users = UserAccount.objects.filter(email=email)
+        for user in users:
+            user.is_newsletter_sub = False
+            user.save()
+
+        return Response({'message': f'{email} unsubscribed successfully.'}, status=status.HTTP_200_OK)
