@@ -6,6 +6,8 @@ import Articles from "@/components/Articles";
 import {
   useUpdateUserMutation,
   useChangeEmailMutation,
+  useDeleteAccountMutation,
+  useLogoutMutation,
 } from "@/redux/api/authApi";
 import { useRouter } from "next/router";
 import { Oval } from "react-loader-spinner";
@@ -13,8 +15,11 @@ import { Oval } from "react-loader-spinner";
 const userprofile = () => {
   const router = useRouter();
 
+  const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
+
   const [emailEdit, setEmailEdit] = useState(false);
   const [oldEmail, setOldEmail] = useState("");
+  const [areYouSure, setAreYouSure] = useState(false);
 
   const [userInfo, setUserInfo] = useState({});
   const [firstName, setFirstName] = useState("");
@@ -25,9 +30,44 @@ const userprofile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showUpdateMessage, setShowUpdateMessage] = useState(false);
 
-  const { data, isSuccess, error } = useLoadUserQuery();
+  const { data, isSuccess, isError, error } = useLoadUserQuery();
   const [updateUser, { isSuccess: isUpdateSuccess, isLoading }] =
     useUpdateUserMutation();
+  const [
+    deleteAcc,
+    {
+      isSuccess: deleteSuccess,
+      isLoading: deleteLoading,
+      isError: isDeleteError,
+      error: deleteError,
+    },
+  ] = useDeleteAccountMutation();
+
+  const handleAccountDelete = async () => {
+    try {
+      await deleteAcc()
+        .unwrap()
+        .then((payload) => {
+          console.log(payload);
+          setAreYouSure(false);
+        });
+    } catch (err) {
+      console.error("Failed to delete account: ", err);
+    }
+    setAreYouSure(false);
+  };
+
+  const oK = () => {
+    logout();
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    if (isError) {
+      router.push("/");
+    }
+  }, [isError])
+
   const [
     emailChange,
     {
@@ -98,7 +138,7 @@ const userprofile = () => {
 
   return (
     <Layout>
-      <Articles/>
+      <Articles />
       <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-500 bg-opacity-50">
         <div className=" flex  items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
           <div className="bg-white w-full rounded px-6 py-2 max-w-xl space-y-8">
@@ -212,7 +252,7 @@ const userprofile = () => {
                       ) : (
                         <button
                           type="submit"
-                          className="bg-indigo-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                         >
                           Update
                         </button>
@@ -295,6 +335,51 @@ const userprofile = () => {
                     <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
                       Subscribe
                     </button>
+                  </div>
+                )}
+                <div className="flex justify-center">
+                  <button
+                    className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4"
+                    onClick={() => setAreYouSure(true)}
+                  >
+                    Delete Account
+                  </button>
+                </div>
+                {areYouSure && (
+                  <div className="flex justify-center flex-col text-center space-y-4">
+                    <h3 className="font-medium text-2xl">Are you sure?</h3>
+                    <p>
+                      By deleting your account, you may be unable to access
+                      certain ModernMinds services. This action is irreversible.
+                    </p>
+                    <button
+                      onClick={handleAccountDelete}
+                      className="bg-black hover:bg-gray-800 text-white py-2 px-4"
+                    >
+                      Yes I'm sure, delete my Account
+                    </button>
+                    <button
+                      onClick={() => setAreYouSure(false)}
+                      className="bg-gray-300 hover:bg-dimBlue py-2 px-4"
+                    >
+                      I'll keep it
+                    </button>
+                  </div>
+                )}
+                {deleteSuccess && (
+                  <div className="flex justify-center flex-col text-center space-y-4">
+                    <p>Your ModernMinds have been successfully deleted!</p>
+                    <button
+                      onClick={oK}
+                      className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4"
+                    >
+                      Okay
+                    </button>
+                  </div>
+                )}
+                {isDeleteError && (
+                  <div className="flex justify-center flex-col text-center space-y-4">
+                    <p>Failed to delete, try again later</p>
                   </div>
                 )}
                 {userInfo.user?.is_email_verified && (

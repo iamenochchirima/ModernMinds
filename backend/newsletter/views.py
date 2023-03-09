@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 import json
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+import base64
 from rest_framework.response import Response
 from django.utils.crypto import get_random_string
 from rest_framework import status
@@ -52,8 +52,8 @@ class SubscribeNewsletterView(APIView):
         subscriber.save()
         token = f"{subscriber_id}:{nonce}"
         signed_token = signer.sign(token)
-        encoded_token = urlsafe_base64_encode(force_bytes(signed_token))
-        verify_url = f"{config('FRONTEND_BASE_URL')}/verify-nl-email/{signed_token}/"
+        encoded_token = base64.urlsafe_b64encode(signed_token.encode('utf-8')).decode('utf-8')
+        verify_url = f"{config('FRONTEND_BASE_URL')}/verify-nl-email/{encoded_token}/"
 
         # Send verification email
         sg = SendGridAPIClient(api_key=config('SENDGRID_API_KEY'))
@@ -78,8 +78,8 @@ class VerifyNewsletterEmailView(APIView):
 
         signer = TimestampSigner()
         try:
-            # signed_token = urlsafe_base64_decode(token)
-            token = signer.unsign(token, max_age=3600)
+            signed_token = base64.urlsafe_b64decode(token.encode('utf-8')).decode('utf-8')
+            token = signer.unsign(signed_token, max_age=3600)
             subscriber_id, nonce = token.split(':')
             subscriber = NewsletterSubscriber.objects.get(pk=subscriber_id)
             if subscriber.is_verified:
