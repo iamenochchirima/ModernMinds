@@ -55,12 +55,13 @@ export const generalApi = generalApiSlice.injectEndpoints({
       }),
     }),
     newsletterUnsubscribe: builder.mutation({
-      query: ({token}) => ({
+      query: (token) => ({
         url: `/newsletter/unsubscribe/${token}/`,
-        method: "POST",
+        method: "GET",
       }),
     }),
   }),
+  overrideExisting: true,
 });
 
 export const {
