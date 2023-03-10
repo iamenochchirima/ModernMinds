@@ -33,7 +33,7 @@ const Navbar = () => {
   const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
   const [
     signupLetter,
-    { isSuccess: letterSuccess, isLoading: letterLoading, error: signupError },
+    {data: signupData, isSuccess: letterSuccess, isLoading: letterLoading, error: signupError },
   ] = useSignUpNewsletterMutation();
   const { data, isSuccess, error } = useLoadUserQuery();
   const [fetchUser, { data: lazyData, isSuccess: success, error: lazyError }] =
@@ -47,6 +47,13 @@ const Navbar = () => {
     setShowForm(false);
   };
 
+  // success: 'Email subscribed to newsletter'}
+  useEffect(() => {
+    if (signupData) {
+      console.log(signupData.success, "Data here")
+    }
+  }, [signupData])
+
   const letterBody = {
     email: letteEmail,
   };
@@ -54,7 +61,11 @@ const Navbar = () => {
     event.preventDefault();
     if (letterBody) {
       try {
-        await signupLetter(letterBody);
+        await signupLetter(letterBody)
+        .unwrap()
+        .then((payload) => {
+          console.log("Success ",payload)
+        })
       } catch (err) {
         console.error("Failed to sign up for newsletter: ", err);
         console.log(signupError, "There have been an error");
@@ -200,7 +211,14 @@ const Navbar = () => {
                         </button>
                       )}
                     </form>
-                    {letterSuccess && (
+                    {letterSuccess && signupData.success === "Subscribed, email already verified" && (
+                      <div className="bg-green-200 rounded p-2 text-green-800">
+                        <p>
+                          You have been successfully subscribed to the MordenMinds newsletter. Thank you for subscribing!
+                        </p>
+                      </div>
+                    )}
+                    {letterSuccess && signupData.success === "Subscribed, verification email sent" && (
                       <div className="bg-green-200 rounded p-2 text-green-800">
                         <p>
                           Check your inbox, we sent you a link to verify your
