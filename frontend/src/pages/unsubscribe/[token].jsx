@@ -13,7 +13,6 @@ const Unsubscibe = () => {
 
   const handleUnsubscribe = async () => {
     if (token) {
-      console.log(token)
       try {
         await unsubscribe(token)
           .unwrap()
