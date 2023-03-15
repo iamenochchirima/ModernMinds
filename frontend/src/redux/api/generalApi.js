@@ -41,6 +41,13 @@ export const generalApi = generalApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getFullArticle: builder.query({
+      query: (slug) => (
+        {
+        url: `/api/articles/${slug}/`,
+        method: "GET",
+      }),
+    }),
     getCountries: builder.query({
       query: () => ({
         url: "/users/countries/",
@@ -74,4 +81,5 @@ export const {
   useSignUpNewsletterMutation,
   useVerifyNewsletterEmailMutation,
   useNewsletterUnsubscribeMutation,
+  useLazyGetFullArticleQuery
 } = generalApi;

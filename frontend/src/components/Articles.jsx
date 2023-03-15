@@ -18,7 +18,7 @@ const Articles = () => {
 
   if (isLoading) {
     content = (
-      <div>
+      <div className="font-kinfolk">
         <h1>Loading...</h1>
       </div>
     );
@@ -32,17 +32,17 @@ const Articles = () => {
     );
   } else if (isError) {
     content = (
-      <div>
+      <div className="font-cormorant">
         <p>Something went wrong</p>
       </div>
     );
   } else if (isSuccess) {
     content = (
-      <div className="font-poppins">
+      <div className="font-cormorant">
         {articles?.map((article) => {
           return (
             <div key={article.id} className="">
-              <Link href={`/Articles/${encodeURIComponent(article.id)}/`}>
+              <Link href={`/Articles/${encodeURIComponent(article.slug)}/`}>
                 <h1>{article.title}</h1>
                 <p>{article.author}</p>
                 <br />

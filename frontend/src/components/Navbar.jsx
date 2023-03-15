@@ -46,8 +46,7 @@ const Navbar = () => {
   const handleCloseForm = () => {
     setShowForm(false);
   };
-
-  // success: 'Email subscribed to newsletter'}
+  
   useEffect(() => {
     if (signupData) {
       console.log(signupData.success, "Data here")
@@ -120,7 +119,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex items-center space-x-2 h-10 bg-slate-200">
+      <div className={`font-kinfolk flex items-center space-x-2 h-10 bg-slate-200 `}>
         <h1>Welcome to MordenMinds</h1>
         <ul className="flex space-x-2">
           {isAuthenticated ? (

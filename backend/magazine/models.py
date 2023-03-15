@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from ckeditor_uploader.fields import RichTextUploadingField 
+from django.utils.text import slugify
+from django_extensions.db.fields import AutoSlugField
 
 User = get_user_model()
 
@@ -34,11 +36,12 @@ class Article(models.Model):
 
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
-    content = RichTextUploadingField(blank=True, null=True)
     cover_image = models.ImageField(
         upload_to=get_cover_image_filepath, null=True, blank=True, default=default_cover_image)
+    content = RichTextUploadingField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    slug = models.SlugField(max_length=250, unique_for_date='created_at')
+    slug = AutoSlugField(populate_from='title', unique=True)
+    issue = models.IntegerField(blank=True)
     status = models.CharField(
         max_length=10, choices=options, default='published')
     editor = models.ForeignKey(
@@ -53,3 +56,8 @@ class Article(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
