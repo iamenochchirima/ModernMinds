@@ -11,6 +11,7 @@ import {
 } from "@/redux/slices/authSlice";
 import { Oval } from "react-loader-spinner";
 import Link from "next/link";
+import Image from "next/image";
 
 const Login = () => {
   const router = useRouter();
@@ -67,11 +68,13 @@ const Login = () => {
   return (
     <>
       <div>
-        <img
-          className="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Mordern Minds"
-        />
+        <Image
+            className="mx-auto w-auto"
+            src={"/logo.png"}
+            alt="Mordern minds logo"
+            height="40"
+            width="40"
+          ></Image>
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
           Sign in to your account
         </h2>

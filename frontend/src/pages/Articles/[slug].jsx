@@ -17,7 +17,7 @@ const Article = () => {
 
   return (
     <Layout>
-      <div className="font-cormorant">
+      <div className="font-graphik">
         <h1>Article {slug}</h1>
         <p>This is the content of article {slug}.</p>
         <div

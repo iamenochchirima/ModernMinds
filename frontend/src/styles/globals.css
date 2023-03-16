@@ -15,6 +15,24 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'tiempos';
+  src: url('../fonts/TiemposHeadline-Light.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'graphik';
+  src: url('../fonts/Graphik-Regular-Trial.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'product';
+  src: url('../fonts/Product-Sans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 * {
   box-sizing: border-box;

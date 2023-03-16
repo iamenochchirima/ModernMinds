@@ -18,9 +18,11 @@ module.exports = {
         dimBlue: "rgba(9, 151, 124, 0.1)",
       },
       fontFamily: {
-        kinfolk: ['Kinfolk', 'Helvetica', 'Arial', 'sans-serif'],
-        cormorant: ['Cormorant', 'Helvetica', 'Arial', 'sans-serif'],
-        // cormorant: ['var(--font-cormorant)'],
+        kinfolk: ['Kinfolk',  'sans-serif'],
+        cormorant: ['Cormorant',  'sans-serif'],
+        tiempos: ['Tiempos', 'sans-serif'],
+        graphik: ['Graphik', 'sans-serif'],
+        product: ['Product', 'sans-serif'],
       },
     },
     screens: {

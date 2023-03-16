@@ -11,6 +11,7 @@ import {
 } from "@/redux/api/authApi";
 import { useRouter } from "next/router";
 import { Oval } from "react-loader-spinner";
+import Link from "next/link";
 
 const userprofile = () => {
   const router = useRouter();
@@ -252,7 +253,7 @@ const userprofile = () => {
                       ) : (
                         <button
                           type="submit"
-                          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+                          className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded"
                         >
                           Update
                         </button>
@@ -302,14 +303,14 @@ const userprofile = () => {
                               strokeWidthSecondary={4}
                             />
                           ) : (
-                            <button className="w-1/4" type="submit">
+                            <button className="w-1/4 hover:bg-gray-300 rounded-md" type="submit">
                               Save new email
                             </button>
                           )}
                         </>
                       ) : (
                         <button
-                          className="w-1/4"
+                          className="w-1/4 hover:bg-gray-300 rounded-md"
                           onClick={(e) => {
                             e.preventDefault();
                             setEmailEdit(true);
@@ -332,9 +333,11 @@ const userprofile = () => {
                 {!userInfo.user?.is_subscribed && (
                   <div className="flex justify-between border border-gray-300 rounded my-5 p-5 items-center">
                     <span>Become a member</span>
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    <Link href='/subscribe'>
+                    <button className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded">
                       Subscribe
                     </button>
+                    </Link>
                   </div>
                 )}
                 <div className="flex justify-center">

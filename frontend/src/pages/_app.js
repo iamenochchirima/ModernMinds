@@ -16,7 +16,7 @@ export default function App({ Component, ...rest }) {
 
   return (
     <Provider store={store}>
-      <div className={`${cormorant.variable}` }>
+      <div className="font-graphik">
       <Component {...pageProps} />
     </div>
     </Provider>
