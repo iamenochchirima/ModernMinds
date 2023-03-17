@@ -32,7 +32,7 @@ const Articles = () => {
                 style={{
                   backgroundImage: `url(${special_atricle?.cover_image})`,
                 }}
-                className="col-span-3 relative bg-cover bg-center text-white"
+                className="col-span-4 sm:col-span-3 relative bg-cover bg-center text-white"
               >
                 <div>
                   <Link
@@ -52,7 +52,9 @@ const Articles = () => {
                         {categories?.map((category) => (
                           <>
                             {category.id === special_atricle.id && (
-                              <span className="pt-3 text-dimWhite text-xs hover:underline tracking-widest">{category.name}</span>
+                              <span className="pt-3 text-dimWhite text-xs hover:underline tracking-widest">
+                                {category.name}
+                              </span>
                             )}
                           </>
                         ))}
@@ -65,23 +67,39 @@ const Articles = () => {
           </>
         );
       })}
-      <div className="col-span-1 bg-yellow-400">
+      <div className="col-span-4 sm:col-span-1 ">
+        <div className="pt-5 pb-2">
+          <span className="font-bold">EDITOR'S NOTE</span>
+        </div>
         {isSuccess && (
-          <div className="">
-            {articles?.map((article) => {
+          <div className="py-1">
+            {specialData?.map((article) => {
               console.log(article);
               return (
                 <div key={article.id} className="">
                   <Link href={`/Articles/${encodeURIComponent(article.slug)}/`}>
-                    {article?.cover_image && (
-                      <Image
-                        src={article?.cover_image}
-                        height={"500"}
-                        width={"500"}
-                      />
-                    )}
-                    <p>{article.author}</p>
-                    <h1>{article.title}</h1>
+                    <div className="flex items-center space-y-3">
+                      <div className="w-2/3">
+                        <h1>{article.title}</h1>
+                      </div>
+                      <div className="w-1/3 bg-yellow-400 relative" style={{ height: "100px", width: "100px" }}>
+                        {article?.cover_image && (
+                          <Image
+                          
+                            src={article?.cover_image}
+                            // height={"500"}
+                            // width={"500"}
+                            style={{
+                              objectFit: "cover",
+                              objectPosition: "center",
+                            }}
+                            fill
+              
+                            alt="Article cover image"
+                          />
+                        )}
+                      </div>
+                    </div>
                   </Link>
                 </div>
               );

@@ -12,6 +12,6 @@ class ArticleModelAdmin(admin.ModelAdmin):
 class SpecialArticleModelAdmin(admin.ModelAdmin):
     form = SpecialArticleModelForm
     model = Article
-    list_display = ('id', 'todays_pick', 'top_story', 'issue', 'created_at', 'status')
+    list_display = ('id','editor_note', 'todays_pick', 'top_story', 'issue', 'created_at', 'status')
 
 admin.site.register(Category)

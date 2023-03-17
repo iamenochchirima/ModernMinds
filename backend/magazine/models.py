@@ -77,6 +77,7 @@ class SpecialArticle(models.Model):
         upload_to=get_cover_image_special_filepath, blank=True)
     content = RichTextUploadingField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    editor_note = models.BooleanField(default=False)
     todays_pick = models.BooleanField(default=False)
     top_story = models.BooleanField(default=False)
     slug = AutoSlugField(populate_from='title', unique=True)
