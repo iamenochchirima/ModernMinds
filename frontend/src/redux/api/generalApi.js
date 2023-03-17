@@ -35,6 +35,19 @@ export const generalApi = generalApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getSpecialArticles: builder.query({
+      query: () => ({
+        url: "/api/special-articles/",
+        method: "GET",
+      }),
+    }),
+    getFullSpecialArticle: builder.query({
+      query: (special_slug) => (
+        {
+        url: `/api/special-articles/${special_slug}/`,
+        method: "GET",
+      }),
+    }),
     getArticles: builder.query({
       query: () => ({
         url: "/api/articles/",
@@ -51,6 +64,12 @@ export const generalApi = generalApiSlice.injectEndpoints({
     getCountries: builder.query({
       query: () => ({
         url: "/users/countries/",
+        method: "GET",
+      }),
+    }),
+    getCategories: builder.query({
+      query: () => ({
+        url: "/api/categories/",
         method: "GET",
       }),
     }),
@@ -81,5 +100,8 @@ export const {
   useSignUpNewsletterMutation,
   useVerifyNewsletterEmailMutation,
   useNewsletterUnsubscribeMutation,
-  useLazyGetFullArticleQuery
+  useLazyGetFullArticleQuery,
+  useGetSpecialArticlesQuery,
+  useLazyGetFullSpecialArticleQuery,
+  useGetCategoriesQuery,
 } = generalApi;

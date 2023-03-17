@@ -207,7 +207,6 @@ const userprofile = () => {
                         onChange={(event) => setCountry(event.target.value)}
                       >
                         <option value="">Select a country</option>
-                        {/* Render options from the countries model */}
                         {userInfo?.user?.country_choices.map((country) => (
                           <option key={country.id} value={country.id}>
                             {country.name}

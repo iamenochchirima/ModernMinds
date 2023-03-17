@@ -193,7 +193,7 @@ const Navbar = () => {
             </li>
           )}
           <Link href="/subscribe">
-            <button className="text-white bg-red-600 px-2 py-1 rounded-md">
+            <button className="text-white bg-yellow-700 px-2 py-1 rounded-md">
               Subscribe
             </button>
           </Link>

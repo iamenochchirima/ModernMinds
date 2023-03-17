@@ -19,7 +19,7 @@ const Layout = ({ title, content, children }) => {
 };
 
 Layout.defaultProps = {
-  title: "Modern Minds",
+  title: "Modern Minds Magazine",
   content: "the modern minds",
 };
 
