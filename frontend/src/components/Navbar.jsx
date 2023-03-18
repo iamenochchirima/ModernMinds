@@ -24,14 +24,18 @@ import { GrClose } from "react-icons/gr";
 import PasswordReset from "./PasswordReset";
 import { Oval } from "react-loader-spinner";
 import Image from "next/image";
-import { AiOutlineDown, AiOutlineSearch } from "react-icons/ai";
-import {GrMenu} from 'react-icons/gr'
+import { AiOutlineClose, AiOutlineDown, AiOutlineSearch } from "react-icons/ai";
+import { GrMenu } from "react-icons/gr";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState(null);
   const [letteEmail, setLetterEmail] = useState("");
   const [showNewsletterForm, setShowForm] = useState(false);
+
+  const [showMenu, setShowMenu] = useState(false)
+
+  const [isSticky, setIsSticky] = useState(false);
 
   const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
   const [
@@ -46,6 +50,18 @@ const Navbar = () => {
   const { data, isSuccess, error } = useLoadUserQuery();
   const [fetchUser, { data: lazyData, isSuccess: success, error: lazyError }] =
     useLazyLoadUserQuery();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.pageYOffset > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleShowForm = () => {
     setShowForm(true);
@@ -301,9 +317,19 @@ const Navbar = () => {
             )}
           </li>
           <li>
-            <button className="flex text-3xl text-black">
-              <GrMenu/>
+            <button onClick={() => setShowMenu(true)} className="flex text-3xl text-black">
+              <GrMenu />
             </button>
+            <div className={`fixed ${showMenu ? `block` : `hidden`} left-0 right-0 top-0 min-h-screen bg-white text-center z-10 `}>
+              <button onClick={() => setShowMenu(false)} className="text-4xl"> 
+              <AiOutlineClose />
+              </button>
+              <ul className="">
+                <li className="hover:scale-110 duration-300">First</li>
+                <li>second</li>
+                <li>third</li>
+              </ul>
+            </div>
           </li>
         </ul>
       </div>

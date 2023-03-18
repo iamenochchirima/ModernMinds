@@ -5,7 +5,7 @@ import { Oval } from "react-loader-spinner";
 import { useVerifyNewsletterEmailMutation } from "@/redux/api/generalApi";
 import { GrClose } from "react-icons/gr";
 import Layout from "@/components/Layout";
-import Articles from "@/components/Articles";
+import Articles from "@/components/SpecialArticles";
 import Link from "next/link";
 
 const Verify = () => {

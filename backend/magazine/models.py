@@ -40,7 +40,8 @@ class Article(models.Model):
     content = RichTextUploadingField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     slug = AutoSlugField(populate_from='title', unique=True)
-    issue = models.IntegerField(blank=True)
+    archive = models.BooleanField(default=False)
+    issue = models.CharField(null=True, blank=True, max_length=100)
     status = models.CharField(
         max_length=10, choices=options, default='published')
     editor = models.ForeignKey(
@@ -80,8 +81,9 @@ class SpecialArticle(models.Model):
     editor_note = models.BooleanField(default=False)
     todays_pick = models.BooleanField(default=False)
     top_story = models.BooleanField(default=False)
+    archive = models.BooleanField(default=False)
     slug = AutoSlugField(populate_from='title', unique=True)
-    issue = models.IntegerField(blank=True)
+    issue = models.CharField(null=True, blank=True, max_length=100)
     status = models.CharField(
         max_length=10, choices=options, default='published')
     editor = models.ForeignKey(

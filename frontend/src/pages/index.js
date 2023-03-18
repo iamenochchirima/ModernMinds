@@ -1,10 +1,12 @@
+import LatestArticles from "@/components/LatestArticles";
 import Layout from "@/components/Layout";
-import Articles from "../components/Articles";
+import SpecialArticles from "../components/SpecialArticles";
 
 export default function Home() {
   return (
    <Layout >
-    <Articles/>
+    <SpecialArticles/>
+    <LatestArticles/>
    </Layout>
   );
 }
