@@ -6,7 +6,7 @@ import Footer from "./Footer";
 const Layout = ({ title, content, children }) => {
   return (
     <div className="flex justify-center items-start">
-    <div className=" xl:max-w-[1280px] w-full ">
+    <div className=" xl:max-w-[1500px] w-full ">
       <Head>
         <title>{title}</title>
       </Head>

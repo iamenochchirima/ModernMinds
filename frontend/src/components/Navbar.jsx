@@ -11,10 +11,9 @@ import {
   setOpenLoginViewState,
   setCloseLoginViewState,
   setCloseRegisterViewState,
-  setCloseIsLogedIn,
-  setOpenPasswordReset,
   setClosePasswordReset,
 } from "@/redux/slices/authSlice";
+import { setExploreOpen, } from "@/redux/slices/appSlice";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
@@ -23,9 +22,10 @@ import Register from "./Register";
 import { GrClose } from "react-icons/gr";
 import PasswordReset from "./PasswordReset";
 import { Oval } from "react-loader-spinner";
-import Image from "next/image";
-import { AiOutlineClose, AiOutlineDown, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineDown, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { GrMenu } from "react-icons/gr";
+import { BsPerson } from "react-icons/bs";
+import ExploreModal from "./ExploreModal";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -33,11 +33,12 @@ const Navbar = () => {
   const [letteEmail, setLetterEmail] = useState("");
   const [showNewsletterForm, setShowForm] = useState(false);
 
-  const [showMenu, setShowMenu] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const [isSticky, setIsSticky] = useState(false);
 
   const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
+
   const [
     signupLetter,
     {
@@ -104,6 +105,13 @@ const Navbar = () => {
     resetPasswordRequest,
   } = useSelector((state) => state.auth);
 
+  const { isExploreOpen } = useSelector((state) => state.app);
+
+  const handleExploreOpen = () => {
+    setMenuOpen(false)
+    dispatch(setExploreOpen())
+  }
+
   const handleLoginClick = (e) => {
     e.preventDefault;
     dispatch(setOpenLoginViewState());
@@ -142,26 +150,30 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <div className="flex justify-center items-start ">
       <div
-        className={`${isSticky ? `py-1 bg-opacity-90 duration-500 ` : `py-4`} fixed w-full z-10 flex items-center justify-between bg-white px-10 `}
+        className={`${
+          isSticky ? `py-0 duration-500 shadow-md ` : `py-4 bg-opacity-0`
+        } fixed w-full z-10 flex items-center justify-between bg-white px-3 ss:px-10 max-w-[1500px] `}
       >
         <Link href="/">
           <div className="text-black flex items-center gap-2 font-product">
-            <Image
-              className=""
+            <img
+              className={` ${
+                isSticky
+                  ? `w-[40px] h-[40px] duration-500`
+                  : `w-[50px] h-[50px]`
+              } w-[40px] sm:w-[50] h-[40px] sm:h-[50] `}
               src={"/logo.png"}
               alt="Mordern minds logo"
-              height="50"
-              width="50"
-            ></Image>
-            <div className="flex flex-col">
-              <h1 className="font-extrabold text-xl">MODERNMINDS</h1>
-              <h1 className="text-lg">MAGAZINE</h1>
+            />
+            <div className=" flex-col hidden xs:flex">
+              <h1 className={`font-extrabold text-lg `}>MODERNMINDS</h1>
+              <h1 className={` text-base tracking-widest`}>MAGAZINE</h1>
             </div>
           </div>
         </Link>
-        <ul className="flex space-x-2 font-product items-center">
+        <ul className="flex  space-x-1 ss:space-x-2 font-product items-center">
           {!isAuthenticated && (
             <li>
               <button onClick={handleLoginClick}>Signin</button>
@@ -170,6 +182,7 @@ const Navbar = () => {
           {isAuthenticated && (
             <li className="relative group pr-2">
               <button className="flex gap-1 items-center group-hover:text-gray-800">
+                <BsPerson />
                 {userInfo?.user.first_name}
                 <AiOutlineDown className="text-sm" />
               </button>
@@ -196,32 +209,34 @@ const Navbar = () => {
               </div>
             </li>
           )}
-          <li>
-            <button className="text-xl p-1 border py-1 pb-2 px-2 rounded-md">
-              <AiOutlineSearch />
-            </button>
-          </li>
           {userInfo?.user?.is_staff && (
-            <li>
+            <li className="hidden sm:block">
               <Link href="/admin">
                 <button>Admin</button>
               </Link>
             </li>
           )}
-          <Link href="/subscribe">
-            <button className="text-white bg-yellow-700 px-2 py-1 rounded-md">
-              Subscribe
+          <li>
+            <button className="text-xl border py-1 pb-2 px-1 rounded-md">
+              <AiOutlineSearch />
             </button>
-          </Link>
+          </li>
+          <li>
+            <Link href="/subscribe">
+              <button className="text-white bg-yellow-700 px-2 py-1 rounded-md hidden sm:block">
+                Subscribe
+              </button>
+            </Link>
+          </li>
           <li>
             <button
-              className="text-white bg-black px-2 py-1 rounded-md"
+              className="text-white bg-black px-2 py-1 rounded-md hidden sm:block"
               onClick={handleShowForm}
             >
               Get The Newsletter
             </button>
             {showNewsletterForm && (
-              <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75">
+              <div className="fixed z-10 inset-0 overflow-y-auto bg-black bg-opacity-75">
                 <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                   <div className="bg-white w-full rounded-lg px-6 py-2 max-w-md space-y-8">
                     <div className="flex justify-end bg">
@@ -317,19 +332,59 @@ const Navbar = () => {
             )}
           </li>
           <li>
-            <button onClick={() => setShowMenu(true)} className="flex text-3xl text-black">
+            <button
+              onClick={() => dispatch(setExploreOpen())}
+              className="text-white hover:bg-gray-800 bg-black px-2 py-1 rounded-md hidden sm:block"
+            >
+              Explore
+            </button>
+            {isExploreOpen && <ExploreModal />}
+          </li>
+          <li className=" sm:hidden">
+            <button onClick={() => setMenuOpen(true)} className="text-2xl">
               <GrMenu />
             </button>
-            <div className={`fixed ${showMenu ? `block` : `hidden`} left-0 right-0 top-0 min-h-screen bg-white text-center z-10 `}>
-              <button onClick={() => setShowMenu(false)} className="text-4xl"> 
-              <AiOutlineClose />
-              </button>
-              <ul className="">
-                <li className="hover:scale-110 duration-300">First</li>
-                <li>second</li>
-                <li>third</li>
-              </ul>
-            </div>
+            {menuOpen && (
+              <div className="fixed left-0 right-0 top-0 min-h-screen overflow-y-scroll bg-white z-10 ">
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  className="text-4xl pt-10 pl-20"
+                >
+                  <AiOutlineClose />
+                </button>
+
+                <div className="menu-container h-screen ">
+                  <ul className="text-center">
+                    {userInfo?.user?.is_staff && (
+                      <li className="">
+                        <Link href="/admin">
+                          <button>Admin</button>
+                        </Link>
+                      </li>
+                    )}
+                    <li>
+                      <Link href="/subscribe">
+                        <button className="">Subscribe</button>
+                      </Link>
+                    </li>
+                    <li>
+                      <button className="" onClick={handleShowForm}>
+                        Get The Newsletter
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleExploreOpen()}
+                        className=""
+                      >
+                        Explore
+                      </button>
+                      {isExploreOpen && <ExploreModal />}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            )}
           </li>
         </ul>
       </div>
@@ -384,7 +439,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

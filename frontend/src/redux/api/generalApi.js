@@ -61,6 +61,13 @@ export const generalApi = generalApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getCategoryArticles: builder.query({
+      query: (slug) => (
+        {
+        url: `/api/category/${slug}/`,
+        method: "GET",
+      }),
+    }),
     getCountries: builder.query({
       query: () => ({
         url: "/users/countries/",
@@ -104,4 +111,5 @@ export const {
   useGetSpecialArticlesQuery,
   useLazyGetFullSpecialArticleQuery,
   useGetCategoriesQuery,
+  useLazyGetCategoryArticlesQuery
 } = generalApi;

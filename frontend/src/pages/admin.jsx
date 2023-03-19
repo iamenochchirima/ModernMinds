@@ -47,7 +47,7 @@ const admin = () => {
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Modern Minds Admin View
             </h2>
-            <Link href={`${adminUrl}`}>
+            <Link href={`${adminUrl}`} target="_blank">
               <div className="flex flex-col">
                 <button className="hover:underline bg-gray-400 p-3 text-xl">
                   Go to adminstrations Interface

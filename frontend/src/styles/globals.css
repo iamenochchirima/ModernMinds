@@ -56,33 +56,6 @@ a {
   color: inherit;
 }
 
-.pick-div {
-  width: 33.3333%;
-  background-color: yellow;
-  position: relative;
-}
-
-@media screen and (max-width: 640px) {
-  .pick-div {
-    height: 150px;
-    width: 150px;
-  }
-}
-
-@media screen and (min-width: 640px) and (max-width: 1024px) {
-  .pick-div {
-    height: 100px;
-    width: 100px;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .pick-div {
-    height: 90px;
-    width: 90px;
-  }
-}
-
 .navbar {
   position: sticky;
   top: 0;

@@ -1,7 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import Article, SpecialArticle, Category
 from .serializer import ArticleSerializer, SpecialArticleSerializer, CategorySerializer
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 class ArticleView(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -33,3 +35,19 @@ class CategoryView(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+
+class ArticleListByCategoryView(APIView):
+    permission_classes = [AllowAny]
+    serializer_class = ArticleSerializer
+
+    def get(self, request, slug):
+        try:
+            category = Category.objects.get(slug=slug)
+        except Category.DoesNotExist:
+            return Response({'error': f'Category "{slug}" does not exist'}, status=404)
+
+        articles = Article.objects.filter(category=category)
+
+        serializer = self.serializer_class(articles, many=True)
+
+        return Response(serializer.data)

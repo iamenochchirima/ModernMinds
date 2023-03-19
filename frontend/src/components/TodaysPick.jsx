@@ -29,41 +29,46 @@ const TodaysPick = () => {
               <>
                 {article?.todays_pick && !article.archive && (
                   <div key={article.id} className="">
-                    <Link
-                      href={`/specialArticles/${encodeURIComponent(
-                        article.slug
-                      )}/`}
-                    >
-                      <div className="flex items-center space-y-3">
-                        <div className="w-2/3">
-                          {categories?.map((category) => (
-                            <>
-                              {category.id === article.category && (
-                                <span key={category.id} className="  text-xs border-b border-yellow-400 hover:border-black tracking-widest">
+                    <div className="flex items-center space-y-3">
+                      <div className="w-2/3">
+                        {categories?.map((category) => (
+                          <>
+                            {category.id === article.category && (
+                              <Link
+                                href={`/category/${encodeURIComponent(
+                                  category.slug
+                                )}/`}
+                              >
+                                <span
+                                  key={category.id}
+                                  className="  text-xs border-b border-yellow-400 hover:border-black tracking-widest"
+                                >
                                   {category.name}
                                 </span>
-                              )}
-                            </>
-                          ))}
-                          <h1 className="hover:underline font-bold">{article.title}</h1>
-                        </div>
-                        <div
-                          className="w-1/3 pick-div bg-yellow-400 relative"
+                              </Link>
+                            )}
+                          </>
+                        ))}
+                        <Link
+                          href={`/specialArticles/${encodeURIComponent(
+                            article.slug
+                          )}/`}
                         >
+                          <h1 className="hover:underline font-bold">
+                            {article.title}
+                          </h1>
+                        </Link>
+                      </div>
+                        <div className="w-1/3 relative">
                           {article?.cover_image && (
-                            <Image
+                            <img
                               src={article?.cover_image}
-                              style={{
-                                objectFit: "cover",
-                                objectPosition: "center",
-                              }}
-                              fill
+                              className="w-full h-[100px] object-cover"
                               alt="Article cover image"
                             />
                           )}
                         </div>
-                      </div>
-                    </Link>
+                    </div>
                   </div>
                 )}
               </>

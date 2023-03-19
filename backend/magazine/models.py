@@ -7,9 +7,14 @@ from django_extensions.db.fields import AutoSlugField
 
 User = get_user_model()
 
+def get_category_cover_image(self, filename):
+    return 'category_cover/' + str(self.pk) + '/cover_image.png'
+
 
 class Category(models.Model):
+    cover_image = models.ImageField(upload_to=get_category_cover_image, blank=True)
     name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return self.name

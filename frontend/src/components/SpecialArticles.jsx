@@ -17,7 +17,7 @@ const SpecialArticles = () => {
   } = useGetSpecialArticlesQuery();
 
   return (
-    <div className="mx-10 mt-24 grid grid-cols-4 gap-5">
+    <div className="px-3 ss:px-10  mt-24 grid grid-cols-4 gap-5">
       {specialSuccess && (
         <>
           {specialData?.map((special_atricle) => {
