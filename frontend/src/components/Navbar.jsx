@@ -144,7 +144,7 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={` flex items-center justify-between bg-white px-10 py-4 shadow-md`}
+        className={`${isSticky ? `py-1 bg-opacity-90 duration-500 ` : `py-4`} fixed w-full z-10 flex items-center justify-between bg-white px-10 `}
       >
         <Link href="/">
           <div className="text-black flex items-center gap-2 font-product">

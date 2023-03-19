@@ -18,7 +18,7 @@ const TodaysPick = () => {
   } = useGetSpecialArticlesQuery();
 
   return (
-    <div>
+    <div className="">
       <div className="pt-5">
         <span className="font- font-bold text-2xl">TODAY'S PICK</span>
       </div>

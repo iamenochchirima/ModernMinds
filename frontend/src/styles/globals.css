@@ -83,3 +83,14 @@ a {
   }
 }
 
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar.shrink {
+  transform: scale(0.9);
+}
