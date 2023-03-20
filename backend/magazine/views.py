@@ -4,12 +4,18 @@ from .serializer import ArticleSerializer, SpecialArticleSerializer, CategorySer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
+
+class ArticlesPagination(PageNumberPagination):
+    page_size = 2
 
 class ArticleView(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
+    pagination_class = ArticlesPagination
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
     lookup_field = 'slug'
+    
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())

@@ -9,11 +9,13 @@ const LatestArticles = () => {
   const { data, isLoading, isSuccess, isError, error } = useGetArticlesQuery();
   const { data: categories } = useGetCategoriesQuery();
 
+  console.log(data)
+
   return (
     <>
-      <h1 className="text-center p-10 text-4xl font-bold">LATEST STORIES</h1>
+      <h1 className="text-center p-10 text-3xl font-bold">LATEST STORIES</h1>
       <div className="px-3 ss:px-10 grid grid-cols-4 gap-5">
-        {data?.map((article) => (
+        {data?.results.map((article) => (
           <div
             key={article.id}
             className="col-span-4 ss:col-span-2 md:col-span-1 hover:scale-105 duration-300"
@@ -26,7 +28,7 @@ const LatestArticles = () => {
                 {article?.cover_image && (
                   <img
                     src={article?.cover_image}
-                    className="w-full h-[250px] object-cover"
+                    className="w-full h-[250px] object-cover rounded-t-md"
                     alt="Article cover image"
                   />
                 )}

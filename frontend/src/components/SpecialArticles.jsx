@@ -16,11 +16,13 @@ const SpecialArticles = () => {
     isError: specialError,
   } = useGetSpecialArticlesQuery();
 
+  console.log(specialData)
+
   return (
     <div className="px-3 ss:px-10  mt-24 grid grid-cols-4 gap-5">
       {specialSuccess && (
         <>
-          {specialData?.map((special_atricle) => {
+          {specialData.map((special_atricle) => {
             return (
               <>
                 {special_atricle?.top_story && (
@@ -43,7 +45,7 @@ const SpecialArticles = () => {
                             <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
                               TOP STORY
                             </span>
-                            <h1 className="text-5xl font-medium font-tiempos pt-5">
+                            <h1 className="text-5xl font-bold pt-5">
                               {special_atricle.title}
                             </h1>
                             {categories?.map((category) => (
