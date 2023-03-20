@@ -22,12 +22,13 @@ const ExploreModal = () => {
         <ul className="md:text-center pl-20">
           {categories.map((category) => (
             <li className="hover:scale-110 duration-300 p-5 text-2xl">
-              <Link href="/category">{category.name}</Link>
+              <Link onClick={() => dispatch(setExploreClose())} href={`/category/${encodeURIComponent(category.slug)}`}>
+                {category.name}
+              </Link>
             </li>
           ))}
         </ul>
       </div>
-      
     </div>
   );
 };

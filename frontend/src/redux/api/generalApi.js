@@ -49,10 +49,8 @@ export const generalApi = generalApiSlice.injectEndpoints({
       }),
     }),
     getArticles: builder.query({
-      query: () => ({
-        url: "/api/articles/",
-        method: "GET",
-      }),
+      query: (page = 1) => `/api/articles/?page=${page}`,
+      providesTags: (result = [], error, arg) => ['Articles'],
     }),
     getFullArticle: builder.query({
       query: (slug) => (
@@ -62,11 +60,8 @@ export const generalApi = generalApiSlice.injectEndpoints({
       }),
     }),
     getCategoryArticles: builder.query({
-      query: (slug) => (
-        {
-        url: `/api/category/${slug}/`,
-        method: "GET",
-      }),
+      query: ({slug, page = 1}) => `/api/category/${slug}/?page=${page}`,
+      providesTags: (result = [], error, arg) => ['CategoryArticles'],
     }),
     getCountries: builder.query({
       query: () => ({

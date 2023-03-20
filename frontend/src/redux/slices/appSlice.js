@@ -3,6 +3,7 @@ import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
   isExploreOpen: false,
+  search: false
 };
 
 export const appSlice = createSlice({
@@ -14,6 +15,12 @@ export const appSlice = createSlice({
       },
     setExploreClose(state) {
         state.isExploreOpen = false;
+      },
+    setSearchOpen(state) {
+        state.search = true;
+      },
+    setSearchClose(state) {
+        state.search = false;
       },
 
     extraReducers: {
@@ -29,6 +36,8 @@ export const appSlice = createSlice({
 
 export const {
     setExploreOpen,
-    setExploreClose
+    setExploreClose,
+    setSearchOpen,
+    setSearchClose
   } = appSlice.actions;
   export default appSlice.reducer;

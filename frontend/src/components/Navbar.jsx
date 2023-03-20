@@ -13,7 +13,7 @@ import {
   setCloseRegisterViewState,
   setClosePasswordReset,
 } from "@/redux/slices/authSlice";
-import { setExploreOpen, } from "@/redux/slices/appSlice";
+import { setExploreOpen, setSearchOpen } from "@/redux/slices/appSlice";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
@@ -26,6 +26,7 @@ import { AiOutlineDown, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { GrMenu } from "react-icons/gr";
 import { BsPerson } from "react-icons/bs";
 import ExploreModal from "./ExploreModal";
+import Search from "./Search";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -105,7 +106,7 @@ const Navbar = () => {
     resetPasswordRequest,
   } = useSelector((state) => state.auth);
 
-  const { isExploreOpen } = useSelector((state) => state.app);
+  const { isExploreOpen, search } = useSelector((state) => state.app);
 
   const handleExploreOpen = () => {
     setMenuOpen(false)
@@ -217,10 +218,11 @@ const Navbar = () => {
             </li>
           )}
           <li>
-            <button className="text-xl border py-1 pb-2 px-1 rounded-md">
+            <button onClick={() => dispatch(setSearchOpen())} className="text-xl border py-1 pb-2 px-2 rounded-md">
               <AiOutlineSearch />
             </button>
           </li>
+          {search && <Search/>}
           <li>
             <Link href="/subscribe">
               <button className="text-white bg-yellow-700 px-2 py-1 rounded-md hidden sm:block">

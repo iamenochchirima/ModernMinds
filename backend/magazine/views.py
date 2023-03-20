@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 class ArticlesPagination(PageNumberPagination):
-    page_size = 2
+    page_size = 3
 
 class ArticleView(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -42,9 +42,14 @@ class CategoryView(ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
+class ArticlesByCategoryPagination(PageNumberPagination):
+    page_size = 2
+
+
 class ArticleListByCategoryView(APIView):
     permission_classes = [AllowAny]
     serializer_class = ArticleSerializer
+    pagination_class = ArticlesByCategoryPagination
 
     def get(self, request, slug):
         try:
@@ -54,6 +59,10 @@ class ArticleListByCategoryView(APIView):
 
         articles = Article.objects.filter(category=category)
 
-        serializer = self.serializer_class(articles, many=True)
+        # Paginate the articles queryset
+        paginator = self.pagination_class()
+        paginated_articles = paginator.paginate_queryset(articles, request)
 
-        return Response(serializer.data)
+        serializer = self.serializer_class(paginated_articles, many=True)
+
+        return paginator.get_paginated_response(serializer.data)

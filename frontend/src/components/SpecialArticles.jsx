@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from "react";
 import {
   useGetSpecialArticlesQuery,
   useGetCategoriesQuery,
@@ -15,8 +15,6 @@ const SpecialArticles = () => {
     isSuccess: specialSuccess,
     isError: specialError,
   } = useGetSpecialArticlesQuery();
-
-  console.log(specialData)
 
   return (
     <div className="px-3 ss:px-10  mt-24 grid grid-cols-4 gap-5">
