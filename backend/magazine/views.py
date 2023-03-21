@@ -88,6 +88,10 @@ class ArticleSearchView(APIView):
             return Response({'error': 'search_query parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
 
         articles = Article.objects.filter(title__icontains=search_query)
+
+        if len(articles) == 0:
+            return Response({'message': 'No matches were found'}, status=status.HTTP_404_NOT_FOUND)
+
         paginator = self.pagination_class()
         paginated_articles = paginator.paginate_queryset(articles, request)
 

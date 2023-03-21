@@ -10,37 +10,45 @@ const url = process.env.NEXT_PUBLIC_API_URL;
 const Search = () => {
   const { data: categories } = useGetCategoriesQuery();
   const [searchQuery, setSearchQuery] = useState("");
-  const [getArticles, { data, isLoading, error }] = useLazySearchQuery();
+  const [getArticles, { data, isLoading, isError, error }] = useLazySearchQuery();
+  const [searchData, setSearchData] = useState(null);
+  const [searched, setSearched] = useState(false);
 
   const [page, setPage] = useState(1);
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     if (data) {
-      setArticles((prevArticles) => [...prevArticles, ...data.results]);
+      setSearchData(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (searchData) {
+      setArticles((prevArticles) => [...prevArticles, ...searchData.results]);
+    }
+  }, [searchData]);
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
 
-  // useEffect(() => {
-  //   setArticles([]);
-  //   setPage(1)
-  // }, [searchQuery]);
-
-  // useEffect(() => {
-  //   setArticles([]);
-  //   setPage(1)
-  //   if (searchQuery) {
-  //     getArticles({ searchQuery, page: 1 });
-  //   }
-  // }, [searchQuery, getArticles]);
+  useEffect(() => {
+    if (searchQuery) {
+      const timeoutId = setTimeout(() => {
+        setSearched(true);
+      }, 1000);
+      return () => clearTimeout(timeoutId);
+    }
+    if(searchQuery === "") {
+      setSearched(false)
+    }
+  }, [searchQuery]);
 
   useEffect(() => {
     setArticles([]);
     setPage(1);
+    setSearchData(null);
     if (searchQuery) {
       const timeoutId = setTimeout(() => {
         getArticles({ searchQuery, page: 1 });
@@ -53,43 +61,48 @@ const Search = () => {
     if (searchQuery) {
       getArticles({ searchQuery, page });
     }
-  }, [ page, getArticles]);
+  }, [page, getArticles]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    getArticles({searchQuery, page});
+    getArticles({ searchQuery, page });
   };
+
+
+  if (isError) {
+    console.log(error)
+  }
 
   return (
     <Layout>
       <div className="min-h-screen mt-24 px-3 ss:px-10">
         <div className="flex justify-center">
-        <form
-          onSubmit={handleSubmit}
-          className="flex pt-20 border-b-2 w-3/4 items-center text-xl gap-10 "
-        >
-          <AiOutlineSearch className="text-gray-500 text-3xl"/>
-          <input
-            type="text"
-            className="w-3/4  outline-none"
-            placeholder="Search for articles"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-
-          {/* <button
-            className="bg-yellow-800 text-white px-2 py-1  rounded-md"
-            type="submit"
+          <form
+            onSubmit={handleSubmit}
+            className="flex pt-20 border-b-2 w-3/4 items-center text-xl gap-10 "
           >
-            Search
-          </button> */}
-        </form>
+            <AiOutlineSearch className="text-gray-500 text-3xl" />
+            <input
+              type="text"
+              className="w-3/4  outline-none"
+              placeholder="Search for articles"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </form>
         </div>
-
+        {isError && error.status === 404 && (
+          <div className="text-center p-20">
+            Sorry, no results were found
+          </div>
+        )}
         <div className="flex justify-center items-center">
           <div className="grid grid-cols-2 w-3/4 gap-10 mt-10">
             {articles?.map((article) => (
-              <div key={article.id} className="col-span-1 border p-4 rounded-md">
+              <div
+                key={article.id}
+                className="col-span-1 border p-4 rounded-md"
+              >
                 <div className="flex items-center space-y-3">
                   <div className="w-2/3">
                     {categories?.map((category) => (
@@ -133,12 +146,15 @@ const Search = () => {
           </div>
         </div>
         <div className="text-center mt-5 flex gap-4 justify-center">
-        {articles && data?.next ? (
-          <button className="border-b-2 border-black" onClick={handleLoadMore}>
-            Load More
-          </button>
-        ) : null}
-      </div>
+          {searchData?.next ? (
+            <button
+              className="border-b-2 border-black"
+              onClick={handleLoadMore}
+            >
+              Load More
+            </button>
+          ) : null}
+        </div>
       </div>
     </Layout>
   );
