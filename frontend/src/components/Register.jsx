@@ -297,6 +297,11 @@ const Register = () => {
               Subscribe to our newsletter
             </label>
           </div>
+          <p className="text-xs">
+            Your personal data will be used to support your experience
+            throughout this website, to manage access to your account, and for
+            other purposes described in our privacy policy.
+          </p>
 
           <div>
             {isLoading ? (
@@ -331,9 +336,9 @@ const Register = () => {
           <p className="text-center">
             Already have an account?{" "}
             <span className=" text-indigo-600">
-              <Link onClick={handleSigninClick} href="">
+              <button onClick={handleSigninClick} >
                 Sign in
-              </Link>
+              </button>
             </span>
           </p>
         </div>

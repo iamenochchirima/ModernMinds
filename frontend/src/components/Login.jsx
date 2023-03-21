@@ -180,9 +180,9 @@ const Login = () => {
         <p className="text-center">
           Don't have an account?{" "}
           <span className=" text-indigo-600">
-            <Link onClick={handleCreateAccountClick} href="">
+            <button onClick={handleCreateAccountClick}>
               Create an account
-            </Link>
+            </button>
           </span>
         </p>
       </div>

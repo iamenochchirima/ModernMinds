@@ -5,8 +5,6 @@ import Link from "next/link";
 import Layout from "@/components/Layout";
 import { useGetCategoriesQuery } from "@/redux/api/generalApi";
 
-const url = process.env.NEXT_PUBLIC_API_URL;
-
 const Category = () => {
   const router = useRouter();
   const { slug } = router.query || {};
@@ -68,7 +66,7 @@ const Category = () => {
         >
           <div className="absolute  w-full  h-[550px] bg-black bg-opacity-30 "></div>
           <div className="relative w-full h-[550px] flex flex-col justify-center z-5">
-            <h1 className="text-center text-white font-bold  text-7xl">
+            <h1 className="text-center text-white font-kinfolk font-medium  text-7xl">
               {name}
             </h1>
           </div>
@@ -86,7 +84,7 @@ const Category = () => {
               >
                 {article?.cover_image && (
                   <img
-                    src={url + article?.cover_image}
+                    src={ article?.cover_image}
                     className="w-full h-[250px] object-cover hover:scale-105 duration-300"
                     alt="Article cover image"
                   />

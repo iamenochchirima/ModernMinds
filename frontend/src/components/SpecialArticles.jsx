@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {
   useGetSpecialArticlesQuery,
   useGetCategoriesQuery,
@@ -32,35 +31,42 @@ const SpecialArticles = () => {
                     className="col-span-4 sm:col-span-2 md:col-span-3 relative bg-cover bg-center text-white "
                   >
                     <div>
-                      <Link
-                        href={`/specialArticles/${encodeURIComponent(
-                          special_atricle.slug
-                        )}/`}
-                      >
-                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-80 "></div>
-                        <div className="relative w-full h-[500px] z-5">
-                          <div className="absolute bottom-0 pb-10 px-5">
+                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-80 "></div>
+                      <div className="relative w-full h-[500px] z-5">
+                        <div className="absolute bottom-0 pb-10 px-5">
+                          <Link
+                            className=""
+                            href={`/specialArticles/${encodeURIComponent(
+                              special_atricle.slug
+                            )}/`}
+                          >
                             <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
                               TOP STORY
                             </span>
                             <h1 className="text-5xl font-bold pt-5">
                               {special_atricle.title}
                             </h1>
-                            {categories?.map((category) => (
-                              <>
-                                {category.id === special_atricle.id && (
-                                  <span
+                          </Link>
+                          {categories?.map((category) => (
+                            <>
+                              {category.id === special_atricle.category && (
+                                <Link
+                                  href={`/category/${encodeURIComponent(
+                                    category.slug
+                                  )}/`}
+                                >
+                                  <h1
                                     key={category.id}
-                                    className="pt-3 text-dimWhite text-xs hover:underline tracking-widest"
+                                    className="pt-3 text-dimWhite text-xs mt-5 hover:underline tracking-widest"
                                   >
                                     {category.name}
-                                  </span>
-                                )}
-                              </>
-                            ))}
-                          </div>
+                                  </h1>
+                                </Link>
+                              )}
+                            </>
+                          ))}
                         </div>
-                      </Link>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -115,9 +121,6 @@ const SpecialArticles = () => {
                           </span>
                         </div>
                         <h1 className="py-2 ">{article.title}</h1>
-                        <span className="hover:underline font-bold text-xs">
-                          READ
-                        </span>
                       </div>
                     </Link>
                   </div>

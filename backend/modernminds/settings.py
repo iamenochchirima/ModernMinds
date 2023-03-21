@@ -156,31 +156,31 @@ SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
 
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY')
-# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-# AWS_DEFAULT_ACL = None
-# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-# AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-# DEFAULT_FILE_STORAGE = 'modernminds.storages.MediaStorage'
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_DEFAULT_ACL = None
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+DEFAULT_FILE_STORAGE = 'modernminds.storages.MediaStorage'
 
-# AWS_QUERYSTRING_AUTH = False
+AWS_QUERYSTRING_AUTH = False
 
-# STATIC_LOCATION = 'static'
-# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-# STATICFILES_STORAGE = 'modernminds.storages.StaticStorage'
+STATIC_LOCATION = 'static'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+STATICFILES_STORAGE = 'modernminds.storages.StaticStorage'
 
-# MEDIA_LOCATION = 'media'
-# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
-# DEFAULT_FILE_STORAGE = 'modernminds.storages.MediaStorage'
+MEDIA_LOCATION = 'media'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+DEFAULT_FILE_STORAGE = 'modernminds.storages.MediaStorage'
 
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 
-STATIC_URL = 'static/'
-MEDIA_URL = 'media/'
+# STATIC_URL = 'static/'
+# MEDIA_URL = 'media/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -255,13 +255,14 @@ CKEDITOR_CONFIGS = {
         'tabSpaces': 4,
         'extraPlugins': ','.join([
             'uploadimage', # the upload image feature
+            'image2', # the responsive image plugin
             # your extra plugins here
             'div',
             'autolink',
             'autoembed',
             'embedsemantic',
             'autogrow',
-            'devtools',
+            # 'devtools',
             'widget',
             'lineutils',
             'clipboard',
@@ -270,5 +271,8 @@ CKEDITOR_CONFIGS = {
             'elementspath',
             'codesnippet',
         ]),
+        'image2_captionedClass': 'image-captioned',
+        'image2_responsive': True,
+        'image2_disableResizer': True,
     }
 }

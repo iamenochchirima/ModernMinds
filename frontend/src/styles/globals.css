@@ -52,9 +52,9 @@ body {
   overflow-x: hidden;
 }
 
-a {
+/* a {
   color: inherit;
-}
+} */
 
 .navbar {
   position: sticky;

@@ -5,8 +5,6 @@ import Layout from "@/components/Layout";
 import { useGetCategoriesQuery } from "@/redux/api/generalApi";
 import { AiOutlineSearch } from "react-icons/ai";
 
-const url = process.env.NEXT_PUBLIC_API_URL;
-
 const Search = () => {
   const { data: categories } = useGetCategoriesQuery();
   const [searchQuery, setSearchQuery] = useState("");
@@ -116,7 +114,7 @@ const Search = () => {
                   <div className="w-1/3 relative">
                     {article?.cover_image && (
                       <img
-                        src={url + article?.cover_image}
+                        src={article?.cover_image}
                         className="w-full h-[100px] object-cover"
                         alt="Article cover image"
                       />
