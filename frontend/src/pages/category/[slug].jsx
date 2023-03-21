@@ -66,7 +66,7 @@ const Category = () => {
         >
           <div className="absolute  w-full  h-[550px] bg-black bg-opacity-30 "></div>
           <div className="relative w-full h-[550px] flex flex-col justify-center z-5">
-            <h1 className="text-center text-white font-kinfolk font-medium  text-7xl">
+            <h1 className="text-center text-white font-medium  text-7xl">
               {name}
             </h1>
           </div>
