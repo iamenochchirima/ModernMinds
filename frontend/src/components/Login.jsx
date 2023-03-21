@@ -9,7 +9,7 @@ import {
   setIsLogedIn,
   setOpenPasswordReset,
 } from "@/redux/slices/authSlice";
-import { Oval } from "react-loader-spinner";
+import { Oval, ThreeDots } from "react-loader-spinner";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -69,12 +69,12 @@ const Login = () => {
     <>
       <div>
         <Image
-            className="mx-auto w-auto"
-            src={"/logo.png"}
-            alt="Mordern minds logo"
-            height="40"
-            width="40"
-          ></Image>
+          className="mx-auto w-auto"
+          src={"/logo.png"}
+          alt="Mordern minds logo"
+          height="40"
+          width="40"
+        ></Image>
         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
           Sign in to your account
         </h2>
@@ -154,18 +154,16 @@ const Login = () => {
 
         <div>
           {isLoading ? (
-            <div className="flex justify-center mt-5">
-              <Oval
-                height={40}
-                width={40}
-                color="blue"
+            <div className="flex justify-center my-5">
+              <ThreeDots
+                height="50"
+                width="50"
+                radius="9"
+                color="#black"
+                ariaLabel="three-dots-loading"
                 wrapperStyle={{}}
-                wrapperClass=""
+                wrapperClassName=""
                 visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor="#4fa94d"
-                strokeWidth={4}
-                strokeWidthSecondary={4}
               />
             </div>
           ) : (

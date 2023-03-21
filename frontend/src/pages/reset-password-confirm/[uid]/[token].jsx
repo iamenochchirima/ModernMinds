@@ -3,7 +3,8 @@ import { useRouter } from "next/router";
 import { useConfirmResetMutation } from "@/redux/api/generalApi";
 import { setOpenLoginViewState } from "@/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
-import { Oval } from "react-loader-spinner";
+import { Oval, ThreeDots } from "react-loader-spinner";
+import Image from "next/image";
 
 const ConfirmPasswordReset = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const ConfirmPasswordReset = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(body)
+    console.log(body);
     if (body) {
       try {
         await finishReset(body)
@@ -58,11 +59,13 @@ const ConfirmPasswordReset = () => {
     <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75">
       <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="bg-white w-full rounded-lg px-6 py-2 max-w-md space-y-8">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Mordern Minds"
-          />
+          <Image
+            className="mx-auto w-auto"
+            src={"/logo.png"}
+            alt="Mordern minds logo"
+            height="40"
+            width="40"
+          ></Image>
 
           {isSuccess ? (
             <div className="">
@@ -125,35 +128,26 @@ const ConfirmPasswordReset = () => {
                       placeholder="Confirm new password"
                     />
                   </div>
-                  {/* {error &&
-                    error.data.err.message ===
-                      "Request failed with status code 401" && (
-                      <div className="text-red-500 mt-2">
-                        Incorrect email or password
-                      </div>
-                    )} */}
                 </div>
 
                 <div>
                   {isLoading ? (
-                    <div className="flex justify-center mt-5">
-                      <Oval
-                        height={40}
-                        width={40}
-                        color="blue"
+                    <div className="flex justify-center my-5">
+                      <ThreeDots
+                        height="40"
+                        width="40"
+                        radius="9"
+                        color="#black"
+                        ariaLabel="three-dots-loading"
                         wrapperStyle={{}}
-                        wrapperClass=""
+                        wrapperClassName=""
                         visible={true}
-                        ariaLabel="oval-loading"
-                        secondaryColor="#4fa94d"
-                        strokeWidth={4}
-                        strokeWidthSecondary={4}
                       />
                     </div>
                   ) : (
                     <button
                       type="submit"
-                      className="mb-10 group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className="mb-10 group relative flex w-full justify-center border border-transparent bg-black hover:bg-gray-800 py-2 px-4 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                       Finish
                     </button>

@@ -12,7 +12,6 @@ const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [getArticles, { data, isLoading, isError, error }] = useLazySearchQuery();
   const [searchData, setSearchData] = useState(null);
-  const [searched, setSearched] = useState(false);
 
   const [page, setPage] = useState(1);
   const [articles, setArticles] = useState([]);
@@ -32,18 +31,6 @@ const Search = () => {
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
-
-  useEffect(() => {
-    if (searchQuery) {
-      const timeoutId = setTimeout(() => {
-        setSearched(true);
-      }, 1000);
-      return () => clearTimeout(timeoutId);
-    }
-    if(searchQuery === "") {
-      setSearched(false)
-    }
-  }, [searchQuery]);
 
   useEffect(() => {
     setArticles([]);
@@ -67,11 +54,6 @@ const Search = () => {
     event.preventDefault();
     getArticles({ searchQuery, page });
   };
-
-
-  if (isError) {
-    console.log(error)
-  }
 
   return (
     <Layout>

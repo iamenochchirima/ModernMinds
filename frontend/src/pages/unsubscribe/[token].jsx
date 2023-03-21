@@ -1,6 +1,8 @@
 import {useState } from "react";
 import { useRouter } from "next/router";
 import { useNewsletterUnsubscribeMutation } from "@/redux/api/generalApi";
+import Image from "next/image";
+import { toast } from "react-toastify";
 
 const Unsubscibe = () => {
   const router = useRouter();
@@ -10,6 +12,10 @@ const Unsubscibe = () => {
 
   const [unsubscribe, { isSuccess, isLoading, isError, error }] =
     useNewsletterUnsubscribeMutation();
+
+    if(isError) {
+      console.log(error)
+    }
 
   const handleUnsubscribe = async () => {
     if (token) {
@@ -21,7 +27,14 @@ const Unsubscibe = () => {
             setDefaultDiv(false);
           });
       } catch (err) {
-        console.error("Failed to unsubscribe: ", err);
+        console.log(err)
+        if (err.status === 400) {
+          toast.error('Invalid token', {
+            position: "top-center",
+            autoClose: 7000,
+            hideProgressBar: true,
+            });
+        }
       }
     }
   };
@@ -31,11 +44,13 @@ const Unsubscibe = () => {
       <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="bg-white w-full rounded-lg px-6 py-2 max-w-md space-y-8">
           <div className="flex flex-col space-y-5">
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Mordern Minds"
-            />
+          <Image
+            className="mx-auto w-auto"
+            src={"/logo.png"}
+            alt="Mordern minds logo"
+            height="40"
+            width="40"
+          ></Image>
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               MODERNMINDS NEWSLETTER
             </h2>

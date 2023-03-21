@@ -3,7 +3,7 @@ import {
   useRegisterMutation,
   useGetCountriesQuery,
 } from "@/redux/api/generalApi";
-import { Oval } from "react-loader-spinner";
+import { Oval, ThreeDots } from "react-loader-spinner";
 import {
   setCloseRegisterViewState,
   setOpenLoginViewState,
@@ -15,7 +15,8 @@ import Image from "next/image";
 const Register = () => {
   const [countries, setCounties] = useState(null);
   const dispatch = useDispatch();
-  const [register, { isLoading, isSuccess, isError:isRegisterError, error }] = useRegisterMutation();
+  const [register, { isLoading, isSuccess, isError: isRegisterError, error }] =
+    useRegisterMutation();
   const { data, isSuccess: countriesSuccess, isError } = useGetCountriesQuery();
 
   const [focused, setFocused] = useState({
@@ -212,7 +213,6 @@ const Register = () => {
                 onBlur={() => handleFocused("country")}
               >
                 <option value="">Select a country</option>
-                {/* Render options from the countries model */}
                 {countries?.map((country) => (
                   <option key={country.id} value={country.id}>
                     {country.name}
@@ -261,7 +261,7 @@ const Register = () => {
               />
               <span className="error-message ">Password is required</span>
             </div>
-            
+
             <div className="">
               <label htmlFor="password" className="sr-only">
                 Confirm password
@@ -278,7 +278,9 @@ const Register = () => {
                 className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Confirm password"
               />
-              <span className="error-message ">Confirm password is required</span>
+              <span className="error-message ">
+                Confirm password is required
+              </span>
             </div>
           </div>
           <div className="flex items-center justify-center">
@@ -298,18 +300,16 @@ const Register = () => {
 
           <div>
             {isLoading ? (
-              <div className="flex justify-center mt-5">
-                <Oval
-                  height={40}
-                  width={40}
-                  color="blue"
+              <div className="flex justify-center my-5">
+                <ThreeDots
+                  height="50"
+                  width="50"
+                  radius="9"
+                  color="#black"
+                  ariaLabel="three-dots-loading"
                   wrapperStyle={{}}
-                  wrapperClass=""
+                  wrapperClassName=""
                   visible={true}
-                  ariaLabel="oval-loading"
-                  secondaryColor="#4fa94d"
-                  strokeWidth={4}
-                  strokeWidthSecondary={4}
                 />
               </div>
             ) : (
@@ -319,6 +319,11 @@ const Register = () => {
               >
                 Register
               </button>
+            )}
+            {isRegisterError && error.status === 400 && (
+              <div className="bg-green-200 text-green-800 py-2 px-4 rounded-md text-center">
+                An account with the same email already exist
+              </div>
             )}
           </div>
         </form>

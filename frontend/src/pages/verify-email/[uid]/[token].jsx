@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useVerifyEmailMutation } from "@/redux/api/generalApi";
 import { setOpenLoginViewState } from "@/redux/slices/authSlice";
-import { Oval } from "react-loader-spinner";
+import { Oval, ThreeDots } from "react-loader-spinner";
 import { useDispatch } from "react-redux";
 
 const EmailVeryfication = () => {
@@ -29,18 +29,16 @@ const EmailVeryfication = () => {
     return (
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <span className="p-52 ">
-          <Oval
-            height={40}
-            width={40}
-            color="blue"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-            ariaLabel="oval-loading"
-            secondaryColor="#4fa94d"
-            strokeWidth={4}
-            strokeWidthSecondary={4}
-          />
+                      <ThreeDots
+                        height="60"
+                        width="60"
+                        radius="9"
+                        color="#black"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true}
+                      />      
         </span>
       </div>
     );
@@ -49,7 +47,7 @@ const EmailVeryfication = () => {
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col space-y-5 p-52">
           <span>Email verified successfully!</span>
-          <button onClick={handleLoginButtonClick} className="px-4 py-2 bg-blue-500 rounded-md text-white">
+          <button onClick={handleLoginButtonClick} className="px-4 py-2 bg-black text-white">
             Continue to login
           </button >
         </div>
@@ -60,7 +58,7 @@ const EmailVeryfication = () => {
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col space-y-5 p-52">
           <span>There was an error verifying your email address.</span>
-          <button onClick={handleErrorButtonClick} className="px-4 py-2 bg-blue-500 rounded-md text-white">
+          <button onClick={handleErrorButtonClick} className="px-4 py-2 bg-black  text-white">
             Try to login
           </button >
         </div>

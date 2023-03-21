@@ -2,7 +2,8 @@ import { useState } from "react";
 import { setClosePasswordReset } from "@/redux/slices/authSlice";
 import { useResetPasswordMutation } from "@/redux/api/generalApi";
 import { useDispatch } from "react-redux";
-import { Oval } from "react-loader-spinner";
+import { Oval, ThreeDots } from "react-loader-spinner";
+import Image from "next/image";
 
 const PasswordReset = () => {
   const dispatch = useDispatch;
@@ -43,14 +44,16 @@ const PasswordReset = () => {
     return (
       <>
         <div className="">
-          <img
-            className="mx-auto h-12 w-auto mb-5"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Mordern Minds"
-          />
+          <Image
+            className="mx-auto w-auto"
+            src={"/logo.png"}
+            alt="Mordern minds logo"
+            height="40"
+            width="40"
+          ></Image>
           <p className="text-center text-teal-800 text-lg mb-10">
-            Your request for password reset have been successfull, please check your
-            email and use the link we sent to finish your password reseting
+            Your request for password reset have been successfull, please check
+            your email and use the link we sent to finish your password reseting
             process.
           </p>
         </div>
@@ -60,11 +63,13 @@ const PasswordReset = () => {
     return (
       <>
         <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Mordern Minds"
-          />
+          <Image
+            className="mx-auto w-auto"
+            src={"/logo.png"}
+            alt="Mordern minds logo"
+            height="40"
+            width="40"
+          ></Image>
           <h3 className="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
             Request password reset
           </h3>
@@ -95,24 +100,22 @@ const PasswordReset = () => {
             </div>
             <div>
               {isLoading ? (
-                <div className="flex justify-center mt-5">
-                  <Oval
-                    height={40}
-                    width={40}
-                    color="blue"
+                <div className="flex justify-center my-5">
+                  <ThreeDots
+                    height="50"
+                    width="50"
+                    radius="9"
+                    color="#black"
+                    ariaLabel="three-dots-loading"
                     wrapperStyle={{}}
-                    wrapperClass=""
+                    wrapperClassName=""
                     visible={true}
-                    ariaLabel="oval-loading"
-                    secondaryColor="#4fa94d"
-                    strokeWidth={4}
-                    strokeWidthSecondary={4}
                   />
                 </div>
               ) : (
                 <button
                   type="submit"
-                  className="mb-10 group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className="mb-10 group relative flex w-full justify-center border border-transparent bg-black hover:bg-gray-800 py-2 px-4 text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                   Send
                 </button>

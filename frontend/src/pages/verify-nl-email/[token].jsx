@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { Oval } from "react-loader-spinner";
+import { Oval, ThreeDots } from "react-loader-spinner";
 import { useVerifyNewsletterEmailMutation } from "@/redux/api/generalApi";
 import { GrClose } from "react-icons/gr";
 import Layout from "@/components/Layout";
@@ -55,7 +55,7 @@ const Verify = () => {
                 </h2>
                 <div className="pb-5 text-center">
                   <span className="text-center text-lg">
-                  You weren't added to our list because your token has expired. Please <Link href="/" className="underline">subscribe again</Link> to generate a new token.
+                  You weren't added to our list because your token is invalid. Please <Link href="/" className="underline">subscribe again</Link> to generate a new token.
                   </span>
                 </div>
               </>
@@ -63,18 +63,16 @@ const Verify = () => {
             {isLoading && (
               <div className="flex justify-center pb-10">
                 {" "}
-                <Oval
-                  height={40}
-                  width={40}
-                  color="blue"
-                  wrapperStyle={{}}
-                  wrapperClass=""
-                  visible={true}
-                  ariaLabel="oval-loading"
-                  secondaryColor="#4fa94d"
-                  strokeWidth={4}
-                  strokeWidthSecondary={4}
-                />
+                <ThreeDots
+                        height="60"
+                        width="60"
+                        radius="9"
+                        color="#black"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true}
+                      />   
               </div>
             )}
           </div>

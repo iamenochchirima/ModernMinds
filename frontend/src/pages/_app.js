@@ -1,13 +1,8 @@
 import "@/styles/globals.css";
 import { Provider } from "react-redux";
 import { wrapper } from "../redux/Store";
-import {Cormorant_Garamond} from '@next/font/google'
-
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  variable: '--font-cormorant',
-  weight: '400',
-});
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App({ Component, ...rest }) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -16,6 +11,7 @@ export default function App({ Component, ...rest }) {
   return (
     <Provider store={store}>
       <div className="font-graphik">
+      <ToastContainer />
       <Component {...pageProps} />
     </div>
     </Provider>
