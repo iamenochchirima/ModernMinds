@@ -21,6 +21,10 @@ const Category = () => {
   const [name, setName] = useState("");
 
   useEffect(() => {
+    setArticles([]);
+  }, [slug]);
+
+  useEffect(() => {
     const matchingCategory = categories?.find(
       (category) => category.slug === slug
     );
@@ -120,9 +124,6 @@ const Category = () => {
       </div>
       </div>
       <div className="text-center mt-5 flex gap-4 justify-center">
-        {/* {data?.previous ? (
-        <button className=" border-b-2 border-black" onClick={handlePrevious}>Previous</button>
-      ) : null} */}
         {data?.next ? (
           <button className="border-b-2 border-black" onClick={handleLoadMore}>
             Load More

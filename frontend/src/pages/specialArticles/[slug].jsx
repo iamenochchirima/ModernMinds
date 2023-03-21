@@ -17,7 +17,7 @@ const SpecialArticle = () => {
 
   return (
     <Layout>
-      <div className="font-graphik">
+      <div className="font-graphik mt-24 min-h-screen">
         <h1>SpecialArticle {slug}</h1>
         <p>This is the content of article {slug}.</p>
         <div

@@ -42,26 +42,31 @@ export const generalApi = generalApiSlice.injectEndpoints({
       }),
     }),
     getFullSpecialArticle: builder.query({
-      query: (special_slug) => (
-        {
+      query: (special_slug) => ({
         url: `/api/special-articles/${special_slug}/`,
         method: "GET",
       }),
     }),
     getArticles: builder.query({
-      query: (page = 1) => `/api/articles/?page=${page}`,
-      providesTags: (result = [], error, arg) => ['Articles'],
+      query: (page = 1, page_size = 2) =>
+        `/api/articles/?page=${page}&page_size=${page_size}`,
+      providesTags: (result = [], error, arg) => ["Articles"],
     }),
     getFullArticle: builder.query({
-      query: (slug) => (
-        {
+      query: (slug) => ({
         url: `/api/articles/${slug}/`,
         method: "GET",
       }),
     }),
     getCategoryArticles: builder.query({
-      query: ({slug, page = 1}) => `/api/category/${slug}/?page=${page}`,
-      providesTags: (result = [], error, arg) => ['CategoryArticles'],
+      query: ({ slug, page = 1, page_size = 3 }) =>
+        `/api/category/${slug}/?page=${page}&page_size=${page_size}`,
+      providesTags: (result = [], error, arg) => ["CategoryArticles"],
+    }),
+    search: builder.query({
+      query: ({ searchQuery, page = 1, page_size = 3 }) =>
+        `/api/search/?search_query=${searchQuery}&page=${page}&page_size=${page_size}`,
+      providesTags: (result = [], error, arg) => ["SearchedArticles"],
     }),
     getCountries: builder.query({
       query: () => ({
@@ -106,5 +111,6 @@ export const {
   useGetSpecialArticlesQuery,
   useLazyGetFullSpecialArticleQuery,
   useGetCategoriesQuery,
-  useLazyGetCategoryArticlesQuery
+  useLazyGetCategoryArticlesQuery,
+  useLazySearchQuery,
 } = generalApi;

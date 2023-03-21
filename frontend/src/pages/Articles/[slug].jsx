@@ -7,24 +7,32 @@ const Article = () => {
   const router = useRouter();
   const { slug } = router.query;
 
-  const [getArticle, { data: article, isSuccess }] = useLazyGetFullArticleQuery();
+  const [getArticle, { data: article, isSuccess }] =
+    useLazyGetFullArticleQuery();
 
   useEffect(() => {
     if (slug) {
-        getArticle(slug)
+      getArticle(slug);
     }
-  }, [slug, getArticle])
+  }, [slug, getArticle]);
 
   return (
     <Layout>
-      <div className="font-graphik">
-        <h1>Article {slug}</h1>
-        <p>This is the content of article {slug}.</p>
-        <div
-          className=""
-          dangerouslySetInnerHTML={{ __html: article?.content }}
-          safe="true"
-        />
+      <div className="font-graphik min-h-screen px-3 ss:px-10">
+        <div className="flex justify-center">
+          <div className="">
+            <img
+              src={article?.cover_image}
+              className="w-full h-[700px] object-cover"
+              alt="Article cover image"
+            />
+            <div
+              className=""
+              dangerouslySetInnerHTML={{ __html: article?.content }}
+              safe="true"
+            />
+          </div>
+        </div>
       </div>
     </Layout>
   );

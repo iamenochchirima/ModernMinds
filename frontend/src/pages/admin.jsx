@@ -49,7 +49,7 @@ const admin = () => {
             </h2>
             <Link href={`${adminUrl}`} target="_blank">
               <div className="flex flex-col">
-                <button className="hover:underline bg-gray-400 p-3 text-xl">
+                <button className="hover:underline border p-3 mt-4 ">
                   Go to adminstrations Interface
                 </button>
               </div>

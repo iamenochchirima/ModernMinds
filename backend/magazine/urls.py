@@ -13,4 +13,5 @@ router.register(r'categories', views.CategoryView)
 urlpatterns = [
     path('', include(router.urls)),
     path('category/<str:slug>/', views.ArticleListByCategoryView.as_view(), name='articles-by-category'),
+    path('search/', views.ArticleSearchView.as_view(), name='article_search'),
 ]

@@ -155,7 +155,7 @@ const userprofile = () => {
                 <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
                   Hello {userInfo.user?.first_name}
                 </h2>
-                <h3 className="text-center text-xl font-medium">
+                <h3 className="text-center text-xl font-bold">
                   Personal Information
                 </h3>
                 {showUpdateMessage && (
@@ -167,7 +167,7 @@ const userprofile = () => {
                   <div className="flex flex-col space-y-5">
                     <div className="flex flex-col space-y-1">
                       <label
-                        className="text-sm font-medium"
+                        className="text-sm font-bold"
                         htmlFor="firstName"
                       >
                         FIRST NAME
@@ -182,7 +182,7 @@ const userprofile = () => {
                       />
                     </div>
                     <div className="flex flex-col space-y-1">
-                      <label className="text-sm font-medium" htmlFor="lastName">
+                      <label className="text-sm font-bold" htmlFor="lastName">
                         LAST NAME
                       </label>
                       <input
@@ -195,7 +195,7 @@ const userprofile = () => {
                       />
                     </div>
                     <div className="flex flex-col space-y-1">
-                      <label className="text-sm font-medium" htmlFor="country">
+                      <label className="text-sm font-bold" htmlFor="country">
                         COUNTRY
                       </label>
                       <select
@@ -215,7 +215,7 @@ const userprofile = () => {
                       </select>
                     </div>
                     <div className="flex flex-col space-y-1">
-                      <label className="text-sm font-medium" htmlFor="gender">
+                      <label className="text-sm font-bold" htmlFor="gender">
                         GENDER
                       </label>
                       <select
@@ -261,7 +261,7 @@ const userprofile = () => {
                   </div>
                 </form>
                 <div className="">
-                  <h3 className="text-center text-xl font-medium">
+                  <h3 className="text-center text-xl font-bold">
                     Email Address
                   </h3>
                   <div className="w-full">
@@ -271,13 +271,13 @@ const userprofile = () => {
                     >
                       <div className="flex flex-col space-y-1 w-3/4">
                         <label
-                          className="text-sm font-medium sr-only"
+                          className="text-sm font-bold sr-only"
                           htmlFor="lastName"
                         >
                           Email
                         </label>
                         <input
-                          className="font-medium relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                          className="font-bold relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                           type="email"
                           id="email"
                           name="email"
@@ -349,7 +349,7 @@ const userprofile = () => {
                 </div>
                 {areYouSure && (
                   <div className="flex justify-center flex-col text-center space-y-4">
-                    <h3 className="font-medium text-2xl">Are you sure?</h3>
+                    <h3 className="font-bold text-2xl">Are you sure?</h3>
                     <p>
                       By deleting your account, you may be unable to access
                       certain ModernMinds services. This action is irreversible.
@@ -370,7 +370,7 @@ const userprofile = () => {
                 )}
                 {deleteSuccess && (
                   <div className="flex justify-center flex-col text-center space-y-4">
-                    <p>Your ModernMinds have been successfully deleted!</p>
+                    <p>Your ModernMinds account have been successfully deleted!</p>
                     <button
                       onClick={oK}
                       className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4"
@@ -383,13 +383,6 @@ const userprofile = () => {
                   <div className="flex justify-center flex-col text-center space-y-4">
                     <p>Failed to delete, try again later</p>
                   </div>
-                )}
-                {userInfo.user?.is_email_verified && (
-                  <div>You are a staff member</div>
-                )}
-                {userInfo.user?.is_admin && <div>You are an admin</div>}
-                {userInfo.user?.is_email_verified && (
-                  <div>You are email verified</div>
                 )}
               </>
             )}

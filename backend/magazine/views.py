@@ -1,4 +1,5 @@
 from rest_framework.viewsets import ModelViewSet
+from rest_framework import status
 from .models import Article, SpecialArticle, Category
 from .serializer import ArticleSerializer, SpecialArticleSerializer, CategorySerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
@@ -7,7 +8,9 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 class ArticlesPagination(PageNumberPagination):
-    page_size = 3
+    page_size = 1
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 class ArticleView(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -44,6 +47,8 @@ class CategoryView(ModelViewSet):
 
 class ArticlesByCategoryPagination(PageNumberPagination):
     page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 
 class ArticleListByCategoryView(APIView):
@@ -59,7 +64,30 @@ class ArticleListByCategoryView(APIView):
 
         articles = Article.objects.filter(category=category)
 
-        # Paginate the articles queryset
+        paginator = self.pagination_class()
+        paginated_articles = paginator.paginate_queryset(articles, request)
+
+        serializer = self.serializer_class(paginated_articles, many=True)
+
+        return paginator.get_paginated_response(serializer.data)
+    
+class ArticleSearchPagination(PageNumberPagination):
+    page_size = 1
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+    
+class ArticleSearchView(APIView):
+    permission_classes = [AllowAny]
+    serializer_class = ArticleSerializer
+    pagination_class = ArticleSearchPagination
+
+    def get(self, request):
+        search_query = request.query_params.get('search_query', None)
+        print(search_query)
+        if not search_query:
+            return Response({'error': 'search_query parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        articles = Article.objects.filter(title__icontains=search_query)
         paginator = self.pagination_class()
         paginated_articles = paginator.paginate_queryset(articles, request)
 

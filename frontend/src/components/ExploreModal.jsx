@@ -20,7 +20,7 @@ const ExploreModal = () => {
 
       <div className=" h-screen ">
         <ul className="md:text-center pl-20">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <li className="hover:scale-110 duration-300 p-5 text-2xl">
               <Link onClick={() => dispatch(setExploreClose())} href={`/category/${encodeURIComponent(category.slug)}`}>
                 {category.name}

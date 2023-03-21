@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useRegisterMutation, useGetCountriesQuery } from "@/redux/api/generalApi";
+import {
+  useRegisterMutation,
+  useGetCountriesQuery,
+} from "@/redux/api/generalApi";
 import { Oval } from "react-loader-spinner";
 import {
   setCloseRegisterViewState,
@@ -7,18 +10,33 @@ import {
 } from "@/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import Image from "next/image";
 
 const Register = () => {
-  const [countries, setCounties] = useState(null)
+  const [countries, setCounties] = useState(null);
   const dispatch = useDispatch();
-  const [register, { isLoading, isSuccess }] = useRegisterMutation();
-  const { data, isSuccess: countriesSuccess, isError } = useGetCountriesQuery()
+  const [register, { isLoading, isSuccess, isError:isRegisterError, error }] = useRegisterMutation();
+  const { data, isSuccess: countriesSuccess, isError } = useGetCountriesQuery();
+
+  const [focused, setFocused] = useState({
+    first_name: false,
+    last_name: false,
+    email: false,
+    country: false,
+    gender: false,
+    password: false,
+    re_password: false,
+  });
+
+  const handleFocused = (field) => {
+    setFocused((prev) => ({ ...prev, [field]: true }));
+  };
 
   useEffect(() => {
     if (countriesSuccess) {
-      setCounties(data)
+      setCounties(data);
     }
-  }, [data, countriesSuccess])
+  }, [data, countriesSuccess]);
 
   const initialFormData = Object.freeze({
     first_name: "",
@@ -62,7 +80,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(body);
     if (body) {
       try {
         if (body.password !== body.re_password) {
@@ -85,11 +102,13 @@ const Register = () => {
     return (
       <>
         <div className="">
-          <img
-            className="mx-auto h-12 w-auto mb-5"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Mordern Minds"
-          />
+          <Image
+            className="mx-auto w-auto"
+            src={"/logo.png"}
+            alt="Mordern minds logo"
+            height="40"
+            width="40"
+          ></Image>
           <p className="text-center text-teal-800 text-lg mb-10">
             Account have been successfully created, now check your emails we
             have sent a link to verify your email and activate you account, come
@@ -102,11 +121,13 @@ const Register = () => {
     return (
       <>
         <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Mordern Minds"
-          />
+          <Image
+            className="mx-auto w-auto"
+            src={"/logo.png"}
+            alt="Mordern minds logo"
+            height="40"
+            width="40"
+          ></Image>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
             Create your account
           </h2>
@@ -120,7 +141,7 @@ const Register = () => {
           <input type="hidden" name="remember" value="true" />
           <div className="-space-y-px rounded-md shadow-sm">
             <div className="grid grid-cols-2 gap-4">
-              <div>
+              <div className="mb-3">
                 <label htmlFor="first_name" className="sr-only">
                   First name
                 </label>
@@ -130,12 +151,15 @@ const Register = () => {
                   autoComplete="first_name"
                   value={first_name}
                   onChange={onChange}
+                  focused={focused.first_name.toString()}
+                  onBlur={() => handleFocused("first_name")}
                   required
-                  className="relative block w-full appearance-none my-2 rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="First name"
                 />
+                <span className="error-message ">First name is required</span>
               </div>
-              <div>
+              <div className="mb-3">
                 <label htmlFor="first_name" className="sr-only">
                   Last name
                 </label>
@@ -145,13 +169,16 @@ const Register = () => {
                   autoComplete="last name"
                   value={last_name}
                   onChange={onChange}
+                  focused={focused.last_name.toString()}
+                  onBlur={() => handleFocused("last_name")}
                   required
-                  className="relative block w-full appearance-none my-2 rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                  className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Last name"
                 />
+                <span className="error-message ">Last name is required</span>
               </div>
             </div>
-            <div>
+            <div className="">
               <label htmlFor="email-address" className="sr-only">
                 Email address
               </label>
@@ -162,10 +189,13 @@ const Register = () => {
                 value={email}
                 onChange={onChange}
                 autoComplete="email"
+                focused={focused.email.toString()}
+                onBlur={() => handleFocused("email")}
                 required
-                className="relative block w-full appearance-none rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Email address"
+                className="relative block w-full appearance-none rounded  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                placeholder="Invalid email"
               />
+              <span className="error-message ">Email is required</span>
             </div>
             <div className="flex flex-col space-y-1">
               <label className="text-sm font-medium sr-only" htmlFor="country">
@@ -178,6 +208,8 @@ const Register = () => {
                 name="country"
                 value={country}
                 onChange={onChange}
+                focused={focused.country.toString()}
+                onBlur={() => handleFocused("country")}
               >
                 <option value="">Select a country</option>
                 {/* Render options from the countries model */}
@@ -187,6 +219,7 @@ const Register = () => {
                   </option>
                 ))}
               </select>
+              <span className="error-message ">Country is required</span>
             </div>
             <div className="flex flex-col space-y-3 pb-3">
               <label className="text-sm font-medium sr-only" htmlFor="gender">
@@ -199,6 +232,8 @@ const Register = () => {
                 name="gender"
                 value={gender}
                 onChange={onChange}
+                focused={focused.gender.toString()}
+                onBlur={() => handleFocused("gender")}
               >
                 <option value="">Select a gender</option>
                 <option value="male">Male</option>
@@ -206,8 +241,9 @@ const Register = () => {
                 <option value="nonbinary">Non-binary</option>
                 <option value="other">Other</option>
               </select>
+              <span className="error-message ">Gender is required</span>
             </div>
-            <div>
+            <div className="">
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
@@ -217,12 +253,16 @@ const Register = () => {
                 type="password"
                 value={password}
                 onChange={onChange}
+                focused={focused.password.toString()}
+                onBlur={() => handleFocused("password")}
                 required
                 className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Password"
               />
+              <span className="error-message ">Password is required</span>
             </div>
-            <div>
+            
+            <div className="">
               <label htmlFor="password" className="sr-only">
                 Confirm password
               </label>
@@ -232,10 +272,13 @@ const Register = () => {
                 type="password"
                 value={re_password}
                 onChange={onChange}
+                focused={focused.re_password.toString()}
+                onBlur={() => handleFocused("re_password")}
                 required
                 className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Confirm password"
               />
+              <span className="error-message ">Confirm password is required</span>
             </div>
           </div>
           <div className="flex items-center justify-center">
@@ -272,7 +315,7 @@ const Register = () => {
             ) : (
               <button
                 type="submit"
-                className="group relative flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                className="group relative flex w-full justify-center border border-transparent bg-black  hover:bg-gray-800 py-2 px-4 text-sm font-medium text-white focus:outline-none focus:ring-2 "
               >
                 Register
               </button>
