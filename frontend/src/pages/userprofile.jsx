@@ -14,7 +14,7 @@ import { Oval, ThreeDots } from "react-loader-spinner";
 import Link from "next/link";
 import { toast } from "react-toastify";
 
-const userprofile = () => {
+const Userprofile = () => {
   const router = useRouter();
 
   const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
@@ -347,7 +347,7 @@ const userprofile = () => {
                     onClick={handleAccountDelete}
                     className="bg-black hover:bg-gray-800 text-white py-2 px-4"
                   >
-                    Yes I'm sure, delete my Account
+                    Yes I&apos;m sure, delete my Account
                   </button>
                   <button
                     onClick={() => setAreYouSure(false)}
@@ -383,4 +383,4 @@ const userprofile = () => {
   );
 };
 
-export default userprofile;
+export default Userprofile;

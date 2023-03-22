@@ -57,8 +57,8 @@ const Unsubscibe = () => {
             {defaultDiv && (
               <>
                 <p>
-                  Unsubscribe from our Newsletter please select the "Unsubscribe
-                  Me" button below to unsubscribe from future updates.
+                  Unsubscribe from our Newsletter please select the &quot;Unsubscribe
+                  Me&quot; button below to unsubscribe from future updates.
                 </p>
                 <button
                   onClick={handleUnsubscribe}
@@ -71,14 +71,14 @@ const Unsubscibe = () => {
             {isSuccess && (
               <>
                 <p>
-                  You have been successfully Unsubscribed, We're sorry to see you go.
+                  You have been successfully Unsubscribed, We&apos;re sorry to see you go.
                 </p>
               </>
             )}
             {error?.data.detail === "Not found." && (
               <div className="bg-green-200 text-green-800 py-2 px-4 rounded-md text-center">
                 <p>
-                  Your'e already unsubscribed from the newsletter
+                  You are already unsubscribed from the newsletter
                 </p>
               </div>
             )}

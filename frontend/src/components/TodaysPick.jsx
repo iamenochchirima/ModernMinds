@@ -19,7 +19,7 @@ const TodaysPick = () => {
   return (
     <div className="">
       <div className="pt-5">
-        <span className="font- font-bold text-2xl">TODAY'S PICK</span>
+        <span className="font- font-bold text-2xl">TODAY&apos;S PICK</span>
       </div>
       {specialSuccess && (
         <div className="py-1">

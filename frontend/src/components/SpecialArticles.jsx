@@ -117,7 +117,7 @@ const SpecialArticles = () => {
                       <div className="md:pt-20 pt-52 relative z-5 px-5">
                         <div className="pt-5">
                           <span className="border-b  font-bold text-xl">
-                            EDITOR'S NOTE
+                            EDITOR&apos;S NOTE
                           </span>
                         </div>
                         <h1 className="py-2 ">{article.title}</h1>

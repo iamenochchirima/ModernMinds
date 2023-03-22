@@ -178,7 +178,7 @@ const Login = () => {
       </form>
       <div className="">
         <p className="text-center">
-          Don't have an account?{" "}
+          Do not have an account?{" "}
           <span className=" text-indigo-600">
             <button onClick={handleCreateAccountClick}>
               Create an account

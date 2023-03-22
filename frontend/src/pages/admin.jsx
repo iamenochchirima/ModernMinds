@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useMainNewsletterMutation } from "@/redux/api/authApi";
 import Link from "next/link";
 
-const admin = () => {
+const Admin = () => {
   const router = useRouter();
 
   const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL;
@@ -85,4 +85,4 @@ const admin = () => {
   );
 };
 
-export default admin;
+export default Admin;
