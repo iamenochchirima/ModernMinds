@@ -353,7 +353,7 @@ const Userprofile = () => {
                     onClick={() => setAreYouSure(false)}
                     className="bg-gray-300 hover:bg-dimBlue py-2 px-4"
                   >
-                    I'll keep it
+                    I&apos;ll keep it
                   </button>
                 </div>
               )}
