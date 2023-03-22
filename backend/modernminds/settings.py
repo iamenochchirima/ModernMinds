@@ -15,9 +15,9 @@ SECRET_KEY = 'django-insecure-q&xt=ssmy_3#1nl^w5w$vx1=)ml8f5&u9sdnuf$it1tq%g&wb!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
 
-CSRF_TRUSTED_ORIGINS = [config('CSRF_TRUSTED_ORIGINS')]
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='').split(',')
 
 # Application definition
 
@@ -202,6 +202,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'CSRF_TRUSTED_ORIGINS': CSRF_TRUSTED_ORIGINS,
 
 }
 
