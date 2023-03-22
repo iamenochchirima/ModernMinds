@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+import os
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -261,7 +262,7 @@ CKEDITOR_CONFIGS = {
         'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',
             'image2', # the responsive image plugin
             # your extra plugins here
             'div',
@@ -278,8 +279,15 @@ CKEDITOR_CONFIGS = {
             'elementspath',
             'codesnippet',
         ]),
-        'image2_captionedClass': 'image-captioned',
+        'image2_captionedClass': 'image-captioned ',
         'image2_responsive': True,
         'image2_disableResizer': True,
+        'image2_disableLinkInsertion': True,
+        'image2_prefillDimensions': True,
+        'image2_captionPlaceholder': 'Caption',
+        'image2_config': {
+            'hSpace': 10,
+            'vSpace': 10
+        },
     }
 }
