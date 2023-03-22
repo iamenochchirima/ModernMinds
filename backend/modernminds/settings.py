@@ -1,5 +1,4 @@
 from pathlib import Path
-import os
 from decouple import config
 from datetime import timedelta
 
@@ -16,7 +15,7 @@ SECRET_KEY = 'django-insecure-q&xt=ssmy_3#1nl^w5w$vx1=)ml8f5&u9sdnuf$it1tq%g&wb!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -105,8 +104,12 @@ CORS_ORIGIN_WHITELIST = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'modernminds',
+        'USER': 'postgres',
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
