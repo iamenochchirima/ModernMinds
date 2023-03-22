@@ -15,9 +15,9 @@ SECRET_KEY = 'django-insecure-q&xt=ssmy_3#1nl^w5w$vx1=)ml8f5&u9sdnuf$it1tq%g&wb!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
+ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default='').split(',')
+CSRF_TRUSTED_ORIGINS = ['https://modernminds-production.up.railway.app']
 
 # Application definition
 
