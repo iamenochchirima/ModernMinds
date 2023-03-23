@@ -77,11 +77,11 @@ const Search = () => {
           </div>
         )}
         <div className="flex justify-center items-center">
-          <div className="grid grid-cols-2 w-3/4 gap-10 mt-10">
+          <div className="grid grid-cols-2 md:w-3/4 gap-10 mt-10">
             {articles?.map((article) => (
               <div
                 key={article.id}
-                className="col-span-1 border p-4 rounded-md"
+                className="md:col-span-1 col-span-2 border p-4 rounded-md"
               >
                 <div className="flex items-center space-y-3">
                   <div className="w-2/3">
