@@ -28,7 +28,8 @@ export default function App({ Component, ...rest }) {
       <Provider store={store}>
         <div className="font-graphik">
           <Head>
-            <Script
+          </Head>
+          <Script
               dangerouslySetInnerHTML={{
                 __html: `
               window.dataLayer = window.dataLayer || [];
@@ -40,7 +41,6 @@ export default function App({ Component, ...rest }) {
             `,
               }}
             />
-          </Head>
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <Script
             strategy="afterInteractive"
