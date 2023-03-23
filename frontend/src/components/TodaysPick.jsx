@@ -24,54 +24,55 @@ const TodaysPick = () => {
       {specialSuccess && (
         <div className="py-1">
           {specialData?.map((article) => {
-            return (
-              <>
-                {article?.todays_pick && !article.archive && (
-                  <div key={article.id} className="mt-3">
-                    <div className="flex items-center gap-1">
-                      <div className="w-2/3">
-                        {categories?.map((category) => (
-                          <>
-                            {category.id === article.category && (
-                              <Link
-                                href={`/category/${encodeURIComponent(
-                                  category.slug
-                                )}/`}
+            if (article?.todays_pick && !article.archive) {
+              return (
+                <div key={article.id} className="mt-3">
+                  <div className="flex items-center gap-1">
+                    <div className="w-2/3">
+                      {categories?.map((category) => {
+                        if (category.id === article.category) {
+                          return (
+                            <Link
+                              key={category.id}
+                              href={`/category/${encodeURIComponent(
+                                category.slug
+                              )}/`}
+                            >
+                              <span
+                                key={category.id}
+                                className="  text-xs border-b border-yellow-400 hover:border-black tracking-widest"
                               >
-                                <span
-                                  key={category.id}
-                                  className="  text-xs border-b border-yellow-400 hover:border-black tracking-widest"
-                                >
-                                  {category.name}
-                                </span>
-                              </Link>
-                            )}
-                          </>
-                        ))}
-                        <Link
-                          href={`/specialArticles/${encodeURIComponent(
-                            article.slug
-                          )}/`}
-                        >
-                          <h1 className="hover:underline font-bold">
-                            {article.title}
-                          </h1>
-                        </Link>
-                      </div>
-                        <div className="w-1/3 relative">
-                          {article?.cover_image && (
-                            <img
-                              src={article?.cover_image}
-                              className="w-full h-[100px] object-cover"
-                              alt="Article cover image"
-                            />
-                          )}
-                        </div>
+                                {category.name}
+                              </span>
+                            </Link>
+                          );
+                        }
+                        return null;
+                      })}
+                      <Link
+                        href={`/specialArticles/${encodeURIComponent(
+                          article.slug
+                        )}/`}
+                      >
+                        <h1 className="hover:underline font-bold">
+                          {article.title}
+                        </h1>
+                      </Link>
+                    </div>
+                    <div className="w-1/3 relative">
+                      {article?.cover_image && (
+                        <img
+                          src={article?.cover_image}
+                          className="w-full h-[100px] object-cover"
+                          alt="Article cover image"
+                        />
+                      )}
                     </div>
                   </div>
-                )}
-              </>
-            );
+                </div>
+              );
+            }
+            return null;
           })}
         </div>
       )}

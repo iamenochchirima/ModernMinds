@@ -20,7 +20,9 @@ const LatestArticles = () => {
 
   return (
     <>
-      <h1 className="text-center p-10 text-2xl font-extrabold">LATEST STORIES</h1>
+      <h1 className="text-center p-10 text-2xl font-extrabold">
+        LATEST STORIES
+      </h1>
       <div className="px-3 ss:px-10 grid grid-cols-6 gap-5">
         {data?.results.map((article) => (
           <div
@@ -49,32 +51,39 @@ const LatestArticles = () => {
                   </h3>
                   <h1 className="hover:underline font-bold">{article.title}</h1>
                 </Link>
-                {categories?.map((category) => (
-                  <>
-                    {category.id === article.category && (
+                {categories?.map((category) => {
+                  if (category.id === article.category) {
+                    return (
                       <Link
+                        key={category.id}
                         href={`/category/${encodeURIComponent(category.slug)}/`}
                       >
                         <span
-                          key={category.id}
-                          className="  text-xs border-b border-yellow-400 hover:border-black tracking-widest"
+                          className="text-xs border-b border-yellow-400 hover:border-black tracking-widest"
                         >
                           {category.name}
                         </span>
                       </Link>
-                    )}
-                  </>
-                ))}
+                    );
+                  }
+                  return null;
+                })}
               </div>
             </div>
           </div>
         ))}
       </div>
       <div className="text-center mt-5 flex gap-4 justify-center">
-      {data?.previous ? (
-        <button className=" border-b-2 border-black" onClick={handlePrevious}>Previous</button>
-      ) : null}
-      {data?.next ? <button className="border-b-2 border-black" onClick={handleLoadMore}>Load More</button> : null}  
+        {data?.previous ? (
+          <button className=" border-b-2 border-black" onClick={handlePrevious}>
+            Previous
+          </button>
+        ) : null}
+        {data?.next ? (
+          <button className="border-b-2 border-black" onClick={handleLoadMore}>
+            Load More
+          </button>
+        ) : null}
       </div>
     </>
   );

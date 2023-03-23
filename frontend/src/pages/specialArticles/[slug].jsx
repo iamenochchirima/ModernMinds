@@ -50,10 +50,11 @@ const SpecialArticle = () => {
                 <div className="sm:pl-10">
                   <h1 className="text-teal-600">{article?.issue}</h1>
                   <h1 className="mt-5">
-                    {categories?.map((category) => (
-                      <>
-                        {category.id === article?.category && (
+                    {categories?.map((category) => {
+                      if (category.id === article?.category) {
+                        return (
                           <Link
+                            key={category.id}
                             href={`/category/${encodeURIComponent(
                               category.slug
                             )}/`}
@@ -65,9 +66,10 @@ const SpecialArticle = () => {
                               {category.name}
                             </span>
                           </Link>
-                        )}
-                      </>
-                    ))}
+                        );
+                      }
+                      return null;
+                    })}
                   </h1>
                 </div>
               </div>

@@ -20,58 +20,56 @@ const SpecialArticles = () => {
       {specialSuccess && (
         <>
           {specialData.map((special_atricle) => {
-            return (
-              <>
-                {special_atricle?.top_story && (
-                  <div
-                    key={special_atricle.id}
-                    style={{
-                      backgroundImage: `url(${special_atricle?.cover_image})`,
-                    }}
-                    className="col-span-4 sm:col-span-2 md:col-span-3 relative bg-cover bg-center text-white "
-                  >
-                    <div>
-                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-80 "></div>
-                      <div className="relative w-full h-[600px] z-5">
-                        <div className="absolute bottom-0 pb-10 px-5">
-                          <Link
-                            className=""
-                            href={`/specialArticles/${encodeURIComponent(
-                              special_atricle.slug
-                            )}/`}
-                          >
-                            <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
-                              TOP STORY
-                            </span>
-                            <h1 className="md:text-4xl text-3xl font-bold pt-5">
-                              {special_atricle.title}
-                            </h1>
-                          </Link>
-                          {categories?.map((category) => (
-                            <>
-                              {category.id === special_atricle.category && (
-                                <Link
-                                  href={`/category/${encodeURIComponent(
-                                    category.slug
-                                  )}/`}
-                                >
-                                  <h1
-                                    key={category.id}
-                                    className="pt-3 text-dimWhite text-xs mt-5 hover:underline tracking-widest"
-                                  >
-                                    {category.name}
-                                  </h1>
-                                </Link>
-                              )}
-                            </>
-                          ))}
-                        </div>
+            if (special_atricle?.top_story) {
+              return (
+                <div
+                  key={special_atricle.id}
+                  style={{
+                    backgroundImage: `url(${special_atricle?.cover_image})`,
+                  }}
+                  className="col-span-4 sm:col-span-2 md:col-span-3 relative bg-cover bg-center text-white "
+                >
+                  <div>
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-80 "></div>
+                    <div className="relative w-full h-[600px] z-5">
+                      <div className="absolute bottom-0 pb-10 px-5">
+                        <Link
+                          className=""
+                          href={`/specialArticles/${encodeURIComponent(
+                            special_atricle.slug
+                          )}/`}
+                        >
+                          <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
+                            TOP STORY
+                          </span>
+                          <h1 className="md:text-4xl text-3xl font-bold pt-5">
+                            {special_atricle.title}
+                          </h1>
+                        </Link>
+                        {categories?.map((category) => {
+                          if (category.id === special_atricle.category) {
+                            return (
+                              <Link
+                                key={category.id}
+                                href={`/category/${encodeURIComponent(
+                                  category.slug
+                                )}/`}
+                              >
+                                <span className="text-xs border-b border-yellow-400 hover:border-black tracking-widest">
+                                  {category.name}
+                                </span>
+                              </Link>
+                            );
+                          }
+                          return null;
+                        })}
                       </div>
                     </div>
                   </div>
-                )}
-              </>
-            );
+                </div>
+              );
+            }
+            return null;
           })}
         </>
       )}
@@ -100,33 +98,32 @@ const SpecialArticles = () => {
       <div className="col-span-4 sm:col-span-2 md:col-span-1 ">
         <div className="py-1">
           {specialData?.map((article) => {
-            return (
-              <>
-                {article?.editor_note && !article.archive && (
-                  <div
-                    key={article.id}
-                    style={{ backgroundImage: `url(${article.cover_image})` }}
-                    className="relative bg-cover bg-center text-white hover:scale-105 duration-300"
+            if (article?.editor_note && !article.archive) {
+              return (
+                <div
+                  key={article.id}
+                  style={{ backgroundImage: `url(${article.cover_image})` }}
+                  className="relative bg-cover bg-center text-white hover:scale-105 duration-300"
+                >
+                  <Link
+                    href={`/specialArticles/${encodeURIComponent(
+                      article.slug
+                    )}/`}
                   >
-                    <Link
-                      href={`/specialArticles/${encodeURIComponent(
-                        article.slug
-                      )}/`}
-                    >
-                      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-70 "></div>
-                      <div className="md:pt-20 pt-52 relative z-5 px-5">
-                        <div className="pt-5">
-                          <h1 className=" text-center font-extrabold text-lg">
-                            EDITOR&apos;S NOTE
-                          </h1>
-                        </div>
-                        <h1 className="py-2 ">{article.title}</h1>
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-70 "></div>
+                    <div className="md:pt-20 pt-52 relative z-5 px-5">
+                      <div className="pt-5">
+                        <h1 className=" text-center font-extrabold text-lg">
+                          EDITOR&apos;S NOTE
+                        </h1>
                       </div>
-                    </Link>
-                  </div>
-                )}
-              </>
-            );
+                      <h1 className="py-2 ">{article.title}</h1>
+                    </div>
+                  </Link>
+                </div>
+              );
+            }
+            return null;
           })}
         </div>
         <TodaysPick />
