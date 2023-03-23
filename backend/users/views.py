@@ -67,7 +67,7 @@ class CustomUserCreate(APIView):
                 token = PasswordResetTokenGenerator().make_token(user)
 
                 # Construct verification URL
-                verification_url = f'http://localhost:3000/verify-email/{uidb64}/{token}'
+                verification_url = f"{config('FRONTEND_BASE_URL')}/verify-email/{uidb64}/{token}"
 
                 # Send verification email using SendGrid dynamic template
                 message = Mail(
@@ -180,7 +180,7 @@ class ChangeEmailView(APIView):
         token = PasswordResetTokenGenerator().make_token(user)
 
         # Construct verification URL
-        verification_url = f'http://localhost:3000/verify-email/{uidb64}/{token}'
+        verification_url = f"{config('FRONTEND_BASE_URL')}/verify-email/{uidb64}/{token}"
 
         # Send verification email using SendGrid dynamic template
         message = Mail(
@@ -241,7 +241,7 @@ class PasswordResetRequestView(APIView):
         token = PasswordResetTokenGenerator().make_token(user)
 
         # Construct reset URL
-        reset_url = f'http://localhost:3000/reset-password-confirm/{uidb64}/{token}'
+        reset_url = f"{config('FRONTEND_BASE_URL')}/reset-password-confirm/{uidb64}/{token}"
 
         # Send reset email using SendGrid dynamic template
         message = Mail(
