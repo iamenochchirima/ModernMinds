@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import Script from "next/script";
 import { useEffect } from "react";
 import * as gtag from "../lib/gtag";
-import Head from "next/head";
 
 export default function App({ Component, ...rest }) {
   const { store, props } = wrapper.useWrappedStore(rest);
@@ -27,9 +26,7 @@ export default function App({ Component, ...rest }) {
     <>
       <Provider store={store}>
         <div className="font-graphik">
-          <Head>
-          </Head>
-          <Script
+          <Script id="google analytics"
               dangerouslySetInnerHTML={{
                 __html: `
               window.dataLayer = window.dataLayer || [];
