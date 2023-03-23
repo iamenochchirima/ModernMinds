@@ -32,7 +32,7 @@ const SpecialArticles = () => {
                   >
                     <div>
                       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-80 "></div>
-                      <div className="relative w-full h-[500px] z-5">
+                      <div className="relative w-full h-[600px] z-5">
                         <div className="absolute bottom-0 pb-10 px-5">
                           <Link
                             className=""
@@ -43,7 +43,7 @@ const SpecialArticles = () => {
                             <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
                               TOP STORY
                             </span>
-                            <h1 className="text-5xl font-bold pt-5">
+                            <h1 className="md:text-4xl text-3xl font-bold pt-5">
                               {special_atricle.title}
                             </h1>
                           </Link>
@@ -116,9 +116,9 @@ const SpecialArticles = () => {
                       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-70 "></div>
                       <div className="md:pt-20 pt-52 relative z-5 px-5">
                         <div className="pt-5">
-                          <span className="border-b  font-bold text-xl">
+                          <h1 className=" text-center font-extrabold text-lg">
                             EDITOR&apos;S NOTE
-                          </span>
+                          </h1>
                         </div>
                         <h1 className="py-2 ">{article.title}</h1>
                       </div>

@@ -19,7 +19,7 @@ const TodaysPick = () => {
   return (
     <div className="">
       <div className="pt-5">
-        <span className="font- font-bold text-2xl">TODAY&apos;S PICK</span>
+        <span className="text-xl font-extrabold">TODAY&apos;S PICK</span>
       </div>
       {specialSuccess && (
         <div className="py-1">
@@ -27,8 +27,8 @@ const TodaysPick = () => {
             return (
               <>
                 {article?.todays_pick && !article.archive && (
-                  <div key={article.id} className="">
-                    <div className="flex items-center space-y-3">
+                  <div key={article.id} className="mt-3">
+                    <div className="flex items-center gap-1">
                       <div className="w-2/3">
                         {categories?.map((category) => (
                           <>

@@ -21,7 +21,7 @@ import Login from "./Login";
 import Register from "./Register";
 import { GrClose } from "react-icons/gr";
 import PasswordReset from "./PasswordReset";
-import { Oval } from "react-loader-spinner";
+import { Oval, ThreeDots } from "react-loader-spinner";
 import { AiOutlineDown, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { GrMenu } from "react-icons/gr";
 import { BsPerson } from "react-icons/bs";
@@ -116,6 +116,11 @@ const Navbar = () => {
     e.preventDefault;
     dispatch(setOpenLoginViewState());
   };
+
+  const handleMobileNewsLetter = () => {
+    setMenuOpen(false)
+    handleShowForm()
+  }
 
   useEffect(() => {
     if (logoutSuccess) {
@@ -264,18 +269,16 @@ const Navbar = () => {
                         className="border border-gray-400 py-2 px-4 rounded w-full mb-4"
                       />
                       {letterLoading ? (
-                        <Oval
-                          height={30}
-                          width={30}
-                          color="blue"
-                          wrapperStyle={{}}
-                          wrapperClass=""
-                          visible={true}
-                          ariaLabel="oval-loading"
-                          secondaryColor="#4fa94d"
-                          strokeWidth={4}
-                          strokeWidthSecondary={4}
-                        />
+                        <ThreeDots
+                        height="50"
+                        width="50"
+                        radius="9"
+                        color="black"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClassName=""
+                        visible={true}
+                      />
                       ) : (
                         <button
                           type="submit"
@@ -356,25 +359,25 @@ const Navbar = () => {
                 </button>
 
                 <div className="menu-container h-screen ">
-                  <ul className="text-center">
+                  <ul className="md:text-center flex flex-col gap-10 pl-20 p-5 text-2xl">
                     {userInfo?.user?.is_staff && (
-                      <li className="">
+                      <li className="hover:scale-110 duration-300">
                         <Link href="/admin">
                           <button>Admin</button>
                         </Link>
                       </li>
                     )}
-                    <li>
+                    <li className="hover:scale-110 duration-300">
                       <Link href="/subscribe">
                         <button className="">Subscribe</button>
                       </Link>
                     </li>
-                    <li>
-                      <button className="" onClick={handleShowForm}>
+                    <li className="hover:scale-110 duration-300">
+                      <button className="" onClick={handleMobileNewsLetter}>
                         Get The Newsletter
                       </button>
                     </li>
-                    <li>
+                    <li className="hover:scale-110 duration-300">
                       <button
                         onClick={() => handleExploreOpen()}
                         className=""

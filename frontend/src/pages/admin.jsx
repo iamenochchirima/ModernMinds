@@ -5,33 +5,27 @@ import { GrClose } from "react-icons/gr";
 import { useRouter } from "next/router";
 import { useMainNewsletterMutation } from "@/redux/api/authApi";
 import Link from "next/link";
+import { ThreeDots } from "react-loader-spinner";
+import { AiOutlineWarning } from "react-icons/ai";
 
 const Admin = () => {
   const router = useRouter();
 
   const adminUrl = process.env.NEXT_PUBLIC_ADMIN_URL;
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [confirm, setConfirm] = useState(false);
 
   const [sendmainLetter, { isSuccess, isLoading, isError, error }] =
     useMainNewsletterMutation();
 
   const handleMainMailSend = () => {
+    setConfirm(false)
     try {
-      setIsButtonDisabled(true);
       sendmainLetter();
     } catch (err) {
       console.error("Failed to sign up for newsletter: ", err);
     }
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      setTimeout(() => {
-        setIsButtonDisabled(false);
-      }, 120000);
-    }
-  }, [isSuccess]);
 
   return (
     <Layout>
@@ -57,17 +51,46 @@ const Admin = () => {
             <h2 className="mt-6 text-center text-xl font-medium tracking-tight text-gray-700">
               Newsletters
             </h2>
-            <div className="flex border-t border-b p-4 items-center border-gray-700 justify-between">
+            {confirm && (
+              <div className="text-center">
+              <div className="bg-red-200 p-5">
+                <div className="flex items-center justify-center gap-2 text-xl">
+                  <AiOutlineWarning className=" text-red-600 text-2xl" />
+                  <span className="text-red-900">Warning! </span>
+                </div>
+                <p className="text-center mt-3">
+                  You are about to send an email newsletter to all the subscribers. This action is
+                  not reversable, make sure you have correctly updated and
+                  finished setting up the email template you are about to send.
+                </p>
+              
+              </div>
+              <button onClick={handleMainMailSend} className="text-center bg-black px-4 py-2 mt-5 text-white text-bold">Proceed</button>
+              </div>
+            )}
+            {!confirm && <div className="flex border-t border-b p-4 items-center border-gray-700 justify-between">
               <span>The weekly main email for all subscribers</span>
-              <button
-                type="submit"
-                onClick={handleMainMailSend}
-                className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded"
-                disabled={isButtonDisabled}
-              >
-                {isLoading ? "Sending..." : "Send"}
-              </button>
-            </div>
+              {isLoading ? (
+                <ThreeDots
+                  height="50"
+                  width="50"
+                  radius="9"
+                  color="black"
+                  ariaLabel="three-dots-loading"
+                  wrapperStyle={{}}
+                  wrapperClassName=""
+                  visible={true}
+                />
+              ) : (
+                <button
+                  type="submit"
+                  onClick={() => setConfirm(true)}
+                  className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded"
+                >
+                  Send
+                </button>
+              )}
+            </div>}
             {isSuccess && (
               <div className="bg-green-200 text-green-700 py-2 px-4 rounded-md text-center">
                 Emails sent successfully!

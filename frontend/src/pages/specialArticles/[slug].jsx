@@ -75,7 +75,7 @@ const SpecialArticle = () => {
           </div>
           <div className="flex justify-center">
             <div
-              className="sm:w-3/4 indent-2"
+              className="sm:w-3/4"
               dangerouslySetInnerHTML={{ __html: article?.content }}
               safe="true"
             />
