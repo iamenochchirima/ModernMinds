@@ -3,17 +3,19 @@ import {
   useRegisterMutation,
   useGetCountriesQuery,
 } from "@/redux/api/generalApi";
-import { Oval, ThreeDots } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 import {
   setCloseRegisterViewState,
   setOpenLoginViewState,
 } from "@/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
-import Link from "next/link";
 import Image from "next/image";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Register = () => {
   const [countries, setCounties] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [reOpen, setReOpen] = useState(false);
   const dispatch = useDispatch();
   const [register, { isLoading, isSuccess, isError: isRegisterError, error }] =
     useRegisterMutation();
@@ -243,59 +245,57 @@ const Register = () => {
               </select>
               <span className="error-message ">Gender is required</span>
             </div>
-            <div className="">
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={onChange}
-                focused={focused.password.toString()}
-                onBlur={() => handleFocused("password")}
-                required
-                className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Password"
-              />
-              <span className="error-message ">Password is required</span>
+            <div className="mb-5">
+              <div className="flex items-center mb-5 border rounded">
+                <input
+                  id="password"
+                  name="password"
+                  type={open ? "text" : "password"}
+                  value={password}
+                  onChange={onChange}
+                  required
+                  className=" w-full  px-3 py-2 border-none text-gray-900 placeholder-gray-500 outline-none sm:text-sm"
+                  placeholder="Password"
+                />
+                {open ? (
+                  <AiOutlineEye
+                    onClick={() => setOpen(false)}
+                    className="mr-2 text-xl"
+                  />
+                ) : (
+                  <AiOutlineEyeInvisible
+                    onClick={() => setOpen(true)}
+                    className="mr-2 text-xl"
+                  />
+                )}
+              </div>
             </div>
-
             <div className="">
-              <label htmlFor="password" className="sr-only">
-                Confirm password
-              </label>
-              <input
-                id="re_password"
-                name="re_password"
-                type="password"
-                value={re_password}
-                onChange={onChange}
-                focused={focused.re_password.toString()}
-                onBlur={() => handleFocused("re_password")}
-                required
-                className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Confirm password"
-              />
-              <span className="error-message ">
-                Confirm password is required
-              </span>
+              <div className="flex border items-center rounded">
+                <input
+                  id="re_password"
+                  name="re_password"
+                  type={reOpen ? "text" : "password"}
+                  value={re_password}
+                  onChange={onChange}
+                  required
+                  className="relative block w-full focus:border-none border-none px-3 py-2 text-gray-900 placeholder-gray-500 outline-none sm:text-sm"
+                  placeholder="Confirm password"
+                />
+                <div className=""></div>
+                {reOpen ? (
+                  <AiOutlineEye
+                    onClick={() => setReOpen(false)}
+                    className="mr-2 text-xl"
+                  />
+                ) : (
+                  <AiOutlineEyeInvisible
+                    onClick={() => setReOpen(true)}
+                    className="mr-2 text-xl"
+                  />
+                )}
+              </div>
             </div>
-          </div>
-          <div className="flex items-center justify-center">
-            <input
-              id="newsletter"
-              name="newsletter"
-              type="checkbox"
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-            />
-            <label
-              htmlFor="newsletter"
-              className="ml-2 block text-sm text-gray-900"
-            >
-              Subscribe to our newsletter
-            </label>
           </div>
           <p className="text-xs">
             Your personal data will be used to support your experience
@@ -336,9 +336,7 @@ const Register = () => {
           <p className="text-center">
             Already have an account?{" "}
             <span className=" text-indigo-600">
-              <button onClick={handleSigninClick} >
-                Sign in
-              </button>
+              <button onClick={handleSigninClick}>Sign in</button>
             </span>
           </p>
         </div>

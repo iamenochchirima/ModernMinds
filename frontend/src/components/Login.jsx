@@ -9,13 +9,14 @@ import {
   setIsLogedIn,
   setOpenPasswordReset,
 } from "@/redux/slices/authSlice";
-import { Oval, ThreeDots } from "react-loader-spinner";
-import Link from "next/link";
+import { ThreeDots } from "react-loader-spinner";
 import Image from "next/image";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
 
   const [login, { isLoading, isSuccess, isError, error }] = useLoginMutation();
 
@@ -107,16 +108,30 @@ const Login = () => {
             <label htmlFor="password" className="sr-only">
               Password
             </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={onChange}
-              required
-              className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-              placeholder="Password"
-            />
+            <div className="flex items-center mb-5 border rounded">
+              <input
+                id="password"
+                name="password"
+                type={open ? "text" : "password"}
+                value={password}
+                onChange={onChange}
+                required
+                className=" w-full  px-3 py-2 border-none text-gray-900 placeholder-gray-500 outline-none sm:text-sm"
+                placeholder="Password"
+                autoComplete="password"
+              />
+              {open ? (
+                <AiOutlineEye
+                  onClick={() => setOpen(false)}
+                  className="mr-2 text-xl"
+                />
+              ) : (
+                <AiOutlineEyeInvisible
+                  onClick={() => setOpen(true)}
+                  className="mr-2 text-xl"
+                />
+              )}
+            </div>
           </div>
           {error &&
             error.data.err.message ===

@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useConfirmResetMutation } from "@/redux/api/generalApi";
 import { setOpenLoginViewState } from "@/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { Oval, ThreeDots } from "react-loader-spinner";
 import Image from "next/image";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 const ConfirmPasswordReset = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { uid, token } = router.query || {};
+  const [open, setOpen] = useState(false);
+  const [reOpen, setReOpen] = useState(false);
 
   const [finishReset, { isSuccess, isLoading, isError, error }] =
     useConfirmResetMutation();
@@ -55,6 +59,16 @@ const ConfirmPasswordReset = () => {
     }
   };
 
+  useEffect(() => {
+    if (isError && error.data.error === "Passwords do not match") {
+      toast.error("Passwords do not match", {
+        autoClose: 5000,
+        position: "top-center",
+        hideProgressBar: true,
+      });
+    }
+  }, [isError]);
+
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75">
       <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -96,37 +110,54 @@ const ConfirmPasswordReset = () => {
               >
                 <input type="hidden" name="remember" value="true" />
                 <div className="-space-y-px rounded-md shadow-sm">
-                  <div>
-                    <label htmlFor="password" className="sr-only">
-                      Password
-                    </label>
+                  <div className="flex items-center mb-5 border rounded">
                     <input
                       id="password"
                       name="password"
-                      type="password"
+                      type={open ? "text" : "password"}
                       value={password}
                       onChange={onChange}
                       required
-                      className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      placeholder="New password"
+                      className=" w-full  px-3 py-2 border-none text-gray-900 placeholder-gray-500 outline-none sm:text-sm"
+                      placeholder="Password"
                     />
+                    {open ? (
+                      <AiOutlineEye
+                        onClick={() => setOpen(false)}
+                        className="mr-2 text-xl"
+                      />
+                    ) : (
+                      <AiOutlineEyeInvisible
+                        onClick={() => setOpen(true)}
+                        className="mr-2 text-xl"
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="-space-y-px rounded-md shadow-sm">
-                  <div>
-                    <label htmlFor="password" className="sr-only">
-                      Retype password
-                    </label>
+                  <div className="flex border items-center rounded">
                     <input
                       id="re_password"
                       name="re_password"
-                      type="password"
+                      type={reOpen ? "text" : "password"}
                       value={re_password}
                       onChange={onChange}
                       required
-                      className="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      placeholder="Confirm new password"
+                      className="relative block w-full focus:border-none border-none px-3 py-2 text-gray-900 placeholder-gray-500 outline-none sm:text-sm"
+                      placeholder="Confirm password"
                     />
+                    <div className=""></div>
+                    {reOpen ? (
+                      <AiOutlineEye
+                        onClick={() => setReOpen(false)}
+                        className="mr-2 text-xl"
+                      />
+                    ) : (
+                      <AiOutlineEyeInvisible
+                        onClick={() => setReOpen(true)}
+                        className="mr-2 text-xl"
+                      />
+                    )}
                   </div>
                 </div>
 

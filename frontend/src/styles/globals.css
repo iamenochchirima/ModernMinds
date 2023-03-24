@@ -78,13 +78,6 @@ select:invalid[focused="true"] ~ .error-message {
   display: block;
 }
 
-input:invalid[focused="true"] {
-  border: 1px solid red;
-}
-select:invalid[focused="true"] {
-  border: 1px solid red;
-}
-
 .fade-in-fwd {
 	-webkit-animation: fade-in-fwd 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	        animation: fade-in-fwd 2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
