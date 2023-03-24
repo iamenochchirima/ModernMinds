@@ -28,14 +28,14 @@ const Article = () => {
           <div className="flex justify-center">
             <img
               src={article?.cover_image}
-              className="w-full h-[724px] object-cover"
+              className="w-full h-[500px] sm:h-[600px] md:h-[724px] object-cover"
               alt="Article cover image"
             />
           </div>
           <div className="flex justify-center">
             <div className="py-10 sm:w-3/4 grid grid-cols-5">
               <div className="col-span-5 sm:col-span-3 sm:border-r-2 ">
-              <h1 className="text-5xl text-teal-900 font-kinfolk font-medium pr-3">
+              <h1 className="text-4xl md:text-5xl text-teal-900 font-kinfolk font-medium pr-3">
                 {article?.title.toUpperCase()}
               </h1>
               </div>
