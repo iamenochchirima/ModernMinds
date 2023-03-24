@@ -106,7 +106,7 @@ const SpecialArticles = () => {
                   className="relative bg-cover bg-center text-white hover:scale-105 duration-300"
                 >
                   <Link
-                    href={`/specialArticles/${encodeURIComponent(
+                    href={`/Articles/${encodeURIComponent(
                       article.slug
                     )}/`}
                   >

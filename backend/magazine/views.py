@@ -1,7 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import status
-from .models import Article, SpecialArticle, Category
-from .serializer import ArticleSerializer, SpecialArticleSerializer, CategorySerializer
+from rest_framework import status, generics
+
+from .models import Article, Category
+from .serializer import ArticleSerializer, CategorySerializer
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -11,21 +12,21 @@ class ArticlesPagination(PageNumberPagination):
     page_size = 1
     page_size_query_param = 'page_size'
     max_page_size = 100
-
-class ArticleView(ModelViewSet):
+    
+class ArticlesView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
+    serializer_class = ArticleSerializer
     pagination_class = ArticlesPagination
+
+    def get_queryset(self):
+        return Article.objects.filter(special=False)
+
+
+class ArticleDetailView(generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
     lookup_field = 'slug'
-    
-
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-        filter_kwargs = {self.lookup_field: self.kwargs[self.lookup_field]}
-        obj = queryset.get(**filter_kwargs)
-        self.check_object_permissions(self.request, obj)
-        return obj
     
 class SpecialArticlesView(APIView):
     permission_classes = [AllowAny]
