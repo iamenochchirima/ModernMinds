@@ -24,7 +24,7 @@ const TodaysPick = () => {
       {specialSuccess && (
         <div className="py-1">
           {specialData?.map((article) => {
-            if (article?.todays_pick && !article.archive) {
+            if (article?.todays_pick) {
               return (
                 <div key={article.id} className="mt-3">
                   <div className="flex items-center gap-1">
@@ -50,7 +50,7 @@ const TodaysPick = () => {
                         return null;
                       })}
                       <Link
-                        href={`/specialArticles/${encodeURIComponent(
+                        href={`/Articles/${encodeURIComponent(
                           article.slug
                         )}/`}
                       >

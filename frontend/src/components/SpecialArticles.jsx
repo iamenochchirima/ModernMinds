@@ -19,13 +19,13 @@ const SpecialArticles = () => {
     <div className="px-3 ss:px-10  mt-24 grid grid-cols-4 gap-5">
       {specialSuccess && (
         <>
-          {specialData.map((special_atricle) => {
-            if (special_atricle?.top_story) {
+          {specialData.map((article) => {
+            if (article?.top_story) {
               return (
                 <div
-                  key={special_atricle.id}
+                  key={article.id}
                   style={{
-                    backgroundImage: `url(${special_atricle?.cover_image})`,
+                    backgroundImage: `url(${article?.cover_image})`,
                   }}
                   className="col-span-4 sm:col-span-2 md:col-span-3 relative bg-cover bg-center text-white "
                 >
@@ -35,19 +35,19 @@ const SpecialArticles = () => {
                       <div className="absolute bottom-0 pb-10 px-5">
                         <Link
                           className=""
-                          href={`/specialArticles/${encodeURIComponent(
-                            special_atricle.slug
+                          href={`/Articles/${encodeURIComponent(
+                            article.slug
                           )}/`}
                         >
                           <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
                             TOP STORY
                           </span>
                           <h1 className="md:text-4xl text-3xl font-bold pt-5">
-                            {special_atricle.title}
+                            {article.title}
                           </h1>
                         </Link>
                         {categories?.map((category) => {
-                          if (category.id === special_atricle.category) {
+                          if (category.id === article.category) {
                             return (
                               <Link
                                 key={category.id}
@@ -98,7 +98,7 @@ const SpecialArticles = () => {
       <div className="col-span-4 sm:col-span-2 md:col-span-1 ">
         <div className="py-1">
           {specialData?.map((article) => {
-            if (article?.editor_note && !article.archive) {
+            if (article?.editor_note) {
               return (
                 <div
                   key={article.id}

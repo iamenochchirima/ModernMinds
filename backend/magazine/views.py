@@ -27,18 +27,13 @@ class ArticleView(ModelViewSet):
         self.check_object_permissions(self.request, obj)
         return obj
     
-class SpecialArticleView(ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = SpecialArticleSerializer
-    queryset = SpecialArticle.objects.all()
-    lookup_field = 'slug'
-
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-        filter_kwargs = {self.lookup_field: self.kwargs[self.lookup_field]}
-        obj = queryset.get(**filter_kwargs)
-        self.check_object_permissions(self.request, obj)
-        return obj
+class SpecialArticlesView(APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self, request, format=None):
+        articles = Article.objects.filter(special=True, archived=False)
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data)
     
 class CategoryView(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]

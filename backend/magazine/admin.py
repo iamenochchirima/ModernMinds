@@ -6,7 +6,7 @@ from .forms import ArticleModelForm, SpecialArticleModelForm
 class ArticleModelAdmin(admin.ModelAdmin):
     form = ArticleModelForm
     model = Article
-    list_display = ('id', 'title', 'issue', 'archive', 'category', 'created_at', 'status')
+    list_display = ('id', 'title', 'special', 'editor_note', 'todays_pick', 'top_story', 'archived', 'issue', 'category', 'created_at', 'status')
 
 @admin.register(SpecialArticle)
 class SpecialArticleModelAdmin(admin.ModelAdmin):

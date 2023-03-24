@@ -45,7 +45,11 @@ class Article(models.Model):
     content = RichTextUploadingField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     slug = AutoSlugField(populate_from='title', unique=True)
-    archive = models.BooleanField(default=False)
+    editor_note = models.BooleanField(default=False)
+    todays_pick = models.BooleanField(default=False)
+    top_story = models.BooleanField(default=False)
+    special = models.BooleanField(default=False)
+    archived = models.BooleanField(default=False)
     issue = models.CharField(null=True, blank=True, max_length=100)
     status = models.CharField(
         max_length=10, choices=options, default='published')

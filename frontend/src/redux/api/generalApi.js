@@ -41,12 +41,6 @@ export const generalApi = generalApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
-    getFullSpecialArticle: builder.query({
-      query: (special_slug) => ({
-        url: `/api/special-articles/${special_slug}/`,
-        method: "GET",
-      }),
-    }),
     getArticles: builder.query({
       query: (page = 1, page_size = 3) =>
         `/api/articles/?page=${page}&page_size=${page_size}`,
@@ -106,7 +100,6 @@ export const {
   useNewsletterUnsubscribeMutation,
   useLazyGetFullArticleQuery,
   useGetSpecialArticlesQuery,
-  useLazyGetFullSpecialArticleQuery,
   useGetCategoriesQuery,
   useLazyGetCategoryArticlesQuery,
   useLazySearchQuery,
