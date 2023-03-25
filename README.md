@@ -62,3 +62,77 @@ Although its foundation is grounded in many of the lessons from the CS50 course,
         - `authSlice.js` - a slice for the "auth" state.
    - `/Store.js` - the redux store.
         
+        
+
+## How to run
+
+1.Clone the project with the following command or simply download the zipfile
+
+```
+git clone https://github.com/iamenochchirima/ModernMinds.git
+```
+
+3. Navigate to the `./backend` directory and run this command to install the python dependencies: 
+
+```
+pip install -r requirements.txt
+```
+
+4. avigate to the `./frontend` and run the following command to run install dependencies:
+
+```
+npm install
+```
+
+5. Create a .env file both in the `/backend` and `/frontend` directories.
+6. Create a sendgrid account, create the dynamic template and get key that corresponds with the following backend env varibales.
+7. In the backend env file set up the following  variables:
+
+```
+AWS_ACCESS_KEY = <your aws access key>
+AWS_SECRET_ACCESS_KEY =  <your aws secret key>
+AWS_STORAGE_BUCKET_NAME = <your aws bucket name>
+
+SENDGRID_API_KEY = <your sendgrid api key>
+HOST_PASSWORD_SENDGRID = <your sendgrid host password>
+
+EMAIL_VERIFICATION_TEMPLATE_ID = <Id for a email verifyfication dynamic template you would have created on sendgrid>
+PASSWORD_RESET_TEMPLATE_ID = <id for password reset template>
+MAIN_NEWSLETTER_TEMPLATE_ID = <newsletter tempplate id>
+NEWSLETTER_VERIFICATION_TEMPLATE_ID = <newsletter verification email template id>
+
+FRONTEND_BASE_URL = <your frond end url. e.g: http://127.0.0.1:3000>
+
+ALLOWED_HOSTS=127.0.0.1
+CSRF_TRUSTED_ORIGINS=http://127.0.0.1:8000
+
+DATABASE_URL = <your db url>
+PGDATABASE = <your db name>
+PGHOST = <your db host>
+PGPASSWORD = <your db password>
+PGPORT = <your db port>
+PGUSER = <your db user name>
+
+```
+
+8. In the frontend .env file setup the following variables:
+
+```
+NODE_ENV = 'development'
+NEXT_PUBLIC_API_URL = 'http://localhost:8000'
+NEXT_PUBLIC_ADMIN_URL = 'http://localhost:8000/admin'
+```
+
+9. When this is all done, navigate to `/backend` and run the following command:
+
+```
+python3 manage.py runserver
+```
+
+10. Create a new terminal and navigate to the `/frontend` directory and run this command:
+
+```
+npm run dev
+```
+
+The frontend and backend should both be running and connected.
