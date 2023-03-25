@@ -12,10 +12,34 @@ Although its foundation is grounded in many of the lessons from the CS50 course,
 
 ## Backend
 
-- `./backend`  Contains the django rest framework backend files
-    - `./modernminds`The main project directory, containing the project configuration files and settings
-        - `./storages` The additional file, which contains two custom classes for storing static and media files in an AWS S3 bucket using the S3Boto3Storage backend
-    - `./magazine` - A magazine directory, which contains all models and api views and serializers for articles.
+- `./backend`  Contains the django rest framework backend files.
+    - `./modernminds`The main project directory, containing the project configuration files and settings.
+        - `./storages.py` The additional file, which contains two custom classes for storing static and media files in an AWS S3 bucket using the S3Boto3Storage backend.
+    - `./magazine` - A magazine app directory, which contains all models views, urls and serializers files for articles. 
+    - `./newsletter` - The newsletter app directory containing the models, views, urls, serializers for the newsletter feature.
+    - `./users` - The users app directory containing the models, views, urls and serializers files for users and authentication logic.
+    - `requirements.text` - The file containing all the packages which are being used by the backend 
 
 ## Frontend
 - `./frontend` - Contains the next.js frontend files
+    - `./src/component/`
+        - `ExploreModal.jsx` - The Explore component with the list off all the categories with links to their respective categories.
+        - `Footer.jsx` - The footer component.
+        - `LatestArticles.jsx` - Lists the list of all the articles section of the magazine, listing them with pagination, 3 articles per page.
+        - `Layout.jsx` - The layout higher component
+        - `Login.jsx` - The login component, 
+        - `Navbar.jsx` - The navbar component, it loads user deatails and handles most of the state affecting component like Login, Register, ExploreModal etc.
+        - `PasswordReset.jsx` - The compenent for sending a request to the server for password reset. With an email input field only.
+        - `Register.jsx` - The register/Signup component
+        - `SpecialArticles.jsx` - Displays special articles like the Top Story and the Editors not, its also the parent component of the Today's Pick component.
+        - `Today's Pick.jsx` - Maps the today's pick articles.
+    - `./fonts` - contains the local font files.
+    - `./lib/gtags.js` - Exports constants and functions for implementing Google Analytics tracking using gtag.js, including setting a tracking ID and functions for pageview and event tracking.
+    - `pages/api/auth` - next js server api endpoints to access protected views in the django rest api. The httpOnly cookies are utilised here at the next.js server.
+        - `change_mail.js` - recieves request for email change from react client sent by RTK Query and sends it to django rest api.
+        - `delete_account.js` - for deleting a users account.
+        - `load_user.js` - loading the active users details, also sends the resfresh token to get a new access and refresh token is the access token have expired.
+        - `login.js` - sending loggin request to the rest api.
+        - `logout` - loging out, by simpl deleting the cookie with the tokens.
+        - `sendmianmails` - sends the request to send the weekly newsletter to the list of subscribers.
+        - `update_users` - send a request to update the user information when a user is updating their details on thieir profile page.
