@@ -13,8 +13,11 @@ Although its foundation is grounded in many of the lessons from the CS50 course,
 ## Backend
 
 - `./backend` - Contains the django rest framework backend files
+
   -`./modernminds` - The main project directory, containing the project configuration files and settings
+  
     -`./storages` - is the additional file, which contains two custom classes for storing static and media files in an AWS S3 bucket using the S3Boto3Storage backend
+    
   -`./magazine` - A magazine directory, which contains all models and api views and serializers for articles.
 
 ## Frontend
