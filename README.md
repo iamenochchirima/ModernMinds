@@ -10,4 +10,4 @@ Although its foundation is grounded in many of the lessons from the CS50 course,
 
 ## Structure
 
-- ./backend
+- `./backend` Contains the django rest framework backend files
