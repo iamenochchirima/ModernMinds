@@ -1,1 +1,5 @@
-# ModernMinds
+# Modern Minds Magazine
+
+## Overview
+
+
