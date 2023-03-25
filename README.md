@@ -23,23 +23,42 @@ Although its foundation is grounded in many of the lessons from the CS50 course,
 ## Frontend
 - `./frontend` - Contains the next.js frontend files
     - `./src/component/`
-        - `ExploreModal.jsx` - The Explore component with the list off all the categories with links to their respective categories.
-        - `Footer.jsx` - The footer component.
-        - `LatestArticles.jsx` - Lists the list of all the articles section of the magazine, listing them with pagination, 3 articles per page.
-        - `Layout.jsx` - The layout higher component
-        - `Login.jsx` - The login component, 
-        - `Navbar.jsx` - The navbar component, it loads user deatails and handles most of the state affecting component like Login, Register, ExploreModal etc.
-        - `PasswordReset.jsx` - The compenent for sending a request to the server for password reset. With an email input field only.
-        - `Register.jsx` - The register/Signup component
-        - `SpecialArticles.jsx` - Displays special articles like the Top Story and the Editors not, its also the parent component of the Today's Pick component.
+        - `/ExploreModal.jsx` - The Explore component with the list off all the categories with links to their respective categories.
+        - `/Footer.jsx` - The footer component.
+        - `/LatestArticles.jsx` - Lists the list of all the articles section of the magazine, listing them with pagination, 3 articles per page.
+        - `/Layout.jsx` - The layout higher component
+        - `/Login.jsx` - The login component, 
+        - `/Navbar.jsx` - The navbar component, it loads user deatails and handles most of the state affecting component like Login, Register, ExploreModal etc.
+        - `/PasswordReset.jsx` - The compenent for sending a request to the server for password reset. With an email input field only.
+        - `/Register.jsx` - The register/Signup component
+        - `/SpecialArticles.jsx` - Displays special articles like the Top Story and the Editors not, its also the parent component of the Today's Pick component.
         - `Today's Pick.jsx` - Maps the today's pick articles.
     - `./fonts` - contains the local font files.
+    - `./config/index.js` - index file exporting the API_URL constant
     - `./lib/gtags.js` - Exports constants and functions for implementing Google Analytics tracking using gtag.js, including setting a tracking ID and functions for pageview and event tracking.
     - `pages/api/auth` - next js server api endpoints to access protected views in the django rest api. The httpOnly cookies are utilised here at the next.js server.
-        - `change_mail.js` - recieves request for email change from react client sent by RTK Query and sends it to django rest api.
-        - `delete_account.js` - for deleting a users account.
-        - `load_user.js` - loading the active users details, also sends the resfresh token to get a new access and refresh token is the access token have expired.
-        - `login.js` - sending loggin request to the rest api.
-        - `logout` - loging out, by simpl deleting the cookie with the tokens.
-        - `sendmianmails` - sends the request to send the weekly newsletter to the list of subscribers.
-        - `update_users` - send a request to update the user information when a user is updating their details on thieir profile page.
+        - `/change_mail.js` - recieves request for email change from react client sent by RTK Query and sends it to django rest api.
+        - `/delete_account.js` - for deleting a users account.
+        - `/load_user.js` - loading the active users details, also sends the resfresh token to get a new access and refresh token is the access token have expired.
+        - `/login.js` - sending loggin request to the rest api.
+        - `/logout.js` - loging out, by simpl deleting the cookie with the tokens.
+        - `/sendmianmails.js` - sends the request to send the weekly newsletter to the list of subscribers.
+        - `/update_users.js` - send a request to update the user information when a user is updating their details on thieir profile page.
+        - `/category/[slug].jsx` - dynamic route for the category page.
+        - `/reset-password-confirm/[uid]/[token].jsx` - dynamic route for password confirm page when reseting password.
+        - `/unsubscribe/[token].jsx` - dynamic route for unsubscibing from the newsletter.
+        - `/verify-email/[uid]/[token].jsx` - route for email verification after account registration.
+        - `/vefify-nl-email/[uid]/[token].jsx` - route newsletter subscribed email verification.
+        - `/admin.jsx` - the page for the frontend admin actions.
+        - `/search.jsx` - the page for searching all the articles.
+        - `/userprofile.jsx` - the user profile page.
+   - `/redux/api`
+        - `/authApiSlice.js` - have an API slice for authentication using Redux Toolkit with a base URL set to "/api/ to the next.js server api endpoints.
+        - `/authApi.js` - endpoints for the authApiSlice, injecting the authApiSlice to the endpoints.
+        - `/generalApiSlice.js` - the api slice for general routes to the rest api that doesn't require authentication.
+        - `/genaralApi,js` - the endpoints for the generalApiSlice going straight to the rest api views.
+   - `/redux/slices`
+        - `/appSlice.js` - a slice for the "app" state.
+        - `authSlice.js` - a slice for the "auth" state.
+   - `/Store.js` - the redux store.
+        
