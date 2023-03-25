@@ -23,12 +23,6 @@ export const authApi = authApiSlice.injectEndpoints({
         body,
       }),
     }),
-    refresh: builder.query({
-      query: () => ({
-        url: "/auth/load_user",
-        method: "GET",
-      }),
-    }),
     deleteAccount: builder.mutation({
       query: () => ({
         url: "/auth/delete_account",
@@ -63,7 +57,6 @@ export const {
   useLoadUserQuery,
   useLazyLoadUserQuery,
   useLogoutMutation,
-  useRefreshQuery,
   useUpdateUserMutation,
   useChangeEmailMutation,
   useMainNewsletterMutation,
