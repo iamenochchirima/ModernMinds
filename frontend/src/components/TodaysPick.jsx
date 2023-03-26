@@ -60,13 +60,17 @@ const TodaysPick = () => {
                     </div>
                     <div className="w-1/3 relative">
                       {article?.cover_image && (
-                        <div className="w-full h-[100px]">
+                        <div className="relative w-full h-[100px]">
                           <Image
+                          className="absolute"
                             src={article?.cover_image}
                             style={{
                               objectFit: "cover",
                             }}
                             fill
+                            sizes="(max-width: 768px) 100vw,
+                              (max-width: 1200px) 50vw,
+                              33vw"
                             alt="Article cover image"
                           />
                         </div>

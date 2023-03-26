@@ -35,11 +35,11 @@ const LatestArticles = () => {
                 className="relative"
                 href={`/Articles/${encodeURIComponent(article.slug)}/`}
               >
-                <div className="w-full h-[250px] object-cover  hover:scale-105 duration-300">
+                <div className="relative w-full h-[250px] object-cover  hover:scale-105 duration-300">
                 {article?.cover_image && (
                   <Image
                   src={article?.cover_image}
-                  className=""
+                  className="absolute"
                   style={{
                     objectFit: "cover",
                   }}
