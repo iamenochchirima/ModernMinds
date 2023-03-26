@@ -59,15 +59,13 @@ const SpecialArticles = () => {
                         return null;
                       })}
                     </div>
-                    <div className="relative w-full h-[600px]">
+                    <div className=" w-full h-[600px]">
                       <Image
-                      className=""
                         src={article?.cover_image}
                         style={{
                           objectFit: "cover",
                         }}
-                        width="900"
-                        height="900"
+                        fill
                         alt="Article cover image"
                         sizes="100vw"
                       />
