@@ -420,7 +420,7 @@ const Navbar = () => {
         </div>
       )}
       {registerView && (
-        <div className="fixed z-20 inset-0 overflow-y-auto bg-black bg-opacity-75">
+        <div className="fixed z-20 inset-0 overflow-y-scroll bg-black bg-opacity-75">
           <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="bg-white w-full  px-6 py-2 max-w-md space-y-8">
               <div className="flex justify-end">
