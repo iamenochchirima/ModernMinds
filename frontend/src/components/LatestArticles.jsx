@@ -4,6 +4,7 @@ import {
   useGetCategoriesQuery,
 } from "@/redux/api/generalApi";
 import Link from "next/link";
+import Image from "next/image";
 
 const LatestArticles = () => {
   const [page, setPage] = useState(1);
@@ -34,13 +35,19 @@ const LatestArticles = () => {
                 className="relative"
                 href={`/Articles/${encodeURIComponent(article.slug)}/`}
               >
+                <div className="w-full h-[250px] object-cover  hover:scale-105 duration-300">
                 {article?.cover_image && (
-                  <img
-                    src={article?.cover_image}
-                    className="w-full h-[250px] object-cover  hover:scale-105 duration-300"
-                    alt="Article cover image"
-                  />
+                  <Image
+                  src={article?.cover_image}
+                  className=""
+                  style={{
+                    objectFit: "cover",
+                  }}
+                  fill
+                />
                 )}
+                </div>
+                
               </Link>
               <div className="">
                 <Link href={`/Articles/${encodeURIComponent(article.slug)}/`}>

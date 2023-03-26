@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
@@ -10,11 +11,17 @@ const Footer = () => {
           <div className="col-span-3 md:col-span-1 mt-10">
             <Link href="/">
               <div className="flex items-center  gap-2 font-product">
-                <img
-                  className={`w-[40px] h-[40px] duration-500`}
-                  src={"/logo.png"}
-                  alt="Mordern minds logo"
-                />
+                <div className={`w-[40px] h-[40px] duration-500 relative`}>
+                <Image
+                src={"/logo.png"}
+                style={{
+                  objectFit: "cover",
+                }}
+                fill
+                alt="Mordern minds logo"
+              />
+                </div>
+                
                 <div className=" flex-col hidden xs:flex">
                   <h1 className={`font-extrabold text-lg `}>MODERNMINDS</h1>
                   <h1 className={` text-base tracking-widest`}>MAGAZINE</h1>

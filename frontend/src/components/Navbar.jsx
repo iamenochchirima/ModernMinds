@@ -13,7 +13,7 @@ import {
   setCloseRegisterViewState,
   setClosePasswordReset,
 } from "@/redux/slices/authSlice";
-import { setExploreOpen} from "@/redux/slices/appSlice";
+import { setExploreOpen } from "@/redux/slices/appSlice";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
@@ -26,6 +26,7 @@ import { AiOutlineDown, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
 import { GrMenu } from "react-icons/gr";
 import { BsPerson } from "react-icons/bs";
 import ExploreModal from "./ExploreModal";
+import Image from "next/image";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -108,9 +109,9 @@ const Navbar = () => {
   const { isExploreOpen } = useSelector((state) => state.app);
 
   const handleExploreOpen = () => {
-    setMenuOpen(false)
-    dispatch(setExploreOpen())
-  }
+    setMenuOpen(false);
+    dispatch(setExploreOpen());
+  };
 
   const handleLoginClick = (e) => {
     e.preventDefault;
@@ -118,9 +119,9 @@ const Navbar = () => {
   };
 
   const handleMobileNewsLetter = () => {
-    setMenuOpen(false)
-    handleShowForm()
-  }
+    setMenuOpen(false);
+    handleShowForm();
+  };
 
   useEffect(() => {
     if (logoutSuccess) {
@@ -159,19 +160,26 @@ const Navbar = () => {
       <div
         className={`${
           isSticky ? `py-0 duration-500 shadow-md ` : `py-4 bg-opacity-0`
-        } fixed w-full z-10 flex items-center justify-between bg-white px-3 ss:px-10 max-w-[1500px] `}
+        } fixed w-full z-20 flex items-center justify-between bg-white px-3 ss:px-10 max-w-[1500px] `}
       >
         <Link href="/">
           <div className="text-black flex items-center gap-2 font-product">
-            <img
+            <div
               className={` ${
                 isSticky
                   ? `w-[40px] h-[40px] duration-500`
                   : `w-[50px] h-[50px]`
-              } w-[40px] sm:w-[50] h-[40px] sm:h-[50] `}
-              src={"/logo.png"}
-              alt="Mordern minds logo"
-            />
+              } w-[40px] sm:w-[50] h-[40px] sm:h-[50] relative `}
+            >
+              <Image
+                src={"/logo.png"}
+                style={{
+                  objectFit: "cover",
+                }}
+                fill
+                alt="Mordern minds logo"
+              />
+            </div>
             <div className=" flex-col hidden xs:flex">
               <h1 className={`font-extrabold text-lg `}>MODERNMINDS</h1>
               <h1 className={` text-base tracking-widest`}>MAGAZINE</h1>
@@ -191,7 +199,7 @@ const Navbar = () => {
                 {userInfo?.user.first_name}
                 <AiOutlineDown className="text-sm" />
               </button>
-              <div className="absolute z-10 left-1/2 transform -translate-x-1/2 top-full w-40 py-2 bg-white rounded-md shadow-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute z-20 left-1/2 transform -translate-x-1/2 top-full w-40 py-2 bg-white rounded-md shadow-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <Link
                   href="/userprofile"
                   className="block px-4 py-2 hover:bg-gray-100"
@@ -222,10 +230,10 @@ const Navbar = () => {
             </li>
           )}
           <li>
-            <Link href='/search'>
-            <button  className="text-xl border py-1 pb-2 px-2 rounded-md">
-              <AiOutlineSearch />
-            </button>
+            <Link href="/search">
+              <button className="text-xl border py-1 pb-2 px-2 rounded-md">
+                <AiOutlineSearch />
+              </button>
             </Link>
           </li>
           <li>
@@ -243,7 +251,7 @@ const Navbar = () => {
               Get The Newsletter
             </button>
             {showNewsletterForm && (
-              <div className="fixed z-10 inset-0 overflow-y-auto bg-black bg-opacity-75">
+              <div className="fixed z-20 inset-0 overflow-y-auto bg-black bg-opacity-75">
                 <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                   <div className="bg-white w-full px-6 py-2 max-w-md space-y-8">
                     <div className="flex justify-end">
@@ -270,15 +278,15 @@ const Navbar = () => {
                       />
                       {letterLoading ? (
                         <ThreeDots
-                        height="50"
-                        width="50"
-                        radius="9"
-                        color="black"
-                        ariaLabel="three-dots-loading"
-                        wrapperStyle={{}}
-                        wrapperClassName=""
-                        visible={true}
-                      />
+                          height="50"
+                          width="50"
+                          radius="9"
+                          color="black"
+                          ariaLabel="three-dots-loading"
+                          wrapperStyle={{}}
+                          wrapperClassName=""
+                          visible={true}
+                        />
                       ) : (
                         <button
                           type="submit"
@@ -350,7 +358,7 @@ const Navbar = () => {
               <GrMenu />
             </button>
             {menuOpen && (
-              <div className="fixed left-0 right-0 top-0 min-h-screen overflow-y-scroll bg-white z-10 ">
+              <div className="fixed left-0 right-0 top-0 min-h-screen overflow-y-scroll bg-white z-20 ">
                 <button
                   onClick={() => setMenuOpen(false)}
                   className="text-4xl pt-10 pl-20"
@@ -378,10 +386,7 @@ const Navbar = () => {
                       </button>
                     </li>
                     <li className="hover:scale-110 duration-300">
-                      <button
-                        onClick={() => handleExploreOpen()}
-                        className=""
-                      >
+                      <button onClick={() => handleExploreOpen()} className="">
                         Explore
                       </button>
                       {isExploreOpen && <ExploreModal />}
@@ -394,7 +399,7 @@ const Navbar = () => {
         </ul>
       </div>
       {loginView && (
-        <div className="fixed z-10 inset-0 overflow-y-auto bg-black bg-opacity-75">
+        <div className="fixed z-20 inset-0 overflow-y-auto bg-black bg-opacity-75">
           <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="bg-white w-full px-6 py-2 max-w-md space-y-8">
               <div className="flex justify-end">
@@ -411,7 +416,7 @@ const Navbar = () => {
         </div>
       )}
       {registerView && (
-        <div className="fixed z-10 inset-0 overflow-y-auto bg-black bg-opacity-75">
+        <div className="fixed z-20 inset-0 overflow-y-auto bg-black bg-opacity-75">
           <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="bg-white w-full  px-6 py-2 max-w-md space-y-8">
               <div className="flex justify-end">
@@ -428,7 +433,7 @@ const Navbar = () => {
         </div>
       )}
       {resetPasswordRequest && (
-        <div className="fixed z-10 inset-0 overflow-y-auto bg-black bg-opacity-75">
+        <div className="fixed z-20 inset-0 overflow-y-auto bg-black bg-opacity-75">
           <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="bg-white w-full px-6 py-2 max-w-md space-y-4">
               <div className="flex justify-end">

@@ -5,6 +5,7 @@ import {
   useGetCategoriesQuery,
 } from "@/redux/api/generalApi";
 import Link from "next/link";
+import Image from "next/image";
 
 const TodaysPick = () => {
   const { data: categories } = useGetCategoriesQuery();
@@ -50,9 +51,7 @@ const TodaysPick = () => {
                         return null;
                       })}
                       <Link
-                        href={`/Articles/${encodeURIComponent(
-                          article.slug
-                        )}/`}
+                        href={`/Articles/${encodeURIComponent(article.slug)}/`}
                       >
                         <h1 className="hover:underline font-bold">
                           {article.title}
@@ -61,11 +60,16 @@ const TodaysPick = () => {
                     </div>
                     <div className="w-1/3 relative">
                       {article?.cover_image && (
-                        <img
-                          src={article?.cover_image}
-                          className="w-full h-[100px] object-cover"
-                          alt="Article cover image"
-                        />
+                        <div className="w-full h-[100px]">
+                          <Image
+                            src={article?.cover_image}
+                            style={{
+                              objectFit: "cover",
+                            }}
+                            fill
+                            alt="Article cover image"
+                          />
+                        </div>
                       )}
                     </div>
                   </div>

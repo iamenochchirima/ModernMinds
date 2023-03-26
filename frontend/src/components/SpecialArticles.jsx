@@ -5,6 +5,7 @@ import {
 import Link from "next/link";
 import TodaysPick from "./TodaysPick";
 import { ThreeDots } from "react-loader-spinner";
+import Image from "next/image";
 
 const SpecialArticles = () => {
   const { data: categories } = useGetCategoriesQuery();
@@ -24,46 +25,49 @@ const SpecialArticles = () => {
               return (
                 <div
                   key={article.id}
-                  style={{
-                    backgroundImage: `url(${article?.cover_image})`,
-                  }}
-                  className="col-span-4 sm:col-span-2 md:col-span-3 relative bg-cover bg-center text-white "
+                  className="col-span-4 sm:col-span-2 md:col-span-3 relative text-white "
                 >
-                  <div>
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-80 "></div>
-                    <div className="relative w-full h-[600px] z-5">
-                      <div className="absolute bottom-0 pb-10 px-5">
-                        <Link
-                          className=""
-                          href={`/Articles/${encodeURIComponent(
-                            article.slug
-                          )}/`}
-                        >
-                          <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
-                            TOP STORY
-                          </span>
-                          <h1 className="md:text-4xl text-3xl font-bold pt-5">
-                            {article.title}
-                          </h1>
-                        </Link>
-                        {categories?.map((category) => {
-                          if (category.id === article.category) {
-                            return (
-                              <Link
-                                key={category.id}
-                                href={`/category/${encodeURIComponent(
-                                  category.slug
-                                )}/`}
-                              >
-                                <span className="text-xs border-b border-yellow-400 hover:border-black tracking-widest">
-                                  {category.name}
-                                </span>
-                              </Link>
-                            );
-                          }
-                          return null;
-                        })}
-                      </div>
+                  <div className="relative w-full h-[600px]">
+                    <div className="absolute w-full h-full flex flex-col px-5 justify-end max-h-[600px] bg-black bg-opacity-30 z-10">
+                      <Link
+                        className=""
+                        href={`/Articles/${encodeURIComponent(article.slug)}/`}
+                      >
+                        <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
+                          TOP STORY
+                        </span>
+                        <h1 className="md:text-4xl text-3xl font-bold pt-5">
+                          {article.title}
+                        </h1>
+                      </Link>
+                      {categories?.map((category) => {
+                        if (category.id === article.category) {
+                          return (
+                            <Link
+                              className="mb-10"
+                              key={category.id}
+                              href={`/category/${encodeURIComponent(
+                                category.slug
+                              )}/`}
+                            >
+                              <span className="text-xs border-b border-yellow-400 hover:border-black tracking-widest">
+                                {category.name}
+                              </span>
+                            </Link>
+                          );
+                        }
+                        return null;
+                      })}
+                    </div>
+                    <div className=" w-full h-[600px]">
+                      <Image
+                        src={article?.cover_image}
+                        style={{
+                          objectFit: "cover",
+                        }}
+                        fill
+                        alt="Article cover image"
+                      />
                     </div>
                   </div>
                 </div>
@@ -96,30 +100,38 @@ const SpecialArticles = () => {
       )}
 
       <div className="col-span-4 sm:col-span-2 md:col-span-1 ">
-        <div className="py-1">
+        <div className="">
           {specialData?.map((article) => {
             if (article?.editor_note) {
               return (
                 <div
                   key={article.id}
-                  style={{ backgroundImage: `url(${article.cover_image})` }}
-                  className="relative bg-cover bg-center text-white hover:scale-105 duration-300"
+                  className="relative text-white hover:scale-105 duration-300 h-[250px]"
                 >
-                  <Link
-                    href={`/Articles/${encodeURIComponent(
-                      article.slug
-                    )}/`}
-                  >
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black opacity-70 "></div>
-                    <div className="md:pt-20 pt-52 relative z-5 px-5">
-                      <div className="pt-5">
-                        <h1 className=" text-center font-extrabold text-lg">
-                          EDITOR&apos;S NOTE
-                        </h1>
+                  <div className="">
+                    <Link
+                      href={`/Articles/${encodeURIComponent(article.slug)}/`}
+                    >
+                      <div className=" relative w-full h-[250px] z-10 px-3 bg-black bg-opacity-30 flex flex-col justify-end">
+                        <div className="pt-5">
+                          <h1 className="font-extrabold text-lg">
+                            EDITOR&apos;S NOTE
+                          </h1>
+                        </div>
+                        <h1 className="py-2 font-medium">{article.title}</h1>
                       </div>
-                      <h1 className="py-2 ">{article.title}</h1>
+                    </Link>
+                    <div className=" w-full h-full">
+                      <Image
+                        src={article?.cover_image}
+                        style={{
+                          objectFit: "cover",
+                        }}
+                        fill
+                        alt="Article cover image"
+                      />
                     </div>
-                  </Link>
+                  </div>
                 </div>
               );
             }

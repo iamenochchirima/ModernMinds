@@ -4,11 +4,13 @@ import Link from "next/link";
 import Layout from "@/components/Layout";
 import { useGetCategoriesQuery } from "@/redux/api/generalApi";
 import { AiOutlineSearch } from "react-icons/ai";
+import Image from "next/image";
 
 const Search = () => {
   const { data: categories } = useGetCategoriesQuery();
   const [searchQuery, setSearchQuery] = useState("");
-  const [getArticles, { data, isLoading, isError, error }] = useLazySearchQuery();
+  const [getArticles, { data, isLoading, isError, error }] =
+    useLazySearchQuery();
   const [searchData, setSearchData] = useState(null);
 
   const [page, setPage] = useState(1);
@@ -72,9 +74,7 @@ const Search = () => {
           </form>
         </div>
         {isError && error.status === 404 && (
-          <div className="text-center p-20">
-            Sorry, no results were found
-          </div>
+          <div className="text-center p-20">Sorry, no results were found</div>
         )}
         <div className="flex justify-center items-center">
           <div className="grid grid-cols-2 md:w-3/4 gap-10 mt-10">
@@ -113,11 +113,16 @@ const Search = () => {
                   </div>
                   <div className="w-1/3 relative">
                     {article?.cover_image && (
-                      <img
-                        src={article?.cover_image}
-                        className="w-full h-[100px] object-cover"
-                        alt="Article cover image"
-                      />
+                      <div className="w-full h-[100px]">
+                        <Image
+                          src={article?.cover_image}
+                          style={{
+                            objectFit: "cover",
+                          }}
+                          fill
+                          alt="Article cover image"
+                        />
+                      </div>
                     )}
                   </div>
                 </div>

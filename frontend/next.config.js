@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'],
+    domains: ['modern-minds-bucket.s3.amazonaws.com'],
   },
 };
 
