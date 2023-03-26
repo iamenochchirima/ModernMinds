@@ -36,7 +36,7 @@ const SpecialArticles = () => {
                         <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
                           TOP STORY
                         </span>
-                        <h1 className="md:text-4xl text-3xl font-bold pt-5">
+                        <h1 className="md:text-5xl text-3xl font-bold pt-5">
                           {article.title}
                         </h1>
                       </Link>

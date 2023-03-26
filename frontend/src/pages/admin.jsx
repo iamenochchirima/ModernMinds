@@ -41,6 +41,7 @@ const Admin = () => {
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
               Modern Minds Admin View
             </h2>
+            <h1 className="mt-6 text-center text-red-500">Only stuff members can see this page.</h1>
             <Link href={`${adminUrl}`} target="_blank">
               <div className="flex flex-col">
                 <button className="hover:underline border p-3 mt-4 ">
