@@ -67,9 +67,13 @@ const SpecialArticles = () => {
                           objectFit: "cover",
                         }}
                         fill
-                        sizes="(max-width: 768px) 100vw,
-                              (max-width: 1200px) 50vw,
-                              33vw"
+                        sizes="(max-width: 360px) 100vw, 
+                              (max-width: 375px) 90vw, 
+                              (max-width: 620px) 80vw, 
+                              (max-width: 770px) 70vw, 
+                              (max-width: 900px) 60vw, 
+                              (max-width: 1200px) 50vw, 
+                              40vw"
                         alt="Article cover image"
                       />
                     </div>
@@ -132,9 +136,13 @@ const SpecialArticles = () => {
                           objectFit: "cover",
                         }}
                         fill
-                        sizes="(max-width: 768px) 100vw,
-                              (max-width: 1200px) 50vw,
-                              33vw"
+                        sizes="(max-width: 360px) 100vw, 
+                                (max-width: 375px) 90vw, 
+                                (max-width: 620px) 80vw, 
+                                (max-width: 770px) 70vw, 
+                                (max-width: 900px) 60vw, 
+                                (max-width: 1200px) 50vw, 
+                                25vw"
                         alt="Article cover image"
                       />
                     </div>
