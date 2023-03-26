@@ -197,11 +197,7 @@ const Navbar = () => {
           )}
           {isAuthenticated && (
             <li className="relative group pr-2">
-              <button className="flex gap-1 items-center group-hover:text-gray-800">
-                <BsPerson />
-                {userInfo?.user.first_name}
-                <AiOutlineDown className="text-sm" />
-              </button>
+            <div className="group-hover:block hidden">
               <div className="absolute z-20 left-1/2 transform -translate-x-1/2 top-full w-40 py-2 bg-white rounded-md shadow-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <Link
                   href="/userprofile"
@@ -217,13 +213,18 @@ const Navbar = () => {
                 </Link>
                 <button
                   onClick={handleLogout}
-                  href="#"
                   className="block px-4 py-2 hover:bg-gray-100"
                 >
                   Sign out
                 </button>
               </div>
-            </li>
+            </div>
+            <button className="flex gap-1 items-center group-hover:text-gray-800">
+              <BsPerson />
+              {userInfo?.user.first_name}
+              <AiOutlineDown className="text-sm" />
+            </button>
+          </li>
           )}
           {userInfo?.user?.is_staff && (
             <li className="hidden sm:block">
