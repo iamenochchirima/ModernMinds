@@ -58,7 +58,7 @@ const Category = () => {
       <div className="">
         <div className="relative h-[550px] w-full">
           <div className="absolute w-full h-[550px] flex flex-col bg-black bg-opacity-20 z-10 justify-center">
-            <h1 className="text-center text-white font-medium  text-7xl">
+            <h1 className="text-center text-white font-medium  text-5xl xs:text-7xl">
               {name}
             </h1>
           </div>
