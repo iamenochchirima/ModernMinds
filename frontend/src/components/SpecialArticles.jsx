@@ -62,11 +62,12 @@ const SpecialArticles = () => {
                     <div className=" w-full h-[600px]">
                       <Image
                         src={article?.cover_image}
-                        // style={{
-                        //   objectFit: "cover",
-                        // }}
+                        style={{
+                          objectFit: "cover",
+                        }}
                         fill
                         alt="Article cover image"
+                        sizes="100vw"
                       />
                     </div>
                   </div>
