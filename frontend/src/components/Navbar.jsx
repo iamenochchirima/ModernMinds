@@ -177,6 +177,9 @@ const Navbar = () => {
                   objectFit: "cover",
                 }}
                 fill
+                sizes="(max-width: 768px) 100vw,
+                (max-width: 1200px) 50vw,
+                33vw"
                 alt="Mordern minds logo"
               />
             </div>

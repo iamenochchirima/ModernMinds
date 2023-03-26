@@ -69,7 +69,11 @@ const Category = () => {
                 style={{
                   objectFit: "cover",
                 }}
+                sizes="(max-width: 768px) 100vw,
+                (max-width: 1200px) 50vw,
+                33vw"
                 fill
+                alt="Category background image"
               />
             ) : null}
           </div>
@@ -92,6 +96,9 @@ const Category = () => {
                         objectFit: "cover",
                       }}
                       fill
+                      sizes="(max-width: 768px) 100vw,
+                      (max-width: 1200px) 50vw,
+                      33vw"
                       alt="Article cover image"
                     />
                   </div>
