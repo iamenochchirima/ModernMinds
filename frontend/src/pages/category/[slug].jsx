@@ -69,9 +69,7 @@ const Category = () => {
                 style={{
                   objectFit: "cover",
                 }}
-                sizes="(max-width: 768px) 100vw,
-                (max-width: 1200px) 50vw,
-                33vw"
+                sizes="100vw"
                 fill
                 alt="Category background image"
               />
@@ -89,8 +87,9 @@ const Category = () => {
                   className="relative"
                   href={`/Articles/${encodeURIComponent(article.slug)}/`}
                 >
-                  <div className="w-full h-[250px] hover:scale-105 duration-300">
+                  <div className="relative w-full h-[250px] hover:scale-105 duration-300">
                     <Image
+                      className="absolute"
                       src={article?.cover_image}
                       style={{
                         objectFit: "cover",
