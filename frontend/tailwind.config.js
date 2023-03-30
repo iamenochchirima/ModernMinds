@@ -21,6 +21,8 @@ module.exports = {
         kinfolk: ['Kinfolk',  'sans-serif'],
         cormorant: ['Cormorant',  'sans-serif'],
         tiempos: ['Tiempos', 'sans-serif'],
+        graphikBold: ['Graphik-bold', 'sans-serif'],
+        graphikSemiBold: ['Graphik-semi-bold', 'sans-serif'],
         graphik: ['Graphik', 'sans-serif'],
         product: ['Product', 'sans-serif'],
         roboto: ['var(--font-roboto)'],

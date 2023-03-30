@@ -21,7 +21,7 @@ const LatestArticles = () => {
 
   return (
     <>
-      <h1 className="text-center p-10 text-2xl font-extrabold">
+      <h1 className="text-center p-10 text-xl font-graphikBold">
         LATEST STORIES
       </h1>
       <div className="px-3 ss:px-10 grid grid-cols-6 gap-5">

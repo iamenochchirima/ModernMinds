@@ -33,7 +33,7 @@ const SpecialArticles = () => {
                         className=""
                         href={`/Articles/${encodeURIComponent(article.slug)}/`}
                       >
-                        <span className=" font-bold bg-yellow-700 text-white px-2 py-1">
+                        <span className=" font-graphikSemiBold bg-yellow-700 text-white px-2 py-1">
                           TOP STORY
                         </span>
                         <h1 className="md:text-5xl text-3xl font-bold pt-5">
@@ -116,7 +116,7 @@ const SpecialArticles = () => {
                     >
                       <div className=" relative w-full h-[250px] z-10 px-3 bg-black bg-opacity-30 flex flex-col justify-end">
                         <div className="pt-5">
-                          <h1 className="font-extrabold text-lg">
+                          <h1 className="font-graphikBold text-lg">
                             EDITOR&apos;S NOTE
                           </h1>
                         </div>
