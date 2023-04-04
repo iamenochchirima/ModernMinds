@@ -5,7 +5,7 @@ const Policy = () => {
   return (
     <Layout>
       <div className="mt-24 mb-10 flex justify-center">
-        <div className="w-3/4">
+        <div className="md:w-3/4 mx-5">
           <h2 className="font-graphikBold text-3xl text-gray-800 mb-5">
             Modern Minds Magazine Privacy Policy
           </h2>
@@ -40,7 +40,7 @@ const Policy = () => {
             <p>
               When you visit our website, our servers may automatically log the
               standard data provided by your web browser. It may include your
-              device's Internet Protocol (IP) address, your browser type and
+              device&apos;s Internet Protocol (IP) address, your browser type and
               version, the pages you visit, the time and date of your visit, the
               time spent on each page, other details about your visit, and
               technical details that occur in conjunction with any errors you
@@ -153,7 +153,7 @@ const Policy = () => {
               historical research purposes or statistical purposes.{" "}
             </p>
             <h3 className="py-5 font-graphikSemiBold text-xl">
-              Children's Privacy
+              Children&apos;s Privacy
             </h3>
             <p>
               We do not aim any of our products or services directly at children
@@ -232,7 +232,7 @@ const Policy = () => {
               If we receive personal information about you from a third party,
               we will protect it as set out in this privacy policy. If you are a
               third party providing personal information about somebody else,
-              you represent and warrant that you have such person's consent to
+              you represent and warrant that you have such person&apos;s consent to
               provide the personal information to us.
             </p>
             <p>

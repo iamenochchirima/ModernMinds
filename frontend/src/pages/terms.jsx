@@ -5,14 +5,14 @@ const Terms = () => {
   return (
     <Layout>
       <div className="mt-24 mb-10 flex justify-center">
-        <div className="w-3/4">
+        <div className="md:w-3/4 mx-5">
           <h1 className="font-graphikBold text-3xl text-gray-800 mb-5">
             Modern Minds Magazine Terms and Conditions
           </h1>
           <div className="text-gray-800">
           <p>
             {" "}
-            Welcome to Modern Minds Magazine (the "Website"), owned and operated
+            Welcome to Modern Minds Magazine (the &quot;Website&quot;), owned and operated
             by Modern Minds Magazine. These terms and conditions govern your use
             of the Website and any content, features, or services provided
             through the Website. By using the Website, you agree to be bound by
@@ -93,7 +93,7 @@ const Terms = () => {
           </h3>{" "}
           <p>
             {" "}
-            The Website and its Content are provided "as is" without warranty of
+            The Website and its Content are provided &quot;as is&quot; without warranty of
             any kind, either express or implied. The Modern Minds Magazine does not warrant
             that the Website will be error-free or uninterrupted. The Modern Minds Magazine
             shall not be liable for any indirect, incidental, special, or
@@ -107,7 +107,7 @@ const Terms = () => {
             {" "}
             You agree to indemnify and hold harmless the Modern Minds Magazine and its
             affiliates, officers, directors, employees, and agents from any and
-            all claims, damages, and expenses (including attorneys' fees)
+            all claims, damages, and expenses (including attorneys&apos; fees)
             arising out of or in connection with your use of the Website, your
             User Content, or your breach of these Terms.{" "}
           </p>{" "}
