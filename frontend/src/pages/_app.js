@@ -26,7 +26,7 @@ export default function App({ Component, ...rest }) {
     <>
       <Provider store={store}>
         <div className="font-graphik">
-          <Script id="google analytics"
+          <Script id="google-analytics"
               dangerouslySetInnerHTML={{
                 __html: `
               window.dataLayer = window.dataLayer || [];
