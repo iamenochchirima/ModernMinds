@@ -62,15 +62,18 @@ const Category = () => {
               {name}
             </h1>
           </div>
-          <div className=" h-[550px] w-full">
+          <div className="w-full h-[550px] relative">
             {background ? (
               <Image
+                className="absolute"
                 src={background}
                 style={{
                   objectFit: "cover",
                 }}
-                sizes="100vw"
                 fill
+                sizes="(max-width: 768px) 100vw,
+                (max-width: 1200px) 50vw,
+                33vw"
                 alt="Category background image"
               />
             ) : null}
@@ -113,24 +116,23 @@ const Category = () => {
                       {article.title}
                     </h1>
                   </Link>
-                  {categories?.map((category) => (
-                    <>
-                      {category.id === article.category && (
+                  {categories?.map((category) => {
+                    if (category.id === article.category) {
+                      return (
                         <Link
+                          key={category.id}
                           href={`/category/${encodeURIComponent(
                             category.slug
                           )}/`}
                         >
-                          <span
-                            key={category.id}
-                            className="  text-xs border-b border-yellow-400 hover:border-black tracking-widest"
-                          >
+                          <span className="  text-xs border-b border-yellow-400 hover:border-black tracking-widest">
                             {category.name}
                           </span>
                         </Link>
-                      )}
-                    </>
-                  ))}
+                      );
+                    }
+                    return null;
+                  })}
                 </div>
               </div>
             </div>

@@ -123,8 +123,9 @@ const SpecialArticles = () => {
                         <h1 className="py-2 font-medium">{article.title}</h1>
                       </div>
                     </Link>
-                    <div className=" w-full h-full">
+                    <div className="relative w-full h-full">
                       <Image
+                      className="relative"
                         src={article?.cover_image}
                         style={{
                           objectFit: "cover",
