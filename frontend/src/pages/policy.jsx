@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Link from "next/link";
 import React from "react";
 
 const Policy = () => {
@@ -40,9 +41,9 @@ const Policy = () => {
             <p>
               When you visit our website, our servers may automatically log the
               standard data provided by your web browser. It may include your
-              device&apos;s Internet Protocol (IP) address, your browser type and
-              version, the pages you visit, the time and date of your visit, the
-              time spent on each page, other details about your visit, and
+              device&apos;s Internet Protocol (IP) address, your browser type
+              and version, the pages you visit, the time and date of your visit,
+              the time spent on each page, other details about your visit, and
               technical details that occur in conjunction with any errors you
               may encounter.{" "}
             </p>
@@ -156,9 +157,18 @@ const Policy = () => {
               Children&apos;s Privacy
             </h3>
             <p>
-              We do not aim any of our products or services directly at children
-              under the age of 13, and we do not knowingly collect personal
-              information about children under 13.{" "}
+              Our website is not directed toward children under the age of 13,
+              and we do not knowingly collect personal information from children
+              under the age of 13. If we discover that we have inadvertently
+              collected personal information from a child under 13, we will
+              promptly take steps to delete that information. If you are a
+              parent or guardian and believe that your child under the age of 13
+              has provided personal information to us, please contact us
+              immediately at{" "}
+              <Link className="text-blue-600" href="/contact">
+                here
+              </Link>{" "}
+              so that we can take steps to delete such information.
             </p>
             <h3 className="py-5 font-graphikSemiBold text-xl">
               Disclosure of Personal Information to Third Parties
@@ -232,8 +242,8 @@ const Policy = () => {
               If we receive personal information about you from a third party,
               we will protect it as set out in this privacy policy. If you are a
               third party providing personal information about somebody else,
-              you represent and warrant that you have such person&apos;s consent to
-              provide the personal information to us.
+              you represent and warrant that you have such person&apos;s consent
+              to provide the personal information to us.
             </p>
             <p>
               If you have previously agreed to us using your personal
@@ -260,7 +270,9 @@ const Policy = () => {
               the right to contact a regulatory body or data protection
               authority in relation to your complaint.
             </p>
-            <h3 className="font-graphikSemiBold py-5 text-xl">Use of Cookies</h3>
+            <h3 className="font-graphikSemiBold py-5 text-xl">
+              Use of Cookies
+            </h3>
             <p>
               We use &ldquo;cookies&rdquo; to collect information about you and
               your activity across our site. A cookie is a small piece of data

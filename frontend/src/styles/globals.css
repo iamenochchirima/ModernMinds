@@ -99,6 +99,8 @@ textarea:invalid[focused="true"] ~ .error-message {
   display: block;
 }
 
+
+
 input:invalid[focused="true"] ~ .error-message {
   display: block;
 }
