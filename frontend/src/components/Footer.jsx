@@ -67,10 +67,10 @@ const Footer = () => {
               </span>
             </p>
           </div>
-          <div className="col-span-5 md:col-span-2 mt-10">
+          <div className="col-span-5 md:col-span-2 md:mt-10">
             <div className="grid grid-cols-2 gap-2">
-              <div className="col-span-2 md:col-span-2 text-sm text-dimWhite">
-                <ul>
+              <div className="col-span-2 md:col-span-2 text text-dimWhite">
+                <ul className="flex flex-col gap-1">
                   <li>
                     <button onClick={() => dispatch(setOpenLoginViewState())}>
                       Signin
