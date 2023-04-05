@@ -65,7 +65,6 @@ const Category = () => {
           <div className="w-full h-[550px] relative">
             {background ? (
               <Image
-                className="absolute"
                 src={background}
                 style={{
                   objectFit: "cover",
