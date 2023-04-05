@@ -5,7 +5,7 @@ import React from "react";
 const About = () => {
   return (
     <Layout>
-      <div className="relative h-[450px]  mx-10">
+      <div className="relative h-[450px]  md:mx-10 ">
         <div className="absolute w-full h-[450px] flex flex-col bg-black bg-opacity-40 z-10 justify-center">
           <h1 className="text-center text-white font-graphikSemiBold  text-5xl xs:text-6xl">
             About Us
