@@ -15,7 +15,7 @@ const Footer = () => {
   return (
     <div className="bg-black mt-10 text-white">
       <div className="px-3 ss:px-10 ">
-        <div className="grid grid-cols-5 mx-20 gap-2">
+        <div className="grid grid-cols-5 md:mx-20 gap-2">
           <div className="col-span-5 md:col-span-3 mt-10">
             <Link href="/">
               <div className="flex items-center  gap-2 font-product">

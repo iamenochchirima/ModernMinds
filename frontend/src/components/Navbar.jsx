@@ -334,13 +334,13 @@ const Navbar = () => {
                       Sign up to our Newsletter to stay updated with special
                       offers and updates for Morden Minds. By signing up, you
                       agree to our{" "}
-                      <a href="terms-of-use" className="underline">
+                      <Link href="/terms" className="underline">
                         Terms of Use
-                      </a>{" "}
+                      </Link>{" "}
                       and acknowledge that you have read our{" "}
-                      <a href="privacy-policy" className="underline">
+                      <Link href="/policy" className="underline">
                         Privacy Policy
-                      </a>
+                      </Link>
                       .
                     </p>
                   </div>
