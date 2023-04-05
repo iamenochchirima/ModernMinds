@@ -65,10 +65,6 @@ body {
   overflow-x: hidden;
 }
 
-/* a {
-  color: inherit;
-} */
-
 .navbar {
   position: sticky;
   top: 0;
@@ -77,11 +73,30 @@ body {
   transition: transform 0.3s ease-in-out;
 }
 
+.contact-input {
+  background-color: white;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+}
+
+.form-div {
+  padding: 0.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.2em;
+}
+
 .error-message {
   color: red;
   margin-top: 0.25rem;
   font-size: 0.75rem;
   display: none;
+}
+textarea:invalid[focused="true"] ~ .error-message {
+  display: block;
 }
 
 input:invalid[focused="true"] ~ .error-message {
