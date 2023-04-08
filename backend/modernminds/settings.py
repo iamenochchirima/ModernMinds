@@ -160,24 +160,17 @@ EMAIL_HOST_PASSWORD = config('HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('HOST_EMAIL')
 SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
-PROJECT_ID = config('PROJECT_ID')
-PRIVATE_KEY_ID = config("PRIVATE_KEY_ID")
-PRIVATE_KEY = config("PRIVATE_KEY")
-CLIENT_EMAIL = config("CLIENT_EMAIL")
-CLIENT_ID = config("CLIENT_ID")
-CLIENT_X509_CERT_URL = config("CLIENT_X509_CERT_URL")
-
 GS_CREDENTIALS = service_account.Credentials.from_service_account_info({
     "type": "service_account",
-    "project_id": PROJECT_ID,
-    "private_key_id": PRIVATE_KEY_ID,
-    "private_key": PRIVATE_KEY.replace('\\n', '\n'),
-    "client_email": CLIENT_EMAIL,
-    "client_id": CLIENT_ID,
+    "project_id": config("PROJECT_ID"),
+    "private_key_id": config("PRIVATE_KEY_ID"),
+    "private_key": config("PRIVATE_KEY").replace('\\n', '\n'),
+    "client_email": config("CLIENT_EMAIL"),
+    "client_id":config("CLIENT_ID"),
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": CLIENT_X509_CERT_URL,
+    "client_x509_cert_url": config("CLIENT_X509_CERT_URL"),
 })
 GS_PROJECT_ID = config('GCS_PROJECT_ID')
 GS_BUCKET_NAME = config('GCS_BUCKET_NAME')
