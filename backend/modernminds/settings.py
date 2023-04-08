@@ -1,7 +1,8 @@
 from pathlib import Path
 from decouple import config
-import os
+from google.oauth2 import service_account
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,7 +102,6 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -160,27 +160,50 @@ EMAIL_HOST_PASSWORD = config('HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('HOST_EMAIL')
 SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
+PROJECT_ID = config('PROJECT_ID')
+PRIVATE_KEY_ID = config("PRIVATE_KEY_ID")
+PRIVATE_KEY = config("PRIVATE_KEY")
+CLIENT_EMAIL = config("CLIENT_EMAIL")
+CLIENT_ID = config("CLIENT_ID")
+CLIENT_X509_CERT_URL = config("CLIENT_X509_CERT_URL")
 
+GS_CREDENTIALS = service_account.Credentials.from_service_account_info({
+    "type": "service_account",
+    "project_id": PROJECT_ID,
+    "private_key_id": PRIVATE_KEY_ID,
+    "private_key": PRIVATE_KEY.replace('\\n', '\n'),
+    "client_email": CLIENT_EMAIL,
+    "client_id": CLIENT_ID,
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": CLIENT_X509_CERT_URL,
+})
+GS_PROJECT_ID = config('GCS_PROJECT_ID')
+GS_BUCKET_NAME = config('GCS_BUCKET_NAME')
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_file(os.path.join(BASE_DIR, 'credentials.json'))
 
-AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY')
-AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
-AWS_DEFAULT_ACL = None
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 DEFAULT_FILE_STORAGE = 'modernminds.storages.MediaStorage'
 
-AWS_QUERYSTRING_AUTH = False
-
 STATIC_LOCATION = 'static'
-STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/{STATIC_LOCATION}/'
 STATICFILES_STORAGE = 'modernminds.storages.StaticStorage'
 
 MEDIA_LOCATION = 'media'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
-DEFAULT_FILE_STORAGE = 'modernminds.storages.MediaStorage'
+MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/{MEDIA_LOCATION}/'
 
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
+
+# STATICFILES_STORAGE = 'modernminds.storages.StaticStorage'
+
+# AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY')
+# AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+# AWS_DEFAULT_ACL = None
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+# AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+# AWS_QUERYSTRING_AUTH = False
 
 # STATIC_URL = 'static/'
 # MEDIA_URL = 'media/'
@@ -208,23 +231,26 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('Bearer',),
-   'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-   'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-   'ROTATE_REFRESH_TOKENS': True,
-   "BLACKLIST_AFTER_ROTATION": True,
-   'AUTH_TOKEN_CLASSES': (
-       'rest_framework_simplejwt.tokens.AccessToken',
-   )
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    'AUTH_TOKEN_CLASSES': (
+        'rest_framework_simplejwt.tokens.AccessToken',
+    )
 }
 
 CKEDITOR_CONFIGS = {
     'default': {
-     
+
         'toolbar_Custom': [
-            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'document', 'items': [
+                'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll']},
             {'name': 'forms',
              'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
                        'HiddenField']},
@@ -237,9 +263,10 @@ CKEDITOR_CONFIGS = {
                        'Language']},
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
             {'name': 'insert',
-             'items': ['Image', 'Youtube','Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+             'items': ['Image', 'Youtube', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
             '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'styles', 'items': [
+                'Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['CodeSnippet']},
@@ -253,7 +280,7 @@ CKEDITOR_CONFIGS = {
             ]},
         ],
         'toolbar': 'Custom',  # put selected toolbar config here
-        'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        'toolbarGroups': [{'name': 'document', 'groups': ['mode', 'document', 'doctools']}],
         'height': 400,
         # 'width': '100%',
         'filebrowserWindowHeight': 725,
@@ -263,7 +290,7 @@ CKEDITOR_CONFIGS = {
         'tabSpaces': 4,
         'extraPlugins': ','.join([
             'uploadimage',
-            'image2', # the responsive image plugin
+            'image2',  # the responsive image plugin
             # your extra plugins here
             'div',
             'autolink',
