@@ -93,7 +93,7 @@ const ContactForm = () => {
           <p className="text-center my-5 font-bold">
             We would be delighted to hear from you if anything on our site has
             caught your attention, sparked new ideas, or left you with any
-            questions. Simpy submit the form below.
+            questions. Simply submit the form below.
           </p>
           <form className=" gap-y-4" onSubmit={handleSubmit}>
             <div className="form-div">

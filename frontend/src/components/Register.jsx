@@ -11,6 +11,7 @@ import {
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import Link from "next/link";
 
 const Register = () => {
   const [countries, setCounties] = useState(null);
@@ -300,7 +301,7 @@ const Register = () => {
           <p className="text-xs">
             Your personal data will be used to support your experience
             throughout this website, to manage access to your account, and for
-            other purposes described in our privacy policy.
+            other purposes described in our <Link onClick={() =>  dispatch(setCloseRegisterViewState())} className="underline" href="/policy">privacy policy</Link> .
           </p>
 
           <div>
