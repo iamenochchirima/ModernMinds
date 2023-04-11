@@ -55,10 +55,10 @@ const Category = () => {
 
   return (
     <Layout>
-      <div>
+      <div className="">
         <div className="relative h-[550px] w-full">
           <div className="absolute w-full h-[550px] flex flex-col bg-black bg-opacity-20 z-10 justify-center">
-            <h1 className="text-center text-white font-medium  text-5xl xs:text-7xl">
+            <h1 className="text-center text-white font-graphikSemiBold  text-5xl sm:text-7xl">
               {name}
             </h1>
           </div>
@@ -71,8 +71,8 @@ const Category = () => {
                 }}
                 fill
                 sizes="(max-width: 768px) 100vw,
-                (max-width: 1200px) 50vw,
-                33vw"
+                      (max-width: 1200px) 90vw,
+                      80vw"
                 alt="Category background image"
               />
             ) : null}

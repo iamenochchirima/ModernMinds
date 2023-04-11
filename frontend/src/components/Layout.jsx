@@ -23,7 +23,7 @@ const Layout = ({ title, content, children }) => {
           buttonText="Okay"
           expires={150}
         >
-          Welcome to Moder Minds Magazine website! We use third-party analytics
+          Welcome to Modern Minds Magazine website! We use third-party analytics
           technologies and cookies to to help enhance the user experience. By
           continuing to use our website, you consent to the use of these
           technologies. To learn more please read our{" "}
