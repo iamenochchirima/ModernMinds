@@ -2,6 +2,7 @@ from pathlib import Path
 from decouple import config
 from google.oauth2 import service_account
 from datetime import timedelta
+import dj_database_url
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -106,16 +107,19 @@ CORS_ORIGIN_WHITELIST = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('PGDATABASE'),
-        'USER': config('PGUSER'),
-        'PASSWORD': config('PGPASSWORD'),
-        'HOST': config('PGHOST'),
-        'PORT': config('PGPORT'),
-        'DATABASE_URL': config('DATABASE_URL')
-    }
+    'default': dj_database_url.parse(config('DATABASE_URL'))
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': config('PGDATABASE'),
+#         'USER': config('PGUSER'),
+#         'PASSWORD': config('PGPASSWORD'),
+#         'HOST': config('PGHOST'),
+#         'PORT': config('PGPORT'),
+#     }
+# }
 
 
 # Password validation
