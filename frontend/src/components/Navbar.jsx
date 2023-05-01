@@ -31,7 +31,7 @@ import Image from "next/image";
 const Navbar = () => {
   const dispatch = useDispatch();
   const [userInfo, setUserInfo] = useState(null);
-  const [letteEmail, setLetterEmail] = useState("");
+  const [letterEmail, setLetterEmail] = useState("");
   const [showNewsletterForm, setShowForm] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -73,14 +73,8 @@ const Navbar = () => {
     setShowForm(false);
   };
 
-  useEffect(() => {
-    if (signupData) {
-      console.log(signupData.success, "Data here");
-    }
-  }, [signupData]);
-
   const letterBody = {
-    email: letteEmail,
+    email: letterEmail,
   };
   const handleSubmitNewsletter = async (event) => {
     event.preventDefault();
@@ -143,11 +137,6 @@ const Navbar = () => {
       dispatch(setAuthState());
     }
   }, [isLogedIn, success, lazyData, data, isSuccess]);
-
-  useEffect(() => {
-    if (isAuthenticated === false) {
-    }
-  }, [isAuthenticated]);
 
   const handleLogout = () => {
     logout();
@@ -274,7 +263,7 @@ const Navbar = () => {
                         type="email"
                         id="email"
                         name="email"
-                        value={letteEmail}
+                        value={letterEmail}
                         onChange={(event) => setLetterEmail(event.target.value)}
                         placeholder="Enter you email address"
                         required

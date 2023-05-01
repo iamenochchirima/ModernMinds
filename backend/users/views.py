@@ -125,7 +125,6 @@ class UpdateUser(APIView):
     permission_classes = [IsAuthenticated]
 
     def put(self, request, format=None):
-        print(request.data)
         user = request.user
         serializer = UpdateUserDataSerializer(
             user, data=request.data, partial=True)
@@ -175,14 +174,11 @@ class ChangeEmailView(APIView):
         user.is_email_verified = False
         user.save()
 
-        # Generate verification token
         uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
         token = PasswordResetTokenGenerator().make_token(user)
 
-        # Construct verification URL
         verification_url = f"{config('FRONTEND_BASE_URL')}/verify-email/{uidb64}/{token}"
 
-        # Send verification email using SendGrid dynamic template
         message = Mail(
             from_email=settings.DEFAULT_FROM_EMAIL,
             to_emails=new_email,

@@ -106,20 +106,20 @@ CORS_ORIGIN_WHITELIST = [
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.parse(config('DATABASE_URL'))
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': config('PGDATABASE'),
-#         'USER': config('PGUSER'),
-#         'PASSWORD': config('PGPASSWORD'),
-#         'HOST': config('PGHOST'),
-#         'PORT': config('PGPORT'),
-#     }
+#     'default': dj_database_url.parse(config('DATABASE_URL'))
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('PGDATABASE'),
+        'USER': config('PGUSER'),
+        'PASSWORD': config('PGPASSWORD'),
+        'HOST': config('PGHOST'),
+        'PORT': config('PGPORT'),
+    }
+}
 
 
 # Password validation
