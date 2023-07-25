@@ -1,6 +1,6 @@
 from pathlib import Path
 from decouple import config
-from google.oauth2 import service_account
+# from google.oauth2 import service_account
 from datetime import timedelta
 import dj_database_url
 import os
@@ -164,30 +164,45 @@ EMAIL_HOST_PASSWORD = config('HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('HOST_EMAIL')
 SENDGRID_API_KEY = config('SENDGRID_API_KEY')
 
-GS_CREDENTIALS = service_account.Credentials.from_service_account_info({
-    "type": "service_account",
-    "project_id": config("PROJECT_ID"),
-    "private_key_id": config("PRIVATE_KEY_ID"),
-    "private_key": config("PRIVATE_KEY").replace('\\n', '\n'),
-    "client_email": config("CLIENT_EMAIL"),
-    "client_id":config("CLIENT_ID"),
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": config("CLIENT_X509_CERT_URL"),
-})
-GS_PROJECT_ID = config('GCS_PROJECT_ID')
-GS_BUCKET_NAME = config('GCS_BUCKET_NAME')
+# --------------------------------Google cloud storage setup--------------------------------------------
+
+# GS_CREDENTIALS = service_account.Credentials.from_service_account_info({
+#     "type": "service_account",
+#     "project_id": config("PROJECT_ID"),
+#     "private_key_id": config("PRIVATE_KEY_ID"),
+#     "private_key": config("PRIVATE_KEY").replace('\\n', '\n'),
+#     "client_email": config("CLIENT_EMAIL"),
+#     "client_id":config("CLIENT_ID"),
+#     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+#     "token_uri": "https://oauth2.googleapis.com/token",
+#     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+#     "client_x509_cert_url": config("CLIENT_X509_CERT_URL"),
+# })
+# GS_PROJECT_ID = config('GCS_PROJECT_ID')
+# GS_BUCKET_NAME = config('GCS_BUCKET_NAME')
 # GS_CREDENTIALS = service_account.Credentials.from_service_account_file(os.path.join(BASE_DIR, 'credentials.json'))
+
+# STATICFILES_STORAGE = 'modernminds.storages.StaticStorage'
+
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME')
+AWS_DEFAULT_ACL = None
+AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+AWS_QUERYSTRING_AUTH = False
 
 DEFAULT_FILE_STORAGE = 'modernminds.storages.MediaStorage'
 
 STATIC_LOCATION = 'static'
-STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/{STATIC_LOCATION}/'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+# STATIC_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/{STATIC_LOCATION}/'
 STATICFILES_STORAGE = 'modernminds.storages.StaticStorage'
 
 MEDIA_LOCATION = 'media'
-MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/{MEDIA_LOCATION}/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+# MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/{MEDIA_LOCATION}/'
 
 CKEDITOR_UPLOAD_PATH = 'ckeditor/'
 
