@@ -158,7 +158,7 @@ const ContactForm = () => {
                 className=" py-2 px-5 mx-2 text-lg rounded-lg border border-black"
                 type="submit"
               >
-                <span>Sumbit</span>
+                <span>Submit</span>
               </button>
             )}
           </form>

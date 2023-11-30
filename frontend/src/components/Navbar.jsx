@@ -173,8 +173,8 @@ const Navbar = () => {
               />
             </div>
             <div className=" flex-col hidden xs:flex">
-              <h1 className={`font-extrabold text-lg `}>MODERNMINDS</h1>
-              <h1 className={` text-base tracking-widest`}>MAGAZINE</h1>
+              <h1 className={`font-extrabold text-lg `}>ModernMinds</h1>
+              <h1 className={` text-base tracking-widest`}>Magazine</h1>
             </div>
           </div>
         </Link>
